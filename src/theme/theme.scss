@@ -3,3 +3,6 @@
  * Framework overrides and customization goes here.
  */
 
+html, body{
+    font-family: $font-stack !important;
+}

@@ -1,10 +1,12 @@
-<div class="container-fluid">
-  <div class="jumbotron text-center">
-    <h1>
-      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo"/>
-      <span translate>Hello world !</span>
-    </h1>
-    <app-loader [isLoading]="isLoading"></app-loader>
-    <q [hidden]="isLoading">{{quote}}</q>
-  </div>
-</div>
+
+
+<p uk-margin>
+  <button class="uk-button uk-button-default">Default</button>
+  <button class="uk-button uk-button-primary">Primary</button>
+  <button class="uk-button uk-button-secondary">Secondary</button>
+  <button class="uk-button uk-button-danger">Danger</button>
+  <button class="uk-button uk-button-text">Text</button>
+  <button class="uk-button uk-button-link">Link</button>
+</p>
+
+<app-loader [isLoading]="isLoading"></app-loader>

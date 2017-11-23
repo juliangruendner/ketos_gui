@@ -5,6 +5,8 @@
 // Set Font Awesome font path
 $fa-font-path: "~font-awesome/fonts";
 
+$font-stack: "Proxima Nova";
+
 // ---------------------------------------------------------------------------
 // Bootstrap variables
 //
@@ -15,41 +17,16 @@ $fa-font-path: "~font-awesome/fonts";
 // Color system
 //
 
-$white:  #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #868e96;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
-$black:  #000;
+// 1. Your custom variables and variable overwrites.
+$global-link-color: #DA7D02;
 
-$blue:    #0073dd;
-$indigo:  #6610f2;
-$purple:  #6f42c1;
-$pink:    #e83e8c;
-$red:     #dc3545;
-$orange:  #fd7e14;
-$yellow:  #ffc107;
-$green:   #28a745;
-$teal:    #20c997;
-$cyan:    #17a2b8;
+// 2. Import default variables and available mixins.
+@import "~uikit/src/scss/variables-theme.scss";
+@import "~uikit/src/scss/mixins-theme.scss";
 
-$theme-colors: (
-  primary: $blue,
-  secondary: $gray-600,
-  success: $green,
-  info: $cyan,
-  warning: $yellow,
-  danger: $red,
-  light: $gray-100,
-  dark: $gray-800
-);
+// 3. Your custom mixin overwrites.
+@mixin hook-card() { color: #000; }
 
-// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
-// in components.
-@import "~bootstrap/scss/_functions";
-@import "~bootstrap/scss/_variables";
+// 4. Import UIkit.
+@import "~uikit/src/scss/uikit-theme.scss";
+

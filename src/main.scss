@@ -7,8 +7,10 @@
 @import "theme/theme-variables";
 
 // 3rd party libraries
-@import "~bootstrap/scss/bootstrap";
+@import "~uikit/src/scss/uikit";
 @import "~font-awesome/scss/font-awesome.scss";
 
 // Theme customization
 @import "theme/theme";
+
+@import "assets/proxima-nova.css";
