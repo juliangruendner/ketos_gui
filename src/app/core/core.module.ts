@@ -12,6 +12,7 @@ import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
+import { MenuComponent } from './menu/menu.component';
 
 export function createHttpService(backend: ConnectionBackend,
                                   defaultOptions: RequestOptions,
@@ -29,7 +30,8 @@ export function createHttpService(backend: ConnectionBackend,
   ],
   declarations: [
     HeaderComponent,
-    ShellComponent
+    ShellComponent,
+    MenuComponent
   ],
   providers: [
     AuthenticationService,
