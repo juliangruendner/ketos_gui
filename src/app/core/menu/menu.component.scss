@@ -1,0 +1,27 @@
+.side-menu {
+    position: relative;
+    max-width: 350px;
+    transition: 1s;
+    li {
+        padding: 5px 80px 5px 40px;
+        font-size: 18px;
+        &:hover, &.active {
+            background-color: rgba(255,255,255,0.15);
+            transition: 1s;
+            cursor: pointer;
+        }
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    
+}
+
+.user-wrapper {
+    position: absolute;
+    bottom: 16px;
+    left: 60px;
+    width: 100%;
+}
