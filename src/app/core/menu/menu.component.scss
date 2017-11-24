@@ -2,6 +2,7 @@
     position: relative;
     max-width: 350px;
     transition: 1s;
+    height: 100%;
     li {
         padding: 5px 80px 5px 40px;
         font-size: 18px;
@@ -15,8 +16,11 @@
                 text-decoration: none;
             }
         }
-    }
-    
+    }   
+}
+
+.logo-wrapper img{
+    width:150px;
 }
 
 .user-wrapper {
