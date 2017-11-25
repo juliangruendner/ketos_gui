@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EnvironmentsComponent } from './environments.component';
+import { EnvironmentsRoutingModule } from './environments-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AboutRoutingModule } from './about-routing.module';
-import { AboutComponent } from './about.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
-    AboutRoutingModule
+    EnvironmentsRoutingModule
   ],
   declarations: [
-    AboutComponent
+    EnvironmentsComponent
   ]
 })
-export class AboutModule { }
+export class EnvironmentsModule { }

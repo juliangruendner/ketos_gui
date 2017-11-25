@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
+import { EnvironmentsModule } from './environments/environments.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,10 @@ import { LoginModule } from './login/login.module';
     HomeModule,
     AboutModule,
     LoginModule,
-    AppRoutingModule
+    EnvironmentsModule,
+
+    //must be after other modules, otherwise path is not detected
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [
