@@ -1,0 +1,43 @@
+<div class="header-wrapper">
+  <h1 class="uk-heading-divider">Crawlers</h1>
+  <div class="header-btn">
+      <button class="uk-button uk-button-primary uk-button-small">New Crawler Job</button>
+  </div>  
+</div>
+
+
+<div class="env-wrapper">
+  <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
+      <li *ngFor="let crawler of crawlers">
+          <div>
+              <div class="uk-card uk-card-default uk-card-body uk-card-hover">
+                  <div class="uk-card-badge uk-label uk-label-warning">stopped</div>
+                  <h3 class="uk-card-title">BA: R-Env</h3>
+                  <p>{{crawler.id}}</p>
+                  <button class="uk-button uk-button-primary uk-button-small">Start</button>
+              </div>
+          </div>
+      </li>
+  </div>
+</div>
+
+<div id="modal-example" uk-modal>
+  <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header">
+          <h2 class="uk-modal-title">Test-Env1</h2>
+      </div>
+      <div class="uk-modal-body">
+        <p>
+          <b>Description</b><br> Python 3.6, Tensorflow and Keras <br><br>
+          <b>Created</b><br>24 days ago by Max Muster<br><br>
+          <b>Environment API</b><br>http://10.132.84.13/4e4ad79<br><br>
+        </p>
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+        <button class="uk-button uk-button-primary" type="button">open jupyter</button>
+        <button class="uk-button uk-button-danger" type="button">Shutdown</button>
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+      </div>
+  </div>
+</div>
