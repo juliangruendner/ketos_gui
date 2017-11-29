@@ -1,12 +1,17 @@
 <div class="header-wrapper">
     <h1 class="uk-heading-divider">Environments</h1>
     <div class="header-btn">
-        <button class="uk-button uk-button-primary uk-button-small">Create new</button>
+        <button class="uk-button uk-button-primary uk-button-small" (click)="click()">Create new</button>
     </div>  
 </div>
 
 
 <div class="env-wrapper">
+    
+    <div *ngFor="let e of envs">
+        {{e.name}}
+    </div>
+
     <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
         <div>
             <div class="uk-card uk-card-default uk-card-body uk-card-hover">

@@ -14,6 +14,8 @@ import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { EnvironmentsModule } from './environments/environments.module';
+import { CrawlersModule } from './crawlers/crawlers.module';
+import { EnvironmentsService } from './services/environments.service';
 
 @NgModule({
   imports: [
@@ -28,12 +30,14 @@ import { EnvironmentsModule } from './environments/environments.module';
     AboutModule,
     LoginModule,
     EnvironmentsModule,
+    CrawlersModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [
+    EnvironmentsService
   ],
   bootstrap: [AppComponent]
 })
