@@ -1,24 +1,49 @@
 @import "../../theme/theme-variables";
 
 .login-container {
+  height: 100%;
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
+  width: 100%;
+}
+
+.uk-card-title{
+  font-weight: lighter;
+  font-size: 40px;
 }
 
 .login-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 400px;
+  height: 400px;
+  /* margin: 0 auto; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -200px;
+}
+
+.logo-wrapper{
+  height: 65px;
+  text-align: center;
+  margin-bottom: 35px;
+  img {
+    width: auto;
+    height: 100%;
+  }
+}
+
+.login-inner{
+  height: 300px;
+  text-align: center;
+
+  button{
+    width: 100%;
+  }
+}
+
+.uk-inline{
   width: 100%;
-  min-height: 100%;
 }
-
-.ng-invalid.ng-touched:not(form) {
-  border-left: 4px solid theme-color("danger");
-}
-
 

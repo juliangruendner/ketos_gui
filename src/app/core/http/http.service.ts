@@ -37,6 +37,13 @@ export class HttpService extends Http {
     options = options || {};
     let url: string;
 
+    //Add Auth
+    let username: string = 'nico';
+    let password: string = 'test';
+  
+    //extend({}, options.headers, { "Authorization" : "Basic " + btoa(username + ":" + password })
+  
+
     if (typeof request === 'string') {
       url = request;
       request = environment.serverUrl + url;

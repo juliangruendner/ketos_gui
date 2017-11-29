@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,12 +16,15 @@ import { LoginModule } from './login/login.module';
 import { EnvironmentsModule } from './environments/environments.module';
 import { CrawlersModule } from './crawlers/crawlers.module';
 import { EnvironmentsService } from './services/environments.service';
+import { AuthInterceptor } from './core/authentication/auth.interceptor';
+import { LoginService } from './services/login.service';
+
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     TranslateModule.forRoot(),
     NgbModule.forRoot(),
     CoreModule,
@@ -37,7 +40,13 @@ import { EnvironmentsService } from './services/environments.service';
   ],
   declarations: [AppComponent],
   providers: [
-    EnvironmentsService
+    EnvironmentsService,
+    LoginService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -14,13 +14,14 @@ export class EnvironmentsComponent implements OnInit {
   constructor(private environmentsService: EnvironmentsService) { }
 
   ngOnInit() {
-    this.environmentsService.getAll()
-    .pipe(finalize(() => { 
-
-     }))
-    .subscribe((quote: any[]) => { 
-      this.envs = quote;
+    this.environmentsService.getAll().subscribe((json: object[]) => { 
+      this.envs = json;
+      console.log(json)
     });
+  }
+
+  getEnv() {
+    return this.envs;
   }
 
   click(){

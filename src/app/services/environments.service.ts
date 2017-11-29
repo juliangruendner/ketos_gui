@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
-  all: '/environments'
+  allByUser: (id : Number) => `http://192.168.178.39:5000/users/${id}/environments`
 };
 
 @Injectable()
 export class EnvironmentsService {
 
-  constructor(private http: Http) { }
+  constructor(private httpClient: HttpClient, private authService : AuthenticationService) { }
 
-  getAll(): Observable<any[]> {
+  getAll(): Observable<Object> {
     console.log("deine mudda")
-    return this.http.get(routes.all)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError(() => Observable.of('Error, could not load environments'))
-      );
+    return this.httpClient.get(routes.allByUser(this.authService.getUser().id));
   }
 
 }

@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { I18nService } from '../core/i18n.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
+import { LoginService } from '../services/login.service';
 
 const log = new Logger('Login');
 
@@ -25,26 +26,41 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private i18nService: I18nService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private loginService:LoginService) {
     this.createForm();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authenticationService.logout();
+  }
 
   login() {
-    this.isLoading = true;
+    console.log("XXXXXX")
+
     this.authenticationService.login(this.loginForm.value)
-      .pipe(finalize(() => {
-        this.loginForm.markAsPristine();
-        this.isLoading = false;
-      }))
-      .subscribe(credentials => {
-        log.debug(`${credentials.username} successfully logged in`);
-        this.router.navigate(['/'], { replaceUrl: true });
-      }, error => {
-        log.debug(`Login error: ${error}`);
-        this.error = error;
-      });
+    .pipe(finalize(() => {
+      this.loginForm.markAsPristine();
+      this.isLoading = false;
+    }))
+    .subscribe(credentials => {
+      
+      
+    }, error => {
+      log.debug(`Login error: ${error}`);
+      
+    });
+
+    this.loginService.login().subscribe((json: any) => {
+      this.authenticationService.setUser(json);
+      this.router.navigate(['/environments'], { replaceUrl: true });
+    },
+    (err) => {
+      console.log("fuck u")
+    });
+
+  
+    
   }
 
   setLanguage(language: string) {

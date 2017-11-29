@@ -7,46 +7,15 @@
 
 
 <div class="env-wrapper">
-    
-    <div *ngFor="let e of envs">
-        {{e.name}}
-    </div>
 
     <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
-        <div>
+        <div *ngFor="let e of getEnv()">
             <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                <div class="uk-card-badge uk-label uk-label-success">running</div>
-                <h3 class="uk-card-title">Test-Env1</h3>
-                <p>Python 3.6, Tensorflow and Keras</p>
+                <div class="uk-card-badge uk-label" [ngClass]="{'uk-label-success': e.status=='running', 'uk-label-warning': e.status=='stopped'}">{{e.status}}</div>
+                <h3 class="uk-card-title">{{e.name}}</h3>
+                <p>{{e.description}}</p>
                 <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #modal-example">Details</button>
                 
-            </div>
-        </div>
-
-        <div>
-            <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                <div class="uk-card-badge uk-label uk-label-warning">stopped</div>
-                <h3 class="uk-card-title">BA: R-Env</h3>
-                <p>R 2.1.1, Caret and H2O Framework</p>
-                <button class="uk-button uk-button-primary uk-button-small">Start</button>
-            </div>
-        </div>
-
-        <div>
-            <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                <div class="uk-card-badge uk-label uk-label-success">running</div>
-                <h3 class="uk-card-title">Jon Doe: R</h3>
-                <p>R 2.1.1, Caret and H2O Framework</p>
-                <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #modal-example">Details</button>
-            </div>
-        </div>
-
-        <div>
-            <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                <div class="uk-card-badge uk-label uk-label-success">running</div>
-                <h3 class="uk-card-title">Test in Python</h3>
-                <p>Python 2.7, Theano and Keras</p>
-                <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #modal-example">Details</button>
             </div>
         </div>
     </div>

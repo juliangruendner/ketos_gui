@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 export interface Credentials {
   // Customize received credentials here
   username: string;
-  token: string;
+  password: string;
 }
 
 export interface LoginContext {
@@ -23,6 +23,7 @@ const credentialsKey = 'credentials';
 export class AuthenticationService {
 
   private _credentials: Credentials;
+  private user : any;
 
   constructor() {
     this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
@@ -37,7 +38,7 @@ export class AuthenticationService {
     // Replace by proper authentication call
     const data = {
       username: context.username,
-      token: '123456'
+      password: context.password,
     };
     this.setCredentials(data, context.remember);
     return Observable.of(data);
@@ -87,5 +88,13 @@ export class AuthenticationService {
       localStorage.removeItem(credentialsKey);
     }
   }
+
+  getUser(): any {
+    return this.user;
+  } 
+
+  setUser(user: any){
+    this.user = user;
+  } 
 
 }
