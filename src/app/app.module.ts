@@ -15,6 +15,7 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { EnvironmentsModule } from './environments/environments.module';
 import { CrawlersModule } from './crawlers/crawlers.module';
+import { EnvironmentsService } from './services/environments.service';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { CrawlersModule } from './crawlers/crawlers.module';
   ],
   declarations: [AppComponent],
   providers: [
+    EnvironmentsService
   ],
   bootstrap: [AppComponent]
 })
