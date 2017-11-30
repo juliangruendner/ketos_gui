@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -11,13 +11,14 @@ import { AuthenticationService } from './authentication.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthenticationService) {}
+  constructor(private injector: Injector) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const auth = this.injector.get(AuthenticationService);
     
     request = request.clone({
       setHeaders: {
-        Authorization: "Basic " + btoa(this.auth.credentials.username + ":" + this.auth.credentials.password)
+        Authorization: "Basic " + btoa(auth.credentials.username + ":" + auth.credentials.password)
       }
     });
 

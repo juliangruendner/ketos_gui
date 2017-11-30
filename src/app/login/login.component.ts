@@ -7,7 +7,6 @@ import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { I18nService } from '../core/i18n.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { LoginService } from '../services/login.service';
 
 const log = new Logger('Login');
 
@@ -26,8 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private i18nService: I18nService,
-              private authenticationService: AuthenticationService,
-              private loginService:LoginService) {
+              private authenticationService: AuthenticationService) {
     this.createForm();
   }
 
@@ -41,24 +39,13 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAsPristine();
       this.isLoading = false;
     }))
-    .subscribe(credentials => {
-      
-      
-    }, error => {
-      log.debug(`Login error: ${error}`);
-      
-    });
-
-    this.loginService.login().subscribe((json: any) => {
-      this.authenticationService.setUser(json);
+    .subscribe(user => {
+      this.authenticationService.setUser(user);
       this.router.navigate(['/environments'], { replaceUrl: true });
-    },
-    (err) => {
-      console.log("fuck u")
+    }, error => {
+      this.authenticationService.logout();
+      log.debug(`Login error: ${error}`);
     });
-
-  
-    
   }
 
   setLanguage(language: string) {

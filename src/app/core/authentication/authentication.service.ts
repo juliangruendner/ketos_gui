@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { LoginService } from '../../services/login.service';
 
 export interface Credentials {
   // Customize received credentials here
@@ -14,6 +15,7 @@ export interface LoginContext {
 }
 
 const credentialsKey = 'credentials';
+const userKey = 'user';
 
 /**
  * Provides a base for authentication workflow.
@@ -23,9 +25,8 @@ const credentialsKey = 'credentials';
 export class AuthenticationService {
 
   private _credentials: Credentials;
-  private user : any;
 
-  constructor() {
+  constructor(private loginService: LoginService) {
     this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
   }
 
@@ -34,14 +35,14 @@ export class AuthenticationService {
    * @param {LoginContext} context The login parameters.
    * @return {Observable<Credentials>} The user credentials.
    */
-  login(context: LoginContext): Observable<Credentials> {
+  login(context: LoginContext): Observable<Object> {
     // Replace by proper authentication call
     const data = {
       username: context.username,
       password: context.password,
     };
     this.setCredentials(data, context.remember);
-    return Observable.of(data);
+    return this.loginService.login();
   }
 
   /**
@@ -51,6 +52,7 @@ export class AuthenticationService {
   logout(): Observable<boolean> {
     // Customize credentials invalidation here
     this.setCredentials();
+    this.setUser();
     return Observable.of(true);
   }
 
@@ -90,11 +92,15 @@ export class AuthenticationService {
   }
 
   getUser(): any {
-    return this.user;
+    return JSON.parse(localStorage.getItem(userKey));
   } 
 
-  setUser(user: any){
-    this.user = user;
+  setUser(user?: any){   
+    if (user) {
+      localStorage.setItem(userKey, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(userKey);
+    }
   } 
 
 }
