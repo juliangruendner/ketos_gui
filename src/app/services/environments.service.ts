@@ -23,8 +23,8 @@ export class EnvironmentsService {
     return this.httpClient.get(routes.singleById(id));
   }
 
-  putSingle(env: any): Observable<Object> {
-    return this.httpClient.put(routes.singleById(env.id), env);
+  putSingle(id: Number, env: any): Observable<Object> {
+    return this.httpClient.put(routes.singleById(id), env);
   }
 
 }

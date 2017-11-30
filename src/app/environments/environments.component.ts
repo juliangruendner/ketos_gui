@@ -31,17 +31,19 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   start() {
-    this.env.status = 'running';
-    this.putEnv();
+    var e = Object.assign({}, this.env);
+    e.status = 'running';
+    this.putEnv(this.env.id, e);
   }
 
   stop() {
-    this.env.status = 'stopped';
-    this.putEnv();
+    var e = Object.assign({}, this.env);
+    e.status = 'stopped';
+    this.putEnv(this.env.id, e);
   }
 
-  putEnv() {
-    this.environmentsService.putSingle(this.env).subscribe(json => {
+  putEnv(id: Number, env: any) {
+    this.environmentsService.putSingle(id, env).subscribe(json => {
       this.env = json;
     });
   }
