@@ -36,8 +36,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log("XXXXXX")
-
     this.authenticationService.login(this.loginForm.value)
     .pipe(finalize(() => {
       this.loginForm.markAsPristine();

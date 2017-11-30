@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 const routes = {
-  login: 'http://192.168.178.39:5000/users/login'
+  login: environment.serverUrl + '/users/login'
 };
 
 @Injectable()

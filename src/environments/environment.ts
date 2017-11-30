@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   version: '(dev)',
-  serverUrl: 'http://192.168.178.39:5000',
+  serverUrl: 'http://localhost:5000',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

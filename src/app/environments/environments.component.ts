@@ -9,23 +9,41 @@ import { finalize } from 'rxjs/operators';
 })
 export class EnvironmentsComponent implements OnInit {
 
-  private envs : any;
+  envs: any;
+  env: any;
 
   constructor(private environmentsService: EnvironmentsService) { }
 
   ngOnInit() {
-    this.environmentsService.getAll().subscribe((json: object[]) => { 
+    this.environmentsService.getAll().subscribe(json => { 
       this.envs = json;
-      console.log(json)
     });
   }
 
-  getEnv() {
-    return this.envs;
+  getEnv(id: Number) {
+    this.environmentsService.getSingleById(id).subscribe(json => {
+      this.env = json;
+    });
   }
 
-  click(){
-    
+  openJupyter() {
+    window.open('http://' + this.env.jupyter_url, "_blank");
+  }
+
+  start() {
+    this.env.status = 'running';
+    this.putEnv();
+  }
+
+  stop() {
+    this.env.status = 'stopped';
+    this.putEnv();
+  }
+
+  putEnv() {
+    this.environmentsService.putSingle(this.env).subscribe(json => {
+      this.env = json;
+    });
   }
 
 }
