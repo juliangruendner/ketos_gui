@@ -5,7 +5,6 @@ import { Environment } from '../models/environment.model';
 import { Image } from '../models/image.model';
 import { ImagesService } from '../services/images.service';
 
-
 @Component({
   selector: 'app-environments',
   templateUrl: './environments.component.html',
@@ -15,7 +14,7 @@ export class EnvironmentsComponent implements OnInit {
 
   envs: Environment[] = [];
   envs_tmp: Environment[] = [];
-  env: Environment;
+  env: Environment = new Environment();
 
   images: Image[] = [];
 
@@ -31,10 +30,23 @@ export class EnvironmentsComponent implements OnInit {
     });
   }
 
-  getEnv(id: Number) {
-    this.environmentsService.getSingleById(id).subscribe(env => {
-      this.env = env;
-    });
+  getEnv(id: Number, name?: string) {
+    this.env = new Environment();
+    if(name) {
+      for(var i = 0; i < this.envs_tmp.length; i++) {
+        if(this.envs_tmp[i].name == name) {
+          this.env = this.envs_tmp[i];
+          return;
+        }
+      }
+    }
+
+    for(var i = 0; i < this.envs.length; i++) {
+      if(this.envs[i].id == id) {
+        this.env = this.envs[i];
+        return;
+      }
+    }
   }
 
   openJupyter() {
@@ -59,7 +71,9 @@ export class EnvironmentsComponent implements OnInit {
 
   putEnv(id: Number, env: any) {
     this.environmentsService.putSingle(id, env).subscribe(env => {
-      this.env = env;
+      if(env.id == this.env.id) {
+        this.env = env;
+      }
       this.addEnv(env);
     });
   }
@@ -94,10 +108,10 @@ export class EnvironmentsComponent implements OnInit {
     this.envs_tmp = tmp;
   }
 
-  removeFromEnvs(env: Environment) {
+  removeFromEnvs(id: Number) {
     var tmp : Environment[] = [];
     for(var i = 0; i < this.envs.length; i++) {
-      if(this.envs[i].id == env.id) {
+      if(this.envs[i].id == id) {
         continue;
       }
       tmp.push(this.envs[i]);
@@ -116,10 +130,10 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   delete() {
-    this.environmentsService.delete(this.env.id).subscribe(ret => {
-      this.removeFromEnvs(this.env);
-      this.env = null;
+    this.environmentsService.delete(this.env.id).subscribe(id => {
+      this.removeFromEnvs(id);
     });
+    this.env = new Environment();
   }
 
   getImages() {

@@ -11,6 +11,7 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { MenuComponent } from './menu/menu.component';
+import { UsernamePipe } from '../pipes/username.pipe';
 
 
 
@@ -25,12 +26,16 @@ import { MenuComponent } from './menu/menu.component';
   declarations: [
     HeaderComponent,
     ShellComponent,
-    MenuComponent
+    MenuComponent,
+    UsernamePipe
   ],
   providers: [
     AuthenticationService,
     AuthenticationGuard,
     I18nService,
+  ],
+  exports: [
+    UsernamePipe
   ]
 })
 export class CoreModule {

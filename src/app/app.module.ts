@@ -52,6 +52,7 @@ import { MomentModule } from 'angular2-moment';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule { }

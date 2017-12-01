@@ -33,8 +33,8 @@ export class EnvironmentsService {
     return this.httpClient.post<Environment>(routes.base, env);
   }
 
-  delete(id: Number): Observable<Object> {
-    return this.httpClient.delete(routes.singleById(id));
+  delete(id: Number): Observable<Number> {
+    return this.httpClient.delete<Number>(routes.singleById(id));
   }
 
 }

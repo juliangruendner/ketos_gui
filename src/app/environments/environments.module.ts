@@ -5,6 +5,7 @@ import { EnvironmentsRoutingModule } from './environments-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -13,10 +14,11 @@ import { MomentModule } from 'angular2-moment';
     TranslateModule,
     EnvironmentsRoutingModule,
     FormsModule,
-    MomentModule
+    MomentModule,
+    CoreModule
   ],
   declarations: [
-    EnvironmentsComponent,
+    EnvironmentsComponent
   ]
 })
 export class EnvironmentsModule { }

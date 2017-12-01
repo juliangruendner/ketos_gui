@@ -9,7 +9,7 @@
 <div class="env-wrapper">
     <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
         <div *ngFor="let e of getAllEnvs()">
-            <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card" uk-toggle="target: #env-detail" (click)="getEnv(e.id)">
+            <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card" uk-toggle="target: #env-detail" (click)="getEnv(e.id, e.name)">
                 <div class="uk-card-badge uk-label" [ngClass]="{'uk-label-success': e.status=='running' || e.status=='starting', 'uk-label-warning': e.status=='stopped' || e.status=='stopping'}">
                                 {{e.status}}<div *ngIf="e.status=='starting' || e.status=='stopping'" uk-spinner></div>
                 </div>
@@ -23,7 +23,7 @@
 </div>
 
 <div id="env-detail" uk-modal>
-    <div class="uk-modal-dialog" *ngIf="env">
+    <div class="uk-modal-dialog" *ngIf="env.name">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
             <h2 class="uk-modal-title">{{env.name}} </h2>
@@ -32,9 +32,9 @@
           <p>
             <b>Status</b><br><div class="uk-label" [ngClass]="{'uk-label-success': env.status=='running' || env.status=='starting', 'uk-label-warning': env.status=='stopped' || env.status=='stopping'}">{{env.status}}<div *ngIf="env.status=='starting' || env.status=='stopping'" uk-spinner></div></div><br><br>
             <b>Description</b><br>{{env.description}}<br><br>
-            <b>Created</b><br>{{env.created_at | date:'MMM d, y, H:mm:ss'}} by {{env.creator.first_name}} {{env.creator.last_name}}<br><br>
-            <b>Updated</b><br>{{env.updated_at | date:'MMM d, y, H:mm:ss'}} by {{env.creator.first_name}} {{env.creator.last_name}}<br><br>
-            <b>Environment API</b><br>Todo<br><br>
+            <b>Owner</b><br>{{env.creator | username}}<br><br>
+            <b>Created</b><br>{{env.created_at | date:'MMM d, y, H:mm:ss'}}<br><br>
+            <b>Updated</b><br>{{env.updated_at | date:'MMM d, y, H:mm:ss'}}<br><br>
           </p>
         </div>
         <div class="uk-modal-footer uk-text-right">
