@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { environment } from '../../environments/environment';
 import { Environment } from '../models/environment.model';
+import { ID } from '../models/id.model';
 
 const routes = {
   allByUser: (id : Number) => environment.serverUrl + `/users/${id}/environments`,
@@ -33,8 +34,8 @@ export class EnvironmentsService {
     return this.httpClient.post<Environment>(routes.base, env);
   }
 
-  delete(id: Number): Observable<Number> {
-    return this.httpClient.delete<Number>(routes.singleById(id));
+  delete(id: Number): Observable<ID> {
+    return this.httpClient.delete<ID>(routes.singleById(id));
   }
 
 }

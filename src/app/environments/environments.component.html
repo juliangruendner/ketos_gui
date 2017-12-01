@@ -11,7 +11,7 @@
         <div *ngFor="let e of getAllEnvs()">
             <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card" uk-toggle="target: #env-detail" (click)="getEnv(e.id, e.name)">
                 <div class="uk-card-badge uk-label" [ngClass]="{'uk-label-success': e.status=='running' || e.status=='starting', 'uk-label-warning': e.status=='stopped' || e.status=='stopping'}">
-                                {{e.status}}<div *ngIf="e.status=='starting' || e.status=='stopping'" uk-spinner></div>
+                                {{e.status}}&nbsp;<div *ngIf="e.status=='starting' || e.status=='stopping'" uk-spinner></div>
                 </div>
                 <h3 class="uk-card-title">{{e.name}}</h3>
                 <p>{{e.description}}</p>

@@ -86,6 +86,9 @@ export class EnvironmentsComponent implements OnInit {
     this.environmentsService.post(env).subscribe(env => {
       this.addEnv(env);
       this.removeFromEnvsTmp(env);
+      if(this.env.name == env.name) {
+        this.env = env;
+      }
     });
     env.status = 'starting';
     this.envs_tmp.push(env);
@@ -130,8 +133,9 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   delete() {
-    this.environmentsService.delete(this.env.id).subscribe(id => {
-      this.removeFromEnvs(id);
+    this.environmentsService.delete(this.env.id).subscribe(resp => {
+      console.log(resp.id)
+      this.removeFromEnvs(resp.id);
     });
     this.env = new Environment();
   }
