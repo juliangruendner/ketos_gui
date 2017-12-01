@@ -69,7 +69,7 @@ export class EnvironmentsComponent implements OnInit {
     this.addEnv(this.env);
   }
 
-  putEnv(id: Number, env: any) {
+  putEnv(id: Number, env: Environment) {
     this.environmentsService.putSingle(id, env).subscribe(env => {
       if(env.id == this.env.id) {
         this.env = env;

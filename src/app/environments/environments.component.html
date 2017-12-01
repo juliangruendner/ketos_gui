@@ -11,7 +11,7 @@
         <div *ngFor="let e of getAllEnvs()">
             <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card" uk-toggle="target: #env-detail" (click)="getEnv(e.id, e.name)">
                 <div class="uk-card-badge uk-label" [ngClass]="{'uk-label-success': e.status=='running' || e.status=='starting', 'uk-label-warning': e.status=='stopped' || e.status=='stopping'}">
-                                {{e.status}}&nbsp;<div *ngIf="e.status=='starting' || e.status=='stopping'" uk-spinner></div>
+                                {{e.status}}&nbsp;&nbsp;<div *ngIf="e.status=='starting' || e.status=='stopping'" uk-spinner></div>
                 </div>
                 <h3 class="uk-card-title">{{e.name}}</h3>
                 <p>{{e.description}}</p>
@@ -30,7 +30,7 @@
         </div>
         <div class="uk-modal-body">
           <p>
-            <b>Status</b><br><div class="uk-label" [ngClass]="{'uk-label-success': env.status=='running' || env.status=='starting', 'uk-label-warning': env.status=='stopped' || env.status=='stopping'}">{{env.status}}<div *ngIf="env.status=='starting' || env.status=='stopping'" uk-spinner></div></div><br><br>
+            <b>Status</b><br><div class="uk-label" [ngClass]="{'uk-label-success': env.status=='running' || env.status=='starting', 'uk-label-warning': env.status=='stopped' || env.status=='stopping'}">{{env.status}}&nbsp;&nbsp;<div *ngIf="env.status=='starting' || env.status=='stopping'" uk-spinner></div></div><br><br>
             <b>Description</b><br>{{env.description}}<br><br>
             <b>Owner</b><br>{{env.creator | username}}<br><br>
             <b>Created</b><br>{{env.created_at | date:'MMM d, y, H:mm:ss'}}<br><br>
