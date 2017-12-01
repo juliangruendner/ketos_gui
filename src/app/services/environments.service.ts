@@ -4,10 +4,12 @@ import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { environment } from '../../environments/environment';
+import { Environment } from '../models/environment.model';
 
 const routes = {
   allByUser: (id : Number) => environment.serverUrl + `/users/${id}/environments`,
-  singleById: (id : Number) => environment.serverUrl + `/environments/${id}`
+  singleById: (id : Number) => environment.serverUrl + `/environments/${id}`,
+  base: environment.serverUrl + '/environments'
 };
 
 @Injectable()
@@ -15,16 +17,24 @@ export class EnvironmentsService {
 
   constructor(private httpClient: HttpClient, private authService : AuthenticationService) { }
 
-  getAll(): Observable<Object> {
-    return this.httpClient.get(routes.allByUser(this.authService.getUser().id));
+  getAll(): Observable<Environment[]> {
+    return this.httpClient.get<Environment[]>(routes.allByUser(this.authService.getUser().id));
   }
 
-  getSingleById(id: Number): Observable<Object> {
-    return this.httpClient.get(routes.singleById(id));
+  getSingleById(id: Number): Observable<Environment> {
+    return this.httpClient.get<Environment>(routes.singleById(id));
   }
 
-  putSingle(id: Number, env: any): Observable<Object> {
-    return this.httpClient.put(routes.singleById(id), env);
+  putSingle(id: Number, env: Environment): Observable<Environment> {
+    return this.httpClient.put<Environment>(routes.singleById(id), env);
+  }
+
+  post(env: Environment): Observable<Environment> {
+    return this.httpClient.post<Environment>(routes.base, env);
+  }
+
+  delete(id: Number): Observable<Object> {
+    return this.httpClient.delete(routes.singleById(id));
   }
 
 }

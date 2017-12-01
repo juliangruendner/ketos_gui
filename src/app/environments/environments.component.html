@@ -1,21 +1,22 @@
 <div class="header-wrapper">
     <h1 class="uk-heading-divider">Environments</h1>
     <div class="header-btn">
-        <button class="uk-button uk-button-primary uk-button-small">Create new</button>
+        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #env-create" (click)="clearCreateInput();getImages()">Create new</button>
     </div>  
 </div>
 
 
 <div class="env-wrapper">
-
     <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
-        <div *ngFor="let e of envs">
-            <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                <div class="uk-card-badge uk-label" [ngClass]="{'uk-label-success': e.status=='running', 'uk-label-warning': e.status=='stopped'}">{{e.status}}</div>
+        <div *ngFor="let e of getAllEnvs()">
+            <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card" uk-toggle="target: #env-detail" (click)="getEnv(e.id)">
+                <div class="uk-card-badge uk-label" [ngClass]="{'uk-label-success': e.status=='running' || e.status=='starting', 'uk-label-warning': e.status=='stopped' || e.status=='stopping'}">
+                                {{e.status}}<div *ngIf="e.status=='starting' || e.status=='stopping'" uk-spinner></div>
+                </div>
                 <h3 class="uk-card-title">{{e.name}}</h3>
                 <p>{{e.description}}</p>
-                <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #env-detail" (click)="getEnv(e.id)">Details</button>
-                
+                <p>created: {{e.created_at | amTimeAgo:true}} ago</p>
+                <p>updated: {{e.updated_at | amTimeAgo:true}} ago</p>
             </div>
         </div>
     </div>
@@ -31,6 +32,7 @@
           <p>
             <b>Description</b><br>{{env.description}}<br><br>
             <b>Created</b><br>{{env.created_at | date:'MMM d, y, H:mm:ss'}} by {{env.creator.first_name}} {{env.creator.last_name}}<br><br>
+            <b>Updated</b><br>{{env.updated_at | date:'MMM d, y, H:mm:ss'}} by {{env.creator.first_name}} {{env.creator.last_name}}<br><br>
             <b>Environment API</b><br>Todo<br><br>
           </p>
         </div>
@@ -38,8 +40,45 @@
           <button class="uk-button uk-button-primary" type="button" (click)="openJupyter()" *ngIf="env.status=='running'">Open Jupyter</button>
           <button class="uk-button uk-button-primary" type="button" *ngIf="env.status=='stopped'" (click)="start()">Start</button>
           <button class="uk-button uk-button-secondary" type="button" *ngIf="env.status=='running'" (click)="stop()">Stop</button>
-          <button class="uk-button uk-button-danger" type="button" *ngIf="env.status=='stopped'">Delete</button>
-          <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+          <button class="uk-button uk-button-danger uk-modal-close" type="button" *ngIf="env.status=='stopped'"(click)="delete()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div id="env-create" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">New Environment</h2>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-horizontal uk-margin-large">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-horizontal-text">Name:</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-horizontal-text" type="text" required name="create_name" [(ngModel)]="create_name">
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+
+                    <label class="uk-form-label" for="form-horizontal-text">Description:</label>
+                    <div class="uk-form-controls">
+                        <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="create_description" [(ngModel)]="create_description"></textarea>
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+
+                    <label class="uk-form-label" for="image">Image:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="image" type="number" required name="create_image_id" [(ngModel)]="create_image_id" *ngFor="let i of images">
+                            <option value="{{i.id}}">{{i.description}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_name||!create_description||!create_image_id">Create</button>
         </div>
     </div>
 </div>

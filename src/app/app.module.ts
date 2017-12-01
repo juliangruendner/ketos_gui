@@ -18,6 +18,8 @@ import { CrawlersModule } from './crawlers/crawlers.module';
 import { EnvironmentsService } from './services/environments.service';
 import { AuthInterceptor } from './core/authentication/auth.interceptor';
 import { LoginService } from './services/login.service';
+import { ImagesService } from './services/images.service';
+import { MomentModule } from 'angular2-moment';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { LoginService } from './services/login.service';
     LoginModule,
     EnvironmentsModule,
     CrawlersModule,
+    MomentModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
@@ -42,6 +45,7 @@ import { LoginService } from './services/login.service';
   providers: [
     EnvironmentsService,
     LoginService,
+    ImagesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
