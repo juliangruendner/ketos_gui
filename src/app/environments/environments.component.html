@@ -26,10 +26,11 @@
     <div class="uk-modal-dialog" *ngIf="env">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
-            <h2 class="uk-modal-title">{{env.name}}</h2>
+            <h2 class="uk-modal-title">{{env.name}} </h2>
         </div>
         <div class="uk-modal-body">
           <p>
+            <b>Status</b><br><div class="uk-label" [ngClass]="{'uk-label-success': env.status=='running' || env.status=='starting', 'uk-label-warning': env.status=='stopped' || env.status=='stopping'}">{{env.status}}<div *ngIf="env.status=='starting' || env.status=='stopping'" uk-spinner></div></div><br><br>
             <b>Description</b><br>{{env.description}}<br><br>
             <b>Created</b><br>{{env.created_at | date:'MMM d, y, H:mm:ss'}} by {{env.creator.first_name}} {{env.creator.last_name}}<br><br>
             <b>Updated</b><br>{{env.updated_at | date:'MMM d, y, H:mm:ss'}} by {{env.creator.first_name}} {{env.creator.last_name}}<br><br>
