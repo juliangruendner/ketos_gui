@@ -40,7 +40,7 @@
         <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-primary" type="button" (click)="openJupyter()" *ngIf="env.status=='running'">Open Jupyter</button>
           <button class="uk-button uk-button-primary" type="button" *ngIf="env.status=='stopped'" (click)="start()">Start</button>
-          <button class="uk-button uk-button-secondary" type="button" *ngIf="env.status=='running'" (click)="stop()">Stop</button>
+          <button class="uk-button uk-button-danger" type="button" *ngIf="env.status=='running'" (click)="stop()">Stop</button>
           <button class="uk-button uk-button-danger uk-modal-close" type="button" *ngIf="env.status=='stopped'"(click)="delete()">Delete</button>
         </div>
     </div>
