@@ -31,7 +31,7 @@ export class EnvironmentsComponent implements OnInit {
     });
   }
 
-  getEnv(id: Number, name?: string) {
+  getEnv(id: number, name?: string) {
     this.env = new Environment();
     if(name) {
       for(var i = 0; i < this.envs_tmp.length; i++) {
@@ -72,7 +72,7 @@ export class EnvironmentsComponent implements OnInit {
     this.addEnv(this.env);
   }
 
-  putEnv(id: Number, env: Environment) {
+  putEnv(id: number, env: Environment) {
     this.environmentsService.putSingle(id, env).subscribe(env => {
       if(env.id == this.env.id) {
         this.env = env;
@@ -117,7 +117,7 @@ export class EnvironmentsComponent implements OnInit {
     this.envs_tmp = tmp;
   }
 
-  removeFromEnvs(id: Number) {
+  removeFromEnvs(id: number) {
     var tmp : Environment[] = [];
     for(var i = 0; i < this.envs.length; i++) {
       if(this.envs[i].id == id) {

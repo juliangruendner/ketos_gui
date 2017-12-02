@@ -1,7 +1,7 @@
 import { User } from "./user.model";
 
 export class Image {
-    id: Number;
+    id: number;
     name: string;
     title: string;
     description: string;

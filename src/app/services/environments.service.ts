@@ -8,8 +8,8 @@ import { Environment } from '../models/environment.model';
 import { ID } from '../models/id.model';
 
 const routes = {
-  allByUser: (id : Number) => environment.serverUrl + `/users/${id}/environments`,
-  singleById: (id : Number) => environment.serverUrl + `/environments/${id}`,
+  allByUser: (id : number) => environment.serverUrl + `/users/${id}/environments`,
+  singleById: (id : number) => environment.serverUrl + `/environments/${id}`,
   base: environment.serverUrl + '/environments'
 };
 
@@ -22,11 +22,11 @@ export class EnvironmentsService {
     return this.httpClient.get<Environment[]>(routes.allByUser(this.authService.getUser().id));
   }
 
-  getSingleById(id: Number): Observable<Environment> {
+  getSingleById(id: number): Observable<Environment> {
     return this.httpClient.get<Environment>(routes.singleById(id));
   }
 
-  putSingle(id: Number, env: Environment): Observable<Environment> {
+  putSingle(id: number, env: Environment): Observable<Environment> {
     return this.httpClient.put<Environment>(routes.singleById(id), env);
   }
 
@@ -34,7 +34,7 @@ export class EnvironmentsService {
     return this.httpClient.post<Environment>(routes.base, env);
   }
 
-  delete(id: Number): Observable<ID> {
+  delete(id: number): Observable<ID> {
     return this.httpClient.delete<ID>(routes.singleById(id));
   }
 
