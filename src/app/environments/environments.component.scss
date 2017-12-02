@@ -1,7 +1,14 @@
 .env-card {
-    background-color: #F1F1F1;
+    
 }
 
-.env-card:hover {
-    background-color: #488aff;
+h3{
+    margin-top:0;
+}
+
+.env-card progress {
+    position: absolute;
+    width: 94%;
+    left: 9px;
+    bottom: -10px;
 }

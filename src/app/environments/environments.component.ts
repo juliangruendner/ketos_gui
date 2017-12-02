@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { EnvironmentsService } from '../services/environments.service';
 import { finalize } from 'rxjs/operators';
 import { Environment } from '../models/environment.model';
 import { Image } from '../models/image.model';
 import { ImagesService } from '../services/images.service';
+import {Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'app-environments',
@@ -20,7 +21,7 @@ export class EnvironmentsComponent implements OnInit {
 
   create_name: string;
   create_description: string;
-  create_image_id: Number;
+  create_image_id: number;
 
   constructor(private environmentsService: EnvironmentsService, private imagesService: ImagesService) { }
 
@@ -49,11 +50,12 @@ export class EnvironmentsComponent implements OnInit {
     }
   }
 
-  openJupyter() {
-    window.open('http://' + this.env.jupyter_url, "_blank");
+  openJupyter(env : Environment) {
+    window.open('http://' + env.jupyter_url, "_blank");
   }
 
   start() {
+    this.startProgress(this.env, 10);
     var e = Object.assign({}, this.env);
     e.status = 'running';
     this.putEnv(this.env.id, e);
@@ -62,6 +64,7 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   stop() {
+    this.startProgress(this.env, 10);
     var e = Object.assign({}, this.env);
     e.status = 'stopped';
     this.putEnv(this.env.id, e);
@@ -75,6 +78,7 @@ export class EnvironmentsComponent implements OnInit {
         this.env = env;
       }
       this.addEnv(env);
+      this.finishProgress(env);
     });
   }
 
@@ -83,7 +87,9 @@ export class EnvironmentsComponent implements OnInit {
     env.name = this.create_name;
     env.description = this.create_description;
     env.image_id = this.create_image_id;
-    this.environmentsService.post(env).subscribe(env => {
+    this.startProgress(this.env, 30);
+    this.environmentsService.post(env).subscribe(env => { 
+      this.finishProgress(this.env);
       this.addEnv(env);
       this.removeFromEnvsTmp(env);
       if(this.env.name == env.name) {
@@ -148,6 +154,17 @@ export class EnvironmentsComponent implements OnInit {
 
   clearCreateInput() {
     this.create_name = this.create_description = this.create_image_id = null;
+  }
+
+  startProgress(env: Environment, maxTime: number){
+    let timer = Observable.timer(0,1000).timeInterval().take(maxTime);
+    env.progress=0;
+    let interval = 90 / maxTime;
+    timer.subscribe(t=> env.progress += interval);
+  }
+
+  finishProgress(env: Environment){
+    env.progress = 100;
   }
 
 }

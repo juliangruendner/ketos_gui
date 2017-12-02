@@ -1,7 +1,7 @@
 import { User } from "./user.model";
 
 export class Environment {
-    id: Number;
+    id: number;
     name: string;
     status: string;
     jupyter_port: string;
@@ -9,7 +9,8 @@ export class Environment {
     jupyter_url: string;
     description: string;
     creator: User;
-    image_id: Number;
+    image_id: number;
     created_at: Date;
     updated_at: Date;
+    progress: number;
 }
