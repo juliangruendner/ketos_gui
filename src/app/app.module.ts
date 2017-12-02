@@ -20,6 +20,7 @@ import { AuthInterceptor } from './core/authentication/auth.interceptor';
 import { LoginService } from './services/login.service';
 import { ImagesService } from './services/images.service';
 import { MomentModule } from 'angular2-moment';
+import { CrawlersService } from './services/crawlers.service';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { MomentModule } from 'angular2-moment';
   declarations: [AppComponent],
   providers: [
     EnvironmentsService,
+    CrawlersService,
     LoginService,
     ImagesService,
     {

@@ -1,43 +1,53 @@
 <div class="header-wrapper">
-  <h1 class="uk-heading-divider">Crawlers</h1>
+  <h1 class="uk-heading-divider">Crawler Jobs</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small">New Crawler Job</button>
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #crawler-create">New Crawler Job</button>
   </div>  
 </div>
 
 
-<div class="env-wrapper">
-  <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
-      <li *ngFor="let crawler of crawlers">
-          <div>
-              <div class="uk-card uk-card-default uk-card-body uk-card-hover">
-                  <div class="uk-card-badge uk-label uk-label-warning">stopped</div>
-                  <h3 class="uk-card-title">BA: R-Env</h3>
-                  <p>{{crawler.id}}</p>
-                  <button class="uk-button uk-button-primary uk-button-small">Start</button>
-              </div>
-          </div>
-      </li>
-  </div>
+
+<div class="">
+    <table class="uk-table uk-table-striped">
+        <thead>
+            <tr>
+                <th>Job Id</th>
+                <th>Resource</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Finished</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let crawler of crawlers | orderBy : 'queued_time' : true">
+                <td>{{crawler._id}}</td>
+                <td>{{crawler.resource}}</td>
+                <td>
+                    <div class="uk-label" [ngClass]="{'uk-label-success': crawler.status=='finished', 'uk-label-warning': crawler.status=='running'}">
+                        {{crawler.status}}
+                    </div>
+                </td>
+                <td>{{crawler.queued_time | date:'MMM d, y, H:mm:ss'}} </td>
+                <td>{{crawler.end_time | date:'MMM d, y, H:mm:ss'}} </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<div id="modal-example" uk-modal>
-  <div class="uk-modal-dialog">
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <div class="uk-modal-header">
-          <h2 class="uk-modal-title">Test-Env1</h2>
-      </div>
-      <div class="uk-modal-body">
-        <p>
-          <b>Description</b><br> Python 3.6, Tensorflow and Keras <br><br>
-          <b>Created</b><br>24 days ago by Max Muster<br><br>
-          <b>Environment API</b><br>http://10.132.84.13/4e4ad79<br><br>
-        </p>
-      </div>
-      <div class="uk-modal-footer uk-text-right">
-        <button class="uk-button uk-button-primary" type="button">open jupyter</button>
-        <button class="uk-button uk-button-danger" type="button">Shutdown</button>
-        <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
-      </div>
-  </div>
+<div id="crawler-create" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h1 class="uk-modal-title">Create Crawler Job</h1>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-horizontal uk-margin-large">
+                
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_name||!create_description||!create_image_id">Create</button>
+        </div>
+    </div>
 </div>
+

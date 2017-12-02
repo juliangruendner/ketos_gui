@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Crawler } from './crawlers';
 
 import { CrawlersService } from '../services/crawlers.service';
+import { Crawler } from '../models/crawlers';
 
 
 @Component({
@@ -13,15 +13,13 @@ export class CrawlersComponent implements OnInit {
 
   crawlers: Crawler[] = [];
 
-  constructor() { }
+  constructor(private crawlersService : CrawlersService) { }
 
   ngOnInit() {
-    this.getCrawlers();
+    this.crawlersService.getAll().subscribe(crawlers => { 
+      this.crawlers = crawlers;
+    });
   }
 
-  getCrawlers() {
-    this.crawlers.push(new Crawler('abbbb'));
-    console.log('AAAAAAA');
-  }
 
 }
