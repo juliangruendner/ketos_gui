@@ -87,7 +87,7 @@ export class EnvironmentsComponent implements OnInit {
     env.name = this.create_name;
     env.description = this.create_description;
     env.image_id = this.create_image_id;
-    this.startProgress(this.env, 30);
+    this.startProgress(env, 30);
     this.environmentsService.post(env).subscribe(env => { 
       this.finishProgress(this.env);
       this.addEnv(env);
