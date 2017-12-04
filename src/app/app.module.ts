@@ -21,6 +21,7 @@ import { LoginService } from './services/login.service';
 import { ImagesService } from './services/images.service';
 import { MomentModule } from 'angular2-moment';
 import { CrawlersService } from './services/crawlers.service';
+import { MLModelsService } from './services/mlmodel.service';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { CrawlersService } from './services/crawlers.service';
     CrawlersService,
     LoginService,
     ImagesService,
+    MLModelsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
