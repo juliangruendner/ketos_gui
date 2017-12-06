@@ -6,11 +6,14 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 import { environment } from '../../environments/environment';
 import { ID } from '../models/id.model';
 import { FeatureSet } from '../models/featureSets.model';
+import { FeatureIDs } from '../models/featureIds.model';
+import { HttpHeaders } from '@angular/common/http/src/headers';
 
 const routes = {
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/featuresets`,
   singleById: (id : number) => environment.serverUrl + `/featuresets/${id}`,
-  base: environment.serverUrl + '/featuresets'
+  base: environment.serverUrl + '/featuresets',
+  featuresForFeatureSet: (id : number) => environment.serverUrl + `/featuresets/${id}/features`
 };
 
 @Injectable()
@@ -36,6 +39,18 @@ export class FeatureSetsService {
 
   delete(id: number): Observable<ID> {
     return this.httpClient.delete<ID>(routes.singleById(id));
+  }
+
+  getFeaturesForFeatureSet(id: number): Observable<FeatureSet> {
+    return this.httpClient.get<FeatureSet>(routes.featuresForFeatureSet(id));
+  }
+
+  postFeatures(id: number, featureIds: FeatureIDs): Observable<FeatureSet> {
+    return this.httpClient.post<FeatureSet>(routes.featuresForFeatureSet(id), featureIds);
+  }
+
+  deleteFeatures(id: number, featureIds: FeatureIDs): Observable<FeatureSet> {
+    return this.httpClient.request<FeatureSet>("delete", routes.featuresForFeatureSet(id), {body: featureIds});
   }
 
 }

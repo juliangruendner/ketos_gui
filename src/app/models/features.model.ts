@@ -10,4 +10,5 @@ export class Feature {
     creator: User;
     created_at: Date;
     updated_at: Date;
+    checked: boolean;
 }
