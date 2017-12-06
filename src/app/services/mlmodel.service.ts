@@ -5,14 +5,24 @@ import { MLModel } from "../models/mlmodel.model";
 import { environment } from '../../environments/environment';
 
 const routes = {
-    base: environment.serverUrl + '/models'
+  allByUser: (id : number) => environment.serverUrl + `/users/${id}/models`,
+  singleById: (id : number) => environment.serverUrl + `/models/${id}`,
+  base: environment.serverUrl + '/models'
 };
 
 export class MLModelsService {
 
-    constructor(private httpClient: HttpClient, private authService : AuthenticationService) { }
+  constructor(private httpClient: HttpClient, private authService : AuthenticationService) { }
     
+  getAll(): Observable<MLModel[]> {
+    return this.httpClient.get<MLModel[]>(routes.allByUser(this.authService.getUser().id));
+  }
+
   post(mlModel: MLModel): Observable<MLModel> {
     return this.httpClient.post<MLModel>(routes.base, mlModel);
+  }
+
+  put(id: number, mlModel: MLModel): Observable<MLModel> {
+    return this.httpClient.put<MLModel>(routes.singleById(id), mlModel);
   }
 }

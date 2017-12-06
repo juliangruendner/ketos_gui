@@ -26,6 +26,7 @@ import { FeaturesModule } from './features/features.module';
 import { FeaturesService } from './services/features.service';
 import { FeatureSetsModule } from './feature-sets/feature-sets.module';
 import { FeatureSetsService } from './services/featuresets.service';
+import { MlmodelsModule } from './mlmodels/mlmodels.module';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { FeatureSetsService } from './services/featuresets.service';
     MomentModule,
     FeaturesModule,
     FeatureSetsModule,
+    MlmodelsModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,

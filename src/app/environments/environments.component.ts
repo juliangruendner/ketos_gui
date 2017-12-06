@@ -5,7 +5,6 @@ import { Environment } from '../models/environment.model';
 import { Image } from '../models/image.model';
 import { ImagesService } from '../services/images.service';
 import {Observable} from 'rxjs/Rx';
-import { MLModelsService } from '../services/mlmodel.service';
 import { MLModel } from '../models/mlmodel.model';
 
 @Component({
@@ -25,7 +24,7 @@ export class EnvironmentsComponent implements OnInit {
   create_description: string;
   create_image_id: number;
 
-  constructor(private environmentsService: EnvironmentsService, private imagesService: ImagesService, private modelsService: MLModelsService) { }
+  constructor(private environmentsService: EnvironmentsService, private imagesService: ImagesService) { }
 
   ngOnInit() {
     this.environmentsService.getAll().subscribe(envs => { 
@@ -167,14 +166,6 @@ export class EnvironmentsComponent implements OnInit {
 
   finishProgress(env: Environment){
     env.progress = 100;
-  }
-
-  createNewMLModel(env: Environment) {
-    var model = new MLModel();
-    model.environment_id = env.id;
-    model.name = " ";
-    model.description = " ";
-    this.modelsService.post(model).subscribe();
   }
 
 }

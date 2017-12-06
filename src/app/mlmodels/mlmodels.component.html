@@ -1,0 +1,83 @@
+<div class="header-wrapper">
+  <h1 class="uk-heading-divider">ML Models</h1>
+  <div class="header-btn">
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #model-create" (click)="clearCreateInput();getEnvs()">Create new</button>
+  </div>  
+</div>
+
+<table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Environment Name</th>
+          <th>Feature Set Name</th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let m of mlmodels">
+          <td>{{m.ml_model_name}}</td>
+          <td>{{m.description}}</td>
+          <td>{{m.environment.name}}</td>
+          <td>{{m.feature_set.name}}</td>
+          <div *ngIf="1 > m.feature_set.id"><td><button class="uk-button uk-button-default" uk-toggle="target: #feature-set-assign" (click)="clearAssignData();getFeatureSets();setMlModel(m)">Bind Feature Set</button></td></div>
+          <div *ngIf="m.feature_set.id > 0"><td><button class="uk-button uk-button-default" uk-toggle="target: #feature-set-assign" (click)="clearAssignData();getFeatureSets();setMlModel(m)">Change Feature Set</button></td></div>
+      </tr>
+  </tbody>
+</table>
+
+<div id="model-create" uk-modal>
+  <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header">
+          <h1 class="uk-modal-title">Create ML Model</h1>
+      </div>
+      <div class="uk-modal-body">
+          <form class="uk-form-horizontal uk-margin-large">
+              <div class="uk-margin">
+                  <label class="uk-form-label" for="form-horizontal-text">Description:</label>
+                  <div class="uk-form-controls">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="create_description" [(ngModel)]="create_description">
+                  </div>
+
+                  <div><p>&nbsp;</p></div>
+
+                  <label class="uk-form-label" for="env">Environment:</label>
+                  <div class="uk-form-controls">
+                      <select class="uk-select" id="env" type="number" required name="create_image_id" [(ngModel)]="create_env_id">
+                          <option *ngFor="let e of envs" value="{{e.id}}">{{e.name}}</option>
+                      </select>
+                  </div>
+              </div>
+          </form>
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_env_id">Create</button>
+      </div>
+  </div>
+</div>
+
+<div id="feature-set-assign" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h1 class="uk-modal-title">Assign Feature Set</h1>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-horizontal uk-margin-large">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="env">Feature Set:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="env" type="number" required name="create_image_id" [(ngModel)]="assign_feature_set">
+                            <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="assignFeatureSet()" [disabled]="!assign_feature_set">Assign</button>
+        </div>
+    </div>
+  </div>
