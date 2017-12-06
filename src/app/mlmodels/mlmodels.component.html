@@ -21,8 +21,8 @@
           <td>{{m.description}}</td>
           <td>{{m.environment.name}}</td>
           <td>{{m.feature_set.name}}</td>
-          <div *ngIf="1 > m.feature_set.id"><td><button class="uk-button uk-button-default" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></td></div>
-          <div *ngIf="m.feature_set.id > 0"><td><button class="uk-button uk-button-default" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></td></div>
+          <div *ngIf="1 > m.feature_set.id"><td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></td></div>
+          <div *ngIf="m.feature_set.id > 0"><td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></td></div>
       </tr>
   </tbody>
 </table>

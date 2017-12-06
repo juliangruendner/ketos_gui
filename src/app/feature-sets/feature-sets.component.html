@@ -10,12 +10,14 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let fs of featureSets" uk-toggle="target: #feature-set-assign" (click)="getFeatures(fs)">
+        <tr *ngFor="let fs of featureSets">
             <td>{{fs.name}}</td>
             <td>{{fs.description}}</td>
+            <td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="getFeatures(fs)">Assign Features</button></td>
         </tr>
     </tbody>
   </table>
