@@ -72,6 +72,7 @@ export class MlmodelsComponent implements OnInit {
       for(var i = 0; i < this.mlmodels.length; i++) {
         if(resp.id == this.mlmodels[i].id) {
           this.mlmodels[i] = resp;
+          this.mlmodel = null;
           break;
         }
       }
