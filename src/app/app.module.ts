@@ -22,6 +22,8 @@ import { ImagesService } from './services/images.service';
 import { MomentModule } from 'angular2-moment';
 import { CrawlersService } from './services/crawlers.service';
 import { MLModelsService } from './services/mlmodel.service';
+import { FeaturesModule } from './features/features.module';
+import { FeaturesService } from './services/features.service';
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { MLModelsService } from './services/mlmodel.service';
     EnvironmentsModule,
     CrawlersModule,
     MomentModule,
+    FeaturesModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
@@ -50,6 +53,7 @@ import { MLModelsService } from './services/mlmodel.service';
     LoginService,
     ImagesService,
     MLModelsService,
+    FeaturesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
