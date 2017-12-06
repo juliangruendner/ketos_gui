@@ -1,0 +1,50 @@
+<div class="header-wrapper">
+    <h1 class="uk-heading-divider">Feature Sets</h1>
+    <div class="header-btn">
+        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-create" (click)="clearCreateInput()">Create new</button>
+    </div>  
+  </div>
+  
+  <table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let fs of featureSets">
+            <td>{{fs.name}}</td>
+            <td>{{fs.description}}</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <div id="feature-set-create" uk-modal>
+      <div class="uk-modal-dialog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <div class="uk-modal-header">
+              <h1 class="uk-modal-title">Create Feature Set</h1>
+          </div>
+          <div class="uk-modal-body">
+              <form class="uk-form-horizontal uk-margin-large">
+                  <div class="uk-margin">
+                      <label class="uk-form-label" for="form-horizontal-text">Name:</label>
+                      <div class="uk-form-controls">
+                          <input class="uk-input" id="form-horizontal-text" type="text" required name="create_name" [(ngModel)]="create_name">
+                      </div>
+    
+                      <div><p>&nbsp;</p></div>
+    
+                      <label class="uk-form-label" for="form-horizontal-text">Description:</label>
+                      <div class="uk-form-controls">
+                          <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="create_description" [(ngModel)]="create_description"></textarea>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="uk-modal-footer uk-text-right">
+              <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_name">Create</button>
+          </div>
+      </div>
+    </div>
