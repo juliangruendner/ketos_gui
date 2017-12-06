@@ -79,4 +79,15 @@ export class MlmodelsComponent implements OnInit {
     });
   }
 
+  initCreate() {
+    this.clearCreateInput();
+    this.getEnvs();
+  }
+
+  initAssign(mlmodel: MLModel) {
+    this.clearAssignData();
+    this.getFeatureSets();
+    this.setMlModel(mlmodel);
+  }
+
 }

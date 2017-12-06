@@ -168,4 +168,9 @@ export class EnvironmentsComponent implements OnInit {
     env.progress = 100;
   }
 
+  initCreate() {
+    this.clearCreateInput();
+    this.getImages();
+  }
+
 }
