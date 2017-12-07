@@ -5,6 +5,7 @@ import { EnvironmentsService } from '../services/environments.service';
 import { Environment } from '../models/environment.model';
 import { FeatureSetsService } from '../services/featuresets.service';
 import { FeatureSet } from '../models/featureSets.model';
+import { PatientIDs } from '../models/patientIds.model';
 
 @Component({
   selector: 'app-mlmodels',
@@ -22,6 +23,10 @@ export class MlmodelsComponent implements OnInit {
   create_description: string;
 
   assign_feature_set: number;
+
+  patient_ids: string;
+
+  testStr: any;
 
   constructor(private mlModelsService: MLModelsService, private environmentsService: EnvironmentsService, private featureSetsService: FeatureSetsService) { }
 
@@ -87,6 +92,25 @@ export class MlmodelsComponent implements OnInit {
   initAssign(mlmodel: MLModel) {
     this.clearAssignData();
     this.getFeatureSets();
+    this.setMlModel(mlmodel);
+  }
+
+  test() {
+    var patientIds: PatientIDs = new PatientIDs();
+    let stringArray = this.patient_ids.split(',');
+    for(var i = 0; i < stringArray.length; i++) {
+      patientIds.patient_ids.push(parseInt(stringArray[i]));
+    }
+
+    this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
+      this.testStr = resp;
+    }, err => {
+      this.testStr = 'server error'
+    });
+  }
+
+  initTest(mlmodel: MLModel) {
+    this.patient_ids = this.testStr = null;
     this.setMlModel(mlmodel);
   }
 

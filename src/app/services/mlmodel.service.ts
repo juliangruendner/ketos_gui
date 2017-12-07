@@ -3,10 +3,12 @@ import { AuthenticationService } from "../core/authentication/authentication.ser
 import { Observable } from "rxjs/Observable";
 import { MLModel } from "../models/mlmodel.model";
 import { environment } from '../../environments/environment';
+import { PatientIDs } from '../models/patientIds.model';
 
 const routes = {
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/models`,
   singleById: (id : number) => environment.serverUrl + `/models/${id}`,
+  prediction: (id : number) => environment.serverUrl + `/models/${id}/prediction`,
   base: environment.serverUrl + '/models'
 };
 
@@ -24,5 +26,9 @@ export class MLModelsService {
 
   put(id: number, mlModel: MLModel): Observable<MLModel> {
     return this.httpClient.put<MLModel>(routes.singleById(id), mlModel);
+  }
+
+  predict(id: number, patientIds: PatientIDs): Observable<any> {
+    return this.httpClient.post(routes.prediction(id), patientIds);
   }
 }

@@ -21,8 +21,11 @@
           <td>{{m.description}}</td>
           <td>{{m.environment.name}}</td>
           <td>{{m.feature_set.name}}</td>
-          <div *ngIf="1 > m.feature_set.id"><td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></td></div>
-          <div *ngIf="m.feature_set.id > 0"><td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></td></div>
+          <td>
+            <div *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
+            <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
+            <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small" uk-toggle="target: #test" (click)="initTest(m)">Test</button></div>
+          </td>
       </tr>
   </tbody>
 </table>
@@ -81,3 +84,26 @@
         </div>
     </div>
   </div>
+
+  <div id="test" uk-modal>
+      <div class="uk-modal-dialog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <div class="uk-modal-header">
+              <h1 class="uk-modal-title">Test Model</h1>
+          </div>
+          <div class="uk-modal-body">
+              <form class="uk-form-horizontal uk-margin-large">
+                  <label class="uk-form-label" for="form-horizontal-text">Patient IDs:</label>
+                  <div class="uk-form-controls">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="patient_ids" [(ngModel)]="patient_ids">
+                  </div>
+              </form>
+              <div>
+                  <textarea class="uk-textarea" rows="15" placeholder="Textarea">{{testStr}}</textarea>
+              </div>
+          </div>
+          <div class="uk-modal-footer uk-text-right">
+              <button class="uk-button uk-button-primary" type="submit" (click)="test()" [disabled]="!patient_ids">Test</button>
+          </div>
+      </div>
+    </div>
