@@ -103,7 +103,8 @@ export class MlmodelsComponent implements OnInit {
     }
 
     this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
-      this.testStr = resp;
+      console.log(resp)
+      this.testStr = resp.prediction[0].prediction;
     }, err => {
       this.testStr = 'server error'
     });

@@ -24,7 +24,7 @@
           <td>
             <div *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
             <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
-            <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small" uk-toggle="target: #test" (click)="initTest(m)">Test</button></div>
+            <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small ketos-predict-button" uk-toggle="target: #test" (click)="initTest(m)">Predict</button></div>
           </td>
       </tr>
   </tbody>
@@ -99,11 +99,12 @@
                   </div>
               </form>
               <div>
-                  <textarea class="uk-textarea" rows="15" placeholder="Textarea">{{testStr}}</textarea>
+                  <label>Prediction result:</label>
+                  {{testStr}}
               </div>
           </div>
           <div class="uk-modal-footer uk-text-right">
-              <button class="uk-button uk-button-primary" type="submit" (click)="test()" [disabled]="!patient_ids">Test</button>
+              <button class="uk-button uk-button-primary" type="submit" (click)="test()" [disabled]="!patient_ids">get prediction</button>
           </div>
       </div>
     </div>
