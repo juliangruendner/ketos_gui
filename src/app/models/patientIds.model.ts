@@ -1,3 +1,3 @@
 export class PatientIDs {
-    patient_ids: number[] = [];
+    patient_ids: number;
 }

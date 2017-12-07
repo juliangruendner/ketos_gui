@@ -98,11 +98,13 @@ export class MlmodelsComponent implements OnInit {
   test() {
     var patientIds: PatientIDs = new PatientIDs();
     let stringArray = this.patient_ids.split(',');
-    for(var i = 0; i < stringArray.length; i++) {
-      patientIds.patient_ids.push(parseInt(stringArray[i]));
-    }
+    patientIds.patient_ids = parseInt(stringArray[0]);
+    //for(var i = 0; i < stringArray.length; i++) {
+      //patientIds.patient_ids.push(parseInt(stringArray[i]));
+    //} 
 
     this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
+      console.log(resp)
       this.testStr = resp;
     }, err => {
       this.testStr = 'server error'
