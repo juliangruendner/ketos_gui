@@ -1,5 +1,5 @@
 <div class="header-wrapper">
-  <h1 class="uk-heading-divider">Crawler Jobs</h1>
+  <h1 class="uk-heading-divider">Data Requests</h1>
   <div class="header-btn">
       <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #crawler-create">New Crawler Job</button>
   </div>  
@@ -12,16 +12,15 @@
         <thead>
             <tr>
                 <th>Job Id</th>
-                <th>Resource</th>
                 <th>Status</th>
                 <th>Created</th>
                 <th>Finished</th>
+                <th>Data Url</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let crawler of crawlers | orderBy : 'queued_time' : true">
                 <td>{{crawler._id}}</td>
-                <td>{{crawler.resource}}</td>
                 <td>
                     <div class="uk-label" [ngClass]="{'uk-label-success': crawler.status=='finished', 'uk-label-warning': crawler.status=='running'}">
                         {{crawler.status}}
@@ -29,6 +28,7 @@
                 </td>
                 <td>{{crawler.queued_time | date:'MMM d, y, H:mm:ss'}} </td>
                 <td>{{crawler.end_time | date:'MMM d, y, H:mm:ss'}} </td>
+                <td>{{crawler.url}}</td>
             </tr>
         </tbody>
     </table>
