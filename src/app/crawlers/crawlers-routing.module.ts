@@ -6,7 +6,7 @@ import { extract } from '../core/i18n.service';
 import { CrawlersComponent } from './crawlers.component';
 
 const routes: Routes = Route.withShell([
-  { path: 'crawlers', component: CrawlersComponent, data: { title: extract('Crawlers') } }
+  { path: 'data', component: CrawlersComponent, data: { title: extract('Data Requests') } }
 ]);
 
 @NgModule({

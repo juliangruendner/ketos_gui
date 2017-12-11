@@ -9,9 +9,9 @@ import { DataRequest } from '../models/dataRequest';
 
 
 const routes = {
-  all: 'http://localhost:5002/crawler/jobs',
-  //create: 'http://localhost:5002/crawler/jobs'
   create: environment.serverUrl + `/data`,
+  all: environment.serverUrl + `/data`,
+  singleById: (id : string) => environment.serverUrl + `/data/${id}`,
 };
 
 
@@ -24,7 +24,11 @@ export class CrawlersService {
     return this.httpClient.get<Crawler[]>(routes.all);
   } 
 
+  getOne(id: string): Observable<Crawler> {
+    return this.httpClient.get<Crawler>(routes.singleById(id));
+  } 
   create(features_set_id: number, dataRequest: DataRequest): Observable<any> {
     return this.httpClient.post(routes.create, dataRequest);
   }
+  
 }
