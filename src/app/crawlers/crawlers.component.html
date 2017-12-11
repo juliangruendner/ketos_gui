@@ -1,11 +1,9 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">Data Requests</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #crawler-create">New Crawler Job</button>
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #crawler-create" (click)="initCreate()">New Data Request</button>
   </div>  
 </div>
-
-
 
 <div class="">
     <table class="uk-table uk-table-striped">
@@ -32,4 +30,32 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+<div id="crawler-create" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h1 class="uk-modal-title">Create ML Model</h1>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-horizontal uk-margin-large">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-horizontal-text">featureset id:</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-horizontal-text" type="number" required name="create_featureset_id" [(ngModel)]="create_featureset_id">
+                    </div>
+  
+                    <div><p>&nbsp;</p></div>
+                    <label class="uk-form-label" for="form-horizontal-text">patient id(s):</label>
+                    <div class="uk-form-controls">
+                        <textarea class="uk-textarea" rows="10" placeholder="input comma separated patient ids here" name="create_patient_ids" [(ngModel)]="create_patient_ids"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_featureset_id">Create</button>
+        </div>
+    </div>
 </div>
