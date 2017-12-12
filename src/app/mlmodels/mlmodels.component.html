@@ -100,7 +100,18 @@
               </form>
               <div>
                   <label>Prediction result:</label>
-                  {{testStr}}
+                  <div *ngIf="show_spinner">
+                        <label>We are currently getting your prediction...</label>
+                        <div uk-spinner ></div>
+                  </div>
+                  
+                  <div class="ketos-prediction-result">
+                        <ul class="uk-list uk-list-divider">
+                            <li>
+                                <span>{{testStr}}</span></li>
+                        </ul>
+                        
+                  </div>
               </div>
           </div>
           <div class="uk-modal-footer uk-text-right">

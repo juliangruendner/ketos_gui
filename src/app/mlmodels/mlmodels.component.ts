@@ -7,6 +7,7 @@ import { FeatureSetsService } from '../services/featuresets.service';
 import { FeatureSet } from '../models/featureSets.model';
 import { PatientIDs } from '../models/patientIds.model';
 
+
 @Component({
   selector: 'app-mlmodels',
   templateUrl: './mlmodels.component.html',
@@ -27,6 +28,7 @@ export class MlmodelsComponent implements OnInit {
   patient_ids: string;
 
   testStr: any;
+  show_spinner: boolean;
 
   constructor(private mlModelsService: MLModelsService, private environmentsService: EnvironmentsService, private featureSetsService: FeatureSetsService) { }
 
@@ -34,6 +36,7 @@ export class MlmodelsComponent implements OnInit {
     this.mlModelsService.getAll().subscribe(resp => {
       this.mlmodels = resp;
     });
+    this.show_spinner = false;
   }
 
   clearCreateInput() {
@@ -96,6 +99,7 @@ export class MlmodelsComponent implements OnInit {
   }
 
   test() {
+    this.show_spinner = true
     var patientIds: PatientIDs = new PatientIDs();
     let stringArray = this.patient_ids.split(',');
     patientIds.patient_ids = parseInt(stringArray[0]);
@@ -105,10 +109,12 @@ export class MlmodelsComponent implements OnInit {
 
     this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
       console.log(resp)
+      this.show_spinner = false
       this.testStr = resp.prediction[0].prediction;
 
     }, err => {
-      this.testStr = 'server error'
+      this.show_spinner = false
+      this.testStr = 'we are sorry, but it seems that the ml-model does not like you!'
     });
   }
 
