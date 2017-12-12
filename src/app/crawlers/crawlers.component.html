@@ -36,14 +36,16 @@
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
-            <h1 class="uk-modal-title">Create ML Model</h1>
+            <h1 class="uk-modal-title">Create Data Request</h1>
         </div>
         <div class="uk-modal-body">
             <form class="uk-form-horizontal uk-margin-large">
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-horizontal-text">featureset id:</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="form-horizontal-text" type="number" required name="create_featureset_id" [(ngModel)]="create_featureset_id">
+                        <select class="uk-select" id="env" type="number" required name="create_image_id" [(ngModel)]="assign_feature_set">
+                            <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
+                        </select>
                     </div>
   
                     <div><p>&nbsp;</p></div>
@@ -55,7 +57,7 @@
             </form>
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_featureset_id">Create</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!assign_feature_set">Create</button>
         </div>
     </div>
 </div>

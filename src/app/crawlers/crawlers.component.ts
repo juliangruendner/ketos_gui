@@ -4,6 +4,8 @@ import { CrawlersService } from '../services/crawlers.service';
 import { Crawler } from '../models/crawlers';
 import { PatientIDs } from '../models/patientIds.model';
 import { DataRequest } from '../models/dataRequest';
+import { FeatureSet } from '../models/featureSets.model';
+import { FeatureSetsService } from '../services/featuresets.service';
 
 @Component({
   selector: 'app-crawlers',
@@ -17,7 +19,10 @@ export class CrawlersComponent implements OnInit {
   create_patient_ids: string  = "test";
   create_featureset_id: number;
 
-  constructor(private crawlersService : CrawlersService) { }
+  assign_feature_set: number;
+  featureSets: FeatureSet[] = []
+
+  constructor(private crawlersService : CrawlersService, private featureSetsService: FeatureSetsService) { }
 
   ngOnInit() {
     this.updateCrawlers()
@@ -36,10 +41,12 @@ export class CrawlersComponent implements OnInit {
   initCreate() {
     this.clearCreateInput();
     this.updateCrawlers();
+    this.clearAssignData();
+    this.getFeatureSets();
   }
 
   create() {
-    var feature_set_id = this.create_featureset_id
+    var feature_set_id = this.assign_feature_set
     let stringArray = this.create_patient_ids.split(',');
      
     var patient_ids: number[] = [];
@@ -61,6 +68,17 @@ export class CrawlersComponent implements OnInit {
     });
 
   }
+
+  clearAssignData() {
+    this.assign_feature_set = null;
+  }
+
+  getFeatureSets() {
+    this.featureSetsService.getAll().subscribe(resp => {
+      this.featureSets = resp;
+    });
+  }
+
 
   
 }
