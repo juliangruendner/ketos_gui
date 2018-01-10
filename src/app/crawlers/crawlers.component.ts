@@ -6,6 +6,7 @@ import { PatientIDs } from '../models/patientIds.model';
 import { DataRequest } from '../models/dataRequest';
 import { FeatureSet } from '../models/featureSets.model';
 import { FeatureSetsService } from '../services/featuresets.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-crawlers',
@@ -15,7 +16,7 @@ import { FeatureSetsService } from '../services/featuresets.service';
 export class CrawlersComponent implements OnInit {
 
   crawlers: Crawler[] = [];
-
+  server_url:string = environment.serverUrl;
   create_patient_ids: string  = "test";
   create_featureset_id: number;
 

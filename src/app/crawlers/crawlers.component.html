@@ -14,6 +14,7 @@
                 <th>Created</th>
                 <th>Finished</th>
                 <th>Data Url</th>
+                <th>Csv Download</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
                 <td>{{crawler.queued_time | date:'MMM d, y, H:mm:ss'}} </td>
                 <td>{{crawler.end_time | date:'MMM d, y, H:mm:ss'}} </td>
                 <td>{{crawler.url}}</td>
+                <td><a href="{{server_url}}/data/{{crawler._id}}"><button class="uk-button uk-button-primary uk-button-small">CSV</button></a></td>
             </tr>
         </tbody>
     </table>
