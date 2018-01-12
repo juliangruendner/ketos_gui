@@ -6,4 +6,5 @@ export class User {
     email: string;
     created_at: Date;
     updated_at: Date;
+    password: string;
 }

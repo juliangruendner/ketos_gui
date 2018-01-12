@@ -26,6 +26,7 @@ import { FeaturesModule } from './features/features.module';
 import { FeaturesService } from './services/features.service';
 import { FeatureSetsModule } from './feature-sets/feature-sets.module';
 import { FeatureSetsService } from './services/featuresets.service';
+import { UsersService } from './services/users.service';
 import { MlmodelsModule } from './mlmodels/mlmodels.module';
 import { AdminUserListComponent } from './admin-user-list/admin-user-list.component';
 import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
@@ -63,6 +64,7 @@ import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
     MLModelsService,
     FeaturesService,
     FeatureSetsService,
+    UsersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
