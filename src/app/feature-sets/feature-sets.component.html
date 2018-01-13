@@ -1,13 +1,14 @@
 <div class="header-wrapper">
     <h1 class="uk-heading-divider">Feature Sets</h1>
     <div class="header-btn">
-        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-create" (click)="clearCreateInput()">Create new</button>
+        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-form" (click)="clearFormInput(); is_form_create = true;">Create new</button>
     </div>  
   </div>
   
   <table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
     <thead>
         <tr>
+            <th class="uk-table-shrink"></th>
             <th>Name</th>
             <th>Description</th>
             <th></th>
@@ -15,6 +16,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let fs of featureSets">
+            <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-set-form" (click)="setFormInput(fs); is_form_create = false;"></button></td>
             <td>{{fs.name}}</td>
             <td>{{fs.description}}</td>
             <td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="getFeatures(fs)">Assign Features</button></td>
@@ -22,71 +24,74 @@
     </tbody>
   </table>
 
-  <div id="feature-set-create" uk-modal>
+  <div id="feature-set-form" uk-modal>
       <div class="uk-modal-dialog">
           <button class="uk-modal-close-default" type="button" uk-close></button>
           <div class="uk-modal-header">
-              <h1 class="uk-modal-title">Create Feature Set</h1>
+              <h1 *ngIf="is_form_create" class="uk-modal-title">Create Feature Set</h1>
+              <h1 *ngIf="!is_form_create" class="uk-modal-title">Edit Feature Set</h1>
           </div>
           <div class="uk-modal-body">
               <form class="uk-form-horizontal uk-margin-large">
                   <div class="uk-margin">
                       <label class="uk-form-label" for="form-horizontal-text">Name:</label>
                       <div class="uk-form-controls">
-                          <input class="uk-input" id="form-horizontal-text" type="text" required name="create_name" [(ngModel)]="create_name">
+                          <input class="uk-input" id="form-horizontal-text" type="text" required name="form_name" [(ngModel)]="form_name">
                       </div>
     
                       <div><p>&nbsp;</p></div>
     
                       <label class="uk-form-label" for="form-horizontal-text">Description:</label>
                       <div class="uk-form-controls">
-                          <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="create_description" [(ngModel)]="create_description"></textarea>
+                          <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="form_description" [(ngModel)]="form_description"></textarea>
                       </div>
                   </div>
               </form>
           </div>
-          <div class="uk-modal-footer uk-text-right">
-              <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_name">Create</button>
+          <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
+              <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!form_name">Create</button>
           </div>
+          <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
+                <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()" [disabled]="form_name == featureSet.name && form_description == featureSet.description">Submit Changes</button>
+                <button class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete()">Delete</button>
+            </div>
       </div>
     </div>
 
-
-        <div id="feature-set-assign" uk-modal class="uk-modal-container ">
-            <div class="uk-modal-dialog">
-              <button class="uk-modal-close-default" type="button" uk-close></button>
-              <div class="uk-modal-header">
-                  <h1 class="uk-modal-title">Assign Features to Feature Set "{{featureSet.name}}"</h1>
-              </div>
-              <div class="uk-modal-body ">
-                  
-                  <table class="uk-table uk-table-hover uk-table-middle uk-table-divider" *ngIf="showFeatures">
-                      <thead>
-                          <tr>
-                              <th>Assign</th>
-                              <th>Resource</th>
-                              <th>Parameter Name</th>
-                              <th>Value</th>
-                              <th>Name</th>
-                              <th>Description</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let f of features">
-                              <td><input class="uk-checkbox" type="checkbox" [(ngModel)]="f.checked"></td>
-                              <td>{{f.resource}}</td>
-                              <td>{{f.parameter_name}}</td>
-                              <td>{{f.value}}</td>
-                              <td>{{f.name}}</td>
-                              <td>{{f.description}}</td>
-                          </tr>
-                      </tbody>
-                  </table>
-                  
-              </div>
-              <div class="uk-modal-footer uk-text-right">
-                  <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="assign()">Assign</button>
-              </div>
-          </div>
+    <div id="feature-set-assign" uk-modal class="uk-modal-container ">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header">
+                <h1 class="uk-modal-title">Assign Features to Feature Set "{{featureSet.name}}"</h1>
+            </div>
+            <div class="uk-modal-body ">
+                
+                <table class="uk-table uk-table-hover uk-table-middle uk-table-divider" *ngIf="showFeatures">
+                    <thead>
+                        <tr>
+                            <th>Assign</th>
+                            <th>Resource</th>
+                            <th>Parameter Name</th>
+                            <th>Value</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let f of features">
+                            <td><input class="uk-checkbox" type="checkbox" [(ngModel)]="f.checked"></td>
+                            <td>{{f.resource}}</td>
+                            <td>{{f.parameter_name}}</td>
+                            <td>{{f.value}}</td>
+                            <td>{{f.name}}</td>
+                            <td>{{f.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="assign()">Assign</button>
+            </div>
         </div>
-    
+    </div>
