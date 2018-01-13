@@ -1,13 +1,14 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">Features</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-create" (click)="clearCreateInput()">Create new</button>
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" (click)="clearFormInput(); is_form_create = true;">Create new</button>
   </div>  
 </div>
 
 <table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
   <thead>
       <tr>
+          <th class="uk-table-shrink"></th>
           <th>Resource</th>
           <th>Parameter Name</th>
           <th>Value</th>
@@ -17,6 +18,7 @@
   </thead>
   <tbody>
       <tr *ngFor="let f of features">
+          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form" (click)="setFormInput(f); is_form_create = false;"></button></td>
           <td>{{f.resource}}</td>
           <td>{{f.parameter_name}}</td>
           <td>{{f.value}}</td>
@@ -26,52 +28,57 @@
   </tbody>
 </table>
 
-<div id="feature-create" uk-modal>
+<div id="feature-form" uk-modal>
   <div class="uk-modal-dialog">
       <button class="uk-modal-close-default" type="button" uk-close></button>
       <div class="uk-modal-header">
-          <h1 class="uk-modal-title">Create Feature</h1>
+          <h1 *ngIf="is_form_create" class="uk-modal-title">Create Feature</h1>
+          <h1 *ngIf="!is_form_create" class="uk-modal-title">Edit Feature</h1>
       </div>
       <div class="uk-modal-body">
           <form class="uk-form-horizontal uk-margin-large">
               <div class="uk-margin">
                   <label class="uk-form-label" for="form-horizontal-text">Resource:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="create_resource" [(ngModel)]="create_resource">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_resource" [(ngModel)]="form_resource">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Parameter Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="create_parameter_name" [(ngModel)]="create_parameter_name">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_parameter_name" [(ngModel)]="form_parameter_name">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Value</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="create_value" [(ngModel)]="create_value">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_value" [(ngModel)]="form_value">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="create_name" [(ngModel)]="create_name">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_name" [(ngModel)]="form_name">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Description:</label>
                   <div class="uk-form-controls">
-                      <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="create_description" [(ngModel)]="create_description"></textarea>
+                      <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="form_description" [(ngModel)]="form_description"></textarea>
                   </div>
               </div>
           </form>
       </div>
-      <div class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_resource||!create_parameter_name||!create_value||!create_name">Create</button>
+      <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!form_resource||!form_parameter_name||!form_value||!form_name">Create</button>
+      </div>
+      <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()" [disabled]="form_resource == feature.resource && form_parameter_name == feature.parameter_name && form_value == feature.value && form_name == feature.name">Submit Changes</button>
+          <button class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete()">Delete</button>
       </div>
   </div>
 </div>
