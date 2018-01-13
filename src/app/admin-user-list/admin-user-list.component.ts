@@ -12,13 +12,12 @@ export class AdminUserListComponent implements OnInit {
   users : User[] = [];
   user : User = new User();
 
-  create_username : string;
-  create_first_name : string;
-  create_last_name : string;
-  create_email : string;
-  create_password : string;
-
-  edit_password : string;
+  is_form_create : boolean;
+  form_username : string;
+  form_first_name : string;
+  form_last_name : string;
+  form_email : string;
+  form_password : string;
 
   constructor(private usersService: UsersService) { }
 
@@ -28,53 +27,47 @@ export class AdminUserListComponent implements OnInit {
     });
   }
 
-  clearCreateInput() {
-    this.create_username = this.create_first_name = this.create_last_name = this.create_email = this.create_password = null;
+  clearFormInput() {
+    this.form_username = this.form_first_name = this.form_last_name = this.form_email = this.form_password = null;
   }
 
   create() {
     var u : User = new User();
-    u.username = this.create_username;
-    u.first_name = this.create_first_name;
-    u.last_name = this.create_last_name;
-    u.email = this.create_email;
-    u.password = this.create_password;
+    u.username = this.form_username;
+    u.first_name = this.form_first_name;
+    u.last_name = this.form_last_name;
+    u.email = this.form_email;
+    u.password = this.form_password;
 
     this.usersService.post(u).subscribe(u => {
       this.users.push(u);
     });
   }
 
-  openEditModal(user: User) {
-    this.edit_password = null;
+  setFormInput(user: User) {
+    this.form_username = user.username;
+    this.form_first_name = user.first_name;
+    this.form_last_name = user.last_name;
+    this.form_email = user.email;
+    this.form_password = null;
     this.user = user;
   }
 
   edit() {
-    if(this.edit_password) {
-      this.user.password = this.edit_password;
-    }
+    this.user.username = this.form_username;
+    this.user.first_name = this.form_first_name;
+    this.user.last_name = this.form_last_name;
+    this.user.email = this.form_email;
+    this.user.password = this.form_password; // is null or content of password form field
 
     this.usersService.putSingle(this.user.id, this.user).subscribe(u => {
-      for(var i = 0; i < this.users.length; i++) {
-        if(u.id == this.users[i].id) {
-          this.users[i] = u;
-          return;
-        }
-      }
+      this.users[this.users.findIndex(user => u.id === user.id)] = u;
     });
   }
 
   delete() {
     this.usersService.delete(this.user.id).subscribe(id => {
-      var tmp : User[] = [];
-      for(var i = 0; i < this.users.length; i++) {
-        if(this.users[i].id == id.id) {
-          continue;
-        }
-        tmp.push(this.users[i]);
-      }
-      this.users = tmp;
+      this.users.splice(this.users.findIndex(user => id.id === user.id), 1);
     });
   }
 
