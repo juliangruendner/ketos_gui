@@ -34,48 +34,59 @@
           <h1 *ngIf="!is_form_create" class="uk-modal-title">Edit User</h1>
       </div>
       <div class="uk-modal-body">
-          <form class="uk-form-horizontal uk-margin-large uk-form">
-              <div class="uk-margin">
+          <form class="uk-form-horizontal uk-margin-large uk-form" novalidate>
+              <div class="uk-margin" [formGroup]="userForm">
                   <label class="uk-form-label" for="form-horizontal-text">Username:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_user.username" [(ngModel)]="form_user.username">
+                      <input class="uk-input form-control" formControlName="username">
+                      <div class="uk-text-danger" *ngIf="userForm.controls.username.invalid && (userForm.controls.username.dirty || userForm.controls.username.touched)">
+                        <div *ngIf="userForm.controls.username.errors.required">
+                            Name is required.
+                        </div>
+                        <div *ngIf="userForm.controls.username.errors.minlength">
+                            Name must be at least 4 characters long.
+                        </div>
+                        <div *ngIf="userForm.controls.username.errors.takenName">
+                            Name is already taken.
+                        </div>
+                      </div>
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">First Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_user.first_name" [(ngModel)]="form_user.first_name">
+                      <input class="uk-input" type="text" name="form_user.first_name" [(ngModel)]="form_user.first_name" [ngModelOptions]="{standalone: true}">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Last Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_user.last_name" [(ngModel)]="form_user.last_name">
+                      <input class="uk-input" type="text" name="form_user.last_name" [(ngModel)]="form_user.last_name" [ngModelOptions]="{standalone: true}">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">E-Mail:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_user.email" [(ngModel)]="form_user.email">
+                      <input class="uk-input" type="text" name="form_user.email" [(ngModel)]="form_user.email" [ngModelOptions]="{standalone: true}">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Password:</label>
                   <div class="uk-form-controls uk-form-password">
-                    <input type="password" name="form_user.password" [(ngModel)]="form_user.password">
+                    <input type="password" name="form_user.password" [(ngModel)]="form_user.password" [ngModelOptions]="{standalone: true}">
                   </div>
               </div>
           </form>
       </div>
       <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!form_user.username||!form_user.email||!form_user.password">Create</button>
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="userForm.controls.username.invalid||!form_user.email||!form_user.password">Create</button>
       </div>
       <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()">Edit</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()" [disabled]="userForm.controls.username.invalid">Edit</button>
             <button class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete()">Delete</button>
      </div>
   </div>
