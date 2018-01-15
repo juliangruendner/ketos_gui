@@ -1,7 +1,7 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">Features</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" (click)="clearFormInput(); is_form_create = true;">Create new</button>
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" (click)="clearForm(); is_form_create = true;">Create new</button>
   </div>  
 </div>
 
@@ -18,7 +18,7 @@
   </thead>
   <tbody>
       <tr *ngFor="let f of features">
-          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form" (click)="setFormInput(f); is_form_create = false;"></button></td>
+          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form" (click)="setForm(f); is_form_create = false;"></button></td>
           <td>{{f.resource}}</td>
           <td>{{f.parameter_name}}</td>
           <td>{{f.value}}</td>
@@ -40,44 +40,47 @@
               <div class="uk-margin">
                   <label class="uk-form-label" for="form-horizontal-text">Resource:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_resource" [(ngModel)]="form_resource">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_feature.resource" [(ngModel)]="form_feature.resource">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Parameter Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_parameter_name" [(ngModel)]="form_parameter_name">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_feature.parameter_name" [(ngModel)]="form_feature.parameter_name">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Value</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_value" [(ngModel)]="form_value">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_feature.value" [(ngModel)]="form_feature.value">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_name" [(ngModel)]="form_name">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_feature.name" [(ngModel)]="form_feature.name">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Description:</label>
                   <div class="uk-form-controls">
-                      <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="form_description" [(ngModel)]="form_description"></textarea>
+                      <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="form_feature.description" [(ngModel)]="form_feature.description"></textarea>
                   </div>
               </div>
           </form>
       </div>
       <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!form_resource||!form_parameter_name||!form_value||!form_name">Create</button>
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" 
+           [disabled]="!form_feature.resource||!form_feature.parameter_name||!form_feature.value||!form_feature.name">Create</button>
       </div>
       <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()" [disabled]="form_resource == feature.resource && form_parameter_name == feature.parameter_name && form_value == feature.value && form_name == feature.name">Submit Changes</button>
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()"
+           [disabled]="form_feature.resource == tmp_feature.resource && form_feature.parameter_name == tmp_feature.parameter_name 
+           && form_feature.value == tmp_feature.value && form_feature.name == tmp_feature.name && form_feature.description == tmp_feature.description">Submit Changes</button>
           <button class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete()">Delete</button>
       </div>
   </div>

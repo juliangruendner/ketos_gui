@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FeaturesService } from '../services/features.service';
 import { Feature } from '../models/features.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-features',
@@ -10,14 +11,10 @@ import { Feature } from '../models/features.model';
 export class FeaturesComponent implements OnInit {
 
   features: Feature[] = [];
-  feature: Feature = new Feature();
 
   is_form_create: boolean;
-  form_resource: string;
-  form_parameter_name: string;
-  form_value: string;
-  form_name: string;
-  form_description: string;
+  form_feature: Feature = new Feature();
+  tmp_feature: Feature = new Feature();
 
   constructor(private featuresService: FeaturesService) { }
 
@@ -27,47 +24,29 @@ export class FeaturesComponent implements OnInit {
     });
   }
 
-  clearFormInput() {
-    this.form_resource = this.form_parameter_name = this.form_value = this.form_name = this.form_description = null;
+  clearForm() {
+    this.form_feature = new Feature();
   }
 
-  setFormInput(feature: Feature) {
-    this.feature = feature;
-    this.form_resource = feature.resource;
-    this.form_parameter_name = feature.parameter_name;
-    this.form_value = feature.value;
-    this.form_name = feature.name;
-    this.form_description = feature.description;
+  setForm(feature: Feature) {
+    this.tmp_feature = _.clone(feature);
+    this.form_feature = _.clone(feature);
   }
 
   create() {
-    var feature = new Feature();
-    feature.resource = this.form_resource;
-    feature.parameter_name = this.form_parameter_name;
-    feature.value = this.form_value;
-    feature.name = this.form_name;
-    feature.description = this.form_description;
-
-    this.featuresService.post(feature).subscribe(f => {
+    this.featuresService.post(this.form_feature).subscribe(f => {
       this.features.push(f);
     });
-    this.clearFormInput();
   }
 
   edit() {
-    this.feature.resource = this.form_resource;
-    this.feature.parameter_name = this.form_parameter_name;
-    this.feature.value = this.form_value;
-    this.feature.name = this.form_name;
-    this.feature.description = this.form_description;
-
-    this.featuresService.putSingle(this.feature.id, this.feature).subscribe((retF) => {
+    this.featuresService.putSingle(this.form_feature.id, this.form_feature).subscribe((retF) => {
       this.features[this.features.findIndex(f => retF.id === f.id)] = retF;
     });
   }
 
   delete() {
-    this.featuresService.delete(this.feature.id).subscribe((id) => {
+    this.featuresService.delete(this.form_feature.id).subscribe((id) => {
       this.features.splice(this.features.findIndex(feature => id.id === feature.id), 1);
     });
   }

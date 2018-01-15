@@ -4,6 +4,7 @@ import { FeatureSet } from '../models/featureSets.model';
 import { Feature } from '../models/features.model';
 import { FeaturesService } from '../services/features.service';
 import { FeatureIDs } from '../models/featureIds.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-feature-sets',
@@ -13,13 +14,12 @@ import { FeatureIDs } from '../models/featureIds.model';
 export class FeatureSetsComponent implements OnInit {
 
   featureSets: FeatureSet[] = [];
-  featureSet: FeatureSet = new FeatureSet();
+  tmp_featureSet: FeatureSet = new FeatureSet();
 
   features: Feature[] = [];
 
   is_form_create: boolean;
-  form_name: string;
-  form_description: string;
+  form_featureSet: FeatureSet = new FeatureSet();
 
   showFeatures: boolean = false;
 
@@ -32,36 +32,29 @@ export class FeatureSetsComponent implements OnInit {
   }
 
   clearFormInput() {
-    this.form_name = this.form_description = null;
+    this.form_featureSet = new FeatureSet();
   }
 
   setFormInput(featureSet: FeatureSet) {
-    this.featureSet = featureSet;
-    this.form_name = featureSet.name;
-    this.form_description = featureSet.description;
+    this.tmp_featureSet = _.clone(featureSet);
+    this.form_featureSet = _.clone(featureSet);
   }
 
   create() {
-    let featureSet = new FeatureSet();
-    featureSet.name = this.form_name;
-    featureSet.description = this.form_description;
-    this.featureSetsService.post(featureSet).subscribe(fs => { 
+    this.featureSetsService.post(this.form_featureSet).subscribe(fs => {
       this.featureSets.push(fs);
     });
     this.clearFormInput();
   }
 
   edit() {
-    this.featureSet.name = this.form_name;
-    this.featureSet.description = this.form_description;
-
-    this.featureSetsService.putSingle(this.featureSet.id, this.featureSet).subscribe(retFs => {
+    this.featureSetsService.putSingle(this.form_featureSet.id, this.form_featureSet).subscribe(retFs => {
       this.featureSets[this.featureSets.findIndex(fs => retFs.id === fs.id)] = retFs;
     });
   }
 
   delete() {
-    this.featureSetsService.delete(this.featureSet.id).subscribe(id => {
+    this.featureSetsService.delete(this.tmp_featureSet.id).subscribe(id => {
       this.featureSets.splice(this.featureSets.findIndex(fs => id.id === fs.id), 1);
     });
   }
@@ -77,8 +70,8 @@ export class FeatureSetsComponent implements OnInit {
       }
     }
 
-    this.featureSetsService.postFeatures(this.featureSet.id, assignIds).subscribe();
-    this.featureSetsService.deleteFeatures(this.featureSet.id, deleteIds).subscribe();
+    this.featureSetsService.postFeatures(this.tmp_featureSet.id, assignIds).subscribe();
+    this.featureSetsService.deleteFeatures(this.tmp_featureSet.id, deleteIds).subscribe();
   }
 
   getFeatures(featureSet: FeatureSet) {
@@ -87,11 +80,11 @@ export class FeatureSetsComponent implements OnInit {
       this.features = resp;
 
       this.featureSetsService.getFeaturesForFeatureSet(featureSet.id).subscribe(resp => {
-        this.featureSet = resp;
+        this.tmp_featureSet = resp;
 
         for(var i = 0; i < this.features.length; i++) {
-          for(var j = 0; j < this.featureSet.features.length; j++) {
-            if(this.features[i].id == this.featureSet.features[j].id) {
+          for(var j = 0; j < this.tmp_featureSet.features.length; j++) {
+            if(this.features[i].id == this.tmp_featureSet.features[j].id) {
               this.features[i].checked = true;
             }
           }
