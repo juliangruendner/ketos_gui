@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -10,14 +12,9 @@ import { User } from '../models/user.model';
 export class AdminUserListComponent implements OnInit {
 
   users : User[] = [];
-  user : User = new User();
 
   is_form_create : boolean;
-  form_username : string;
-  form_first_name : string;
-  form_last_name : string;
-  form_email : string;
-  form_password : string;
+  form_user : User = new User();
 
   constructor(private usersService: UsersService) { }
 
@@ -27,46 +24,28 @@ export class AdminUserListComponent implements OnInit {
     });
   }
 
-  clearFormInput() {
-    this.form_username = this.form_first_name = this.form_last_name = this.form_email = this.form_password = null;
+  clearForm() {
+    this.form_user = new User();
   }
 
   create() {
-    var u : User = new User();
-    u.username = this.form_username;
-    u.first_name = this.form_first_name;
-    u.last_name = this.form_last_name;
-    u.email = this.form_email;
-    u.password = this.form_password;
-
-    this.usersService.post(u).subscribe(u => {
+    this.usersService.post(this.form_user).subscribe(u => {
       this.users.push(u);
     });
   }
 
-  setFormInput(user: User) {
-    this.form_username = user.username;
-    this.form_first_name = user.first_name;
-    this.form_last_name = user.last_name;
-    this.form_email = user.email;
-    this.form_password = null;
-    this.user = user;
+  setForm(user: User) {
+    this.form_user = _.clone(user);
   }
 
   edit() {
-    this.user.username = this.form_username;
-    this.user.first_name = this.form_first_name;
-    this.user.last_name = this.form_last_name;
-    this.user.email = this.form_email;
-    this.user.password = this.form_password; // is null or content of password form field
-
-    this.usersService.putSingle(this.user.id, this.user).subscribe(u => {
+    this.usersService.putSingle(this.form_user.id, this.form_user).subscribe(u => {
       this.users[this.users.findIndex(user => u.id === user.id)] = u;
     });
   }
 
   delete() {
-    this.usersService.delete(this.user.id).subscribe(id => {
+    this.usersService.delete(this.form_user.id).subscribe(id => {
       this.users.splice(this.users.findIndex(user => id.id === user.id), 1);
     });
   }

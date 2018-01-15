@@ -1,7 +1,7 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">User List</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #user-form" (click)="clearFormInput(); is_form_create = true;">Create new</button>
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #user-form" (click)="clearForm(); is_form_create = true;">Create new</button>
   </div>  
 </div>
 
@@ -16,7 +16,7 @@
       </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let u of users" uk-toggle="target: #user-form" (click)="setFormInput(u); is_form_create = false;">
+      <tr *ngFor="let u of users" uk-toggle="target: #user-form" (click)="setForm(u); is_form_create = false;">
           <td>{{u.id}}</td>
           <td>{{u.username}}</td>
           <td>{{u.first_name}}</td>
@@ -38,41 +38,41 @@
               <div class="uk-margin">
                   <label class="uk-form-label" for="form-horizontal-text">Username:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_username" [(ngModel)]="form_username">
+                      <input class="uk-input" type="text" name="form_user.username" [(ngModel)]="form_user.username">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">First Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_first_name" [(ngModel)]="form_first_name">
+                      <input class="uk-input" type="text" name="form_user.first_name" [(ngModel)]="form_user.first_name">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Last Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_last_name" [(ngModel)]="form_last_name">
+                      <input class="uk-input" type="text" name="form_user.last_name" [(ngModel)]="form_user.last_name">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">E-Mail:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_email" [(ngModel)]="form_email">
+                      <input class="uk-input" type="text" name="form_user.email" [(ngModel)]="form_user.email">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">Password:</label>
                   <div class="uk-form-controls uk-form-password">
-                    <input type="password" name="form_password" [(ngModel)]="form_password">
+                    <input type="password" name="form_user.password" [(ngModel)]="form_user.password">
                   </div>
               </div>
           </form>
       </div>
       <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!form_username||!form_email||!form_password">Create</button>
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!form_user.username||!form_user.email||!form_user.password">Create</button>
       </div>
       <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
             <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()">Edit</button>

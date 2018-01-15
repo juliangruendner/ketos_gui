@@ -31,11 +31,11 @@ export class FeatureSetsComponent implements OnInit {
     });
   }
 
-  clearFormInput() {
+  clearForm() {
     this.form_featureSet = new FeatureSet();
   }
 
-  setFormInput(featureSet: FeatureSet) {
+  setForm(featureSet: FeatureSet) {
     this.tmp_featureSet = _.clone(featureSet);
     this.form_featureSet = _.clone(featureSet);
   }
@@ -44,7 +44,6 @@ export class FeatureSetsComponent implements OnInit {
     this.featureSetsService.post(this.form_featureSet).subscribe(fs => {
       this.featureSets.push(fs);
     });
-    this.clearFormInput();
   }
 
   edit() {

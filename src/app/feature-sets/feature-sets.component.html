@@ -1,7 +1,7 @@
 <div class="header-wrapper">
     <h1 class="uk-heading-divider">Feature Sets</h1>
     <div class="header-btn">
-        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-form" (click)="clearFormInput(); is_form_create = true;">Create new</button>
+        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-form" (click)="clearForm(); is_form_create = true;">Create new</button>
     </div>  
   </div>
   
@@ -16,7 +16,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let fs of featureSets">
-            <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-set-form" (click)="setFormInput(fs); is_form_create = false;"></button></td>
+            <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-set-form" (click)="setForm(fs); is_form_create = false;"></button></td>
             <td>{{fs.name}}</td>
             <td>{{fs.description}}</td>
             <td><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="getFeatures(fs)">Assign Features</button></td>
