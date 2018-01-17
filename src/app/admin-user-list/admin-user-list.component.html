@@ -16,7 +16,7 @@
       </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let u of users" uk-toggle="target: #user-form" (click)="setForm(u); is_form_create = false;">
+      <tr *ngFor="let u of (users | sortForProperty: 'id')" uk-toggle="target: #user-form" (click)="setForm(u); is_form_create = false;">
           <td>{{u.id}}</td>
           <td>{{u.username}}</td>
           <td>{{u.first_name}}</td>
