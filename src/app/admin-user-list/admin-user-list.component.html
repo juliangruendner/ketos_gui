@@ -46,8 +46,11 @@
                         <div *ngIf="userForm.controls.username.errors.minlength">
                             Name must be at least 4 characters long.
                         </div>
-                        <div *ngIf="userForm.controls.username.errors.takenName">
+                        <div *ngIf="userForm.controls.username.errors.takenProperty">
                             Name is already taken.
+                        </div>
+                        <div *ngIf="userForm.controls.username.errors.forbiddenCharacter">
+                            Character "{{userForm.controls.username.errors.forbiddenCharacter.value}}" is forbidden.
                         </div>
                       </div>
                   </div>
@@ -63,14 +66,25 @@
 
                   <label class="uk-form-label" for="form-horizontal-text">Last Name:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_user.last_name" [(ngModel)]="form_user.last_name" [ngModelOptions]="{standalone: true}">
+                        <input class="uk-input" type="text" name="form_user.last_name" [(ngModel)]="form_user.last_name" [ngModelOptions]="{standalone: true}">
                   </div>
 
                   <div><p>&nbsp;</p></div>
 
                   <label class="uk-form-label" for="form-horizontal-text">E-Mail:</label>
                   <div class="uk-form-controls">
-                      <input class="uk-input" type="text" name="form_user.email" [(ngModel)]="form_user.email" [ngModelOptions]="{standalone: true}">
+                    <input class="uk-input" type="text" formControlName="email">
+                    <div class="uk-text-danger" *ngIf="userForm.controls.email.invalid && (userForm.controls.email.dirty || userForm.controls.email.touched)">
+                        <div *ngIf="userForm.controls.email.errors.required">
+                            E-Mail is required.
+                        </div>
+                        <div *ngIf="userForm.controls.email.errors.email">
+                            Is not a valid E-Mail address!
+                        </div>
+                        <div *ngIf="userForm.controls.email.errors.takenProperty">
+                            E-Mail is already in use.
+                        </div>
+                    </div>
                   </div>
 
                   <div><p>&nbsp;</p></div>
@@ -83,7 +97,7 @@
           </form>
       </div>
       <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="userForm.controls.username.invalid||!form_user.email||!form_user.password">Create</button>
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="userForm.controls.username.invalid||userForm.controls.email.invalid||!form_user.password">Create</button>
       </div>
       <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
             <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()" [disabled]="userForm.controls.username.invalid">Edit</button>

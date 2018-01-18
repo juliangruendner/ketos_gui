@@ -28,21 +28,41 @@ export class AdminUserListComponent implements OnInit {
       'username': new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        this.takenNameValidator()
+        this.takenPropertyValidator('username'),
+        this.forbiddenCharactersValidator([/ /, /@/])
+      ]),
+      'email': new FormControl('', [
+        Validators.required,
+        Validators.email,
+        this.takenPropertyValidator('email')
       ]),
     });
   }
 
-  takenNameValidator(): ValidatorFn {
+  takenPropertyValidator(property: string): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
-      const names = this.users.map(u => u.username);
-      return names.includes(control.value) ? {'takenName': {value: control.value}} : null;
+      const properties = this.users.map(u => u[property]);
+      return properties.includes(control.value) ? {'takenProperty': {value: control.value}} : null;
+    };
+  }
+
+  forbiddenCharactersValidator(exprs: RegExp[]): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} => {
+      let ret: any = null;
+      exprs.forEach(expr => {
+        if (expr.test(control.value)) {
+          ret = {'forbiddenCharacter': {value: expr.toString().replace(/\//g, '')}};
+        }
+      });
+
+      return ret;
     };
   }
 
   clearForm() {
     this.form_user = new User();
     this.userForm.reset();
+    this.userForm.enable();
   }
 
   create() {
@@ -60,12 +80,10 @@ export class AdminUserListComponent implements OnInit {
      // Set fields of userForm to fields of form user
     this.userForm.reset();
     this.userForm.patchValue(_.clone(user));
+    this.userForm.disable();
   }
 
   edit() {
-    // Write back fields of userForm to form user
-    _.assignIn(this.form_user, this.userForm.value);
-
     this.usersService.putSingle(this.form_user.id, this.form_user).subscribe(u => {
       this.users[this.users.findIndex(user => u.id === user.id)] = u;
     });
