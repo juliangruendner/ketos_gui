@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let fs of featureSets">
+        <tr *ngFor="let fs of (featureSets | sortForProperty: 'name')">
             <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-set-form" (click)="setForm(fs); is_form_create = false;"></button></td>
             <td>{{fs.name}}</td>
             <td>{{fs.description}}</td>

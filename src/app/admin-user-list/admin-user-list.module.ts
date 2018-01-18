@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MomentModule } from 'angular2-moment/moment.module';
 import { CoreModule } from '../core/core.module';
 import { AdminUserListComponent } from './admin-user-list.component';
-import { SortForObjPropertyPipe } from '../pipes/sort.pipe';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
     imports: [
@@ -16,14 +16,11 @@ import { SortForObjPropertyPipe } from '../pipes/sort.pipe';
       FormsModule,
       MomentModule,
       CoreModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      PipesModule,
     ],
     declarations: [
       AdminUserListComponent,
-      SortForObjPropertyPipe
     ],
-    exports: [
-      SortForObjPropertyPipe
-    ]
   })
 export class AdminUserListModule { }
