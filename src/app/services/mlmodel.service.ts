@@ -9,6 +9,7 @@ const routes = {
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/models`,
   singleById: (id : number) => environment.serverUrl + `/models/${id}`,
   prediction: (id : number) => environment.serverUrl + `/models/${id}/prediction`,
+  create: environment.serverUrl + `/models?createExampleModel=True`,
   base: environment.serverUrl + '/models'
 };
 
@@ -21,7 +22,7 @@ export class MLModelsService {
   }
 
   post(mlModel: MLModel): Observable<MLModel> {
-    return this.httpClient.post<MLModel>(routes.base, mlModel);
+    return this.httpClient.post<MLModel>(routes.create, mlModel);
   }
 
   put(id: number, mlModel: MLModel): Observable<MLModel> {
