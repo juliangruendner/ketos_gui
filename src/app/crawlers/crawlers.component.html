@@ -21,7 +21,7 @@
             <tr *ngFor="let crawler of crawlers | orderBy : 'queued_time' : true">
                 <td>{{crawler._id}}</td>
                 <td>
-                    <div class="uk-label" [ngClass]="{'uk-label-success': crawler.status=='finished', 'uk-label-warning': crawler.status=='running'}">
+                    <div class="uk-label" [ngClass]="{'uk-label-success': crawler.status=='finished', 'uk-label-warning': crawler.status=='running', 'uk-label-danger': crawler.status=='error'}">
                         {{crawler.status}}
                     </div>
                 </td>
