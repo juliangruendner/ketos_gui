@@ -6,10 +6,8 @@ import { environment } from '../../environments/environment';
 import { ResourceConfig } from '../models/resourceConfig.model';
 
 const routes = {
-  // base: environment.serverUrl + '/resources_config',
-  base: 'http://localhost:5002' + '/resources_config',
-  // singleById: (resourceName: string) => environment.serverUrl + `/${resourceName}`,
-  singleById: (resourceName: string) => 'http://localhost:5002' + `/resources_config/${resourceName}`,
+  base: environment.serverUrl + '/resources_config',
+  singleById: (resourceName: string) => environment.serverUrl + '/resources_config/${resourceName}',
 };
 
 @Injectable()
