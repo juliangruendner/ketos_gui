@@ -7,7 +7,7 @@ import { ResourceConfig } from '../models/resourceConfig.model';
 
 const routes = {
   base: environment.serverUrl + '/resources_config',
-  singleById: (resourceName: string) => environment.serverUrl + '/resources_config/${resourceName}',
+  singleById: (resourceName: string) => environment.serverUrl + `/resources_config/${resourceName}`,
 };
 
 @Injectable()
