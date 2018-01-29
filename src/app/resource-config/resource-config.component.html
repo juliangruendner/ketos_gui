@@ -1,0 +1,25 @@
+<div class="header-wrapper">
+  <h1 class="uk-heading-divider">FHIR Resource Configuration</h1>
+  <div class="header-btn">
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form">Create new</button>
+  </div>  
+</div>
+
+<table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
+  <thead>
+      <tr>
+          <th class="uk-table-shrink"></th>
+          <th>Resource</th>
+          <th>Mappings</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let r of resourceConfigs">
+          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form"></button></td>
+          <td>{{r.resource_name}}</td>
+          <td>
+            <div *ngFor="let mapping of r.resource_mapping">{{mapping.resource_path}} --> {{mapping.result_path}}</div>
+          </td>
+      </tr>
+  </tbody>
+</table>

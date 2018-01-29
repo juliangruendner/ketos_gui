@@ -30,6 +30,8 @@ import { UsersService } from './services/users.service';
 import { MlmodelsModule } from './mlmodels/mlmodels.module';
 import { AdminUserListComponent } from './admin-user-list/admin-user-list.component';
 import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
+import { ResourceConfigModule } from './resource-config/resource-config.module';
+import { ResourcesConfigService } from './services/resourcesconfig.service';
 
 
 @NgModule({
@@ -52,6 +54,7 @@ import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
     FeatureSetsModule,
     MlmodelsModule,
     AdminUserListModule,
+    ResourceConfigModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
@@ -66,6 +69,7 @@ import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
     FeaturesService,
     FeatureSetsService,
     UsersService,
+    ResourcesConfigService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
