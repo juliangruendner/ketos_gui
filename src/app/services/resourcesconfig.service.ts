@@ -9,7 +9,7 @@ const routes = {
   // base: environment.serverUrl + '/resources_config',
   base: 'http://localhost:5002' + '/resources_config',
   // singleById: (resourceName: string) => environment.serverUrl + `/${resourceName}`,
-  singleById: (resourceName: string) => 'http://localhost:5002' + `/${resourceName}`,
+  singleById: (resourceName: string) => 'http://localhost:5002' + `/resources_config/${resourceName}`,
 };
 
 @Injectable()
@@ -31,6 +31,10 @@ export class ResourcesConfigService {
 
   post(resoureConfig: ResourceConfig): Observable<ResourceConfig> {
     return this.httpClient.post<ResourceConfig>(routes.base, resoureConfig);
+  }
+
+  delete(resoureConfig: ResourceConfig): Observable<String> {
+    return this.httpClient.delete<String>(routes.singleById(resoureConfig.resource_name));
   }
 
 }
