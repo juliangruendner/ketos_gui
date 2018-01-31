@@ -41,25 +41,53 @@
             <h1 class="uk-modal-title">Create Data Request</h1>
         </div>
         <div class="uk-modal-body">
-            <form class="uk-form-horizontal uk-margin-large">
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-horizontal-text">featureset id:</label>
-                    <div class="uk-form-controls">
-                        <select class="uk-select" id="env" type="number" required name="create_image_id" [(ngModel)]="assign_feature_set">
-                            <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
-                        </select>
-                    </div>
-  
-                    <div><p>&nbsp;</p></div>
-                    <label class="uk-form-label" for="form-horizontal-text">patient id(s):</label>
-                    <div class="uk-form-controls">
-                        <textarea class="uk-textarea" rows="10" placeholder="input comma separated patient ids here" name="create_patient_ids" [(ngModel)]="create_patient_ids"></textarea>
-                    </div>
-                </div>
-            </form>
+            <ul uk-tab>
+                <li><a href="#" (click)="isResourceObservation = true;">Observation</a></li>
+                <li><a href="#" (click)="isResourceObservation = false;">Other FHIR Resource</a></li>
+            </ul>
+
+            <ul class="uk-switcher uk-margin">
+                <li>
+                    <form class="uk-form-horizontal uk-margin-large">
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-horizontal-text">featureset id:</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="env" type="number" required name="create_image_id" [(ngModel)]="assign_feature_set">
+                                    <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
+                                </select>
+                            </div>
+          
+                            <div><p>&nbsp;</p></div>
+                            <label class="uk-form-label" for="form-horizontal-text">patient id(s):</label>
+                            <div class="uk-form-controls">
+                                <textarea class="uk-textarea" rows="10" placeholder="input comma separated patient ids here" name="create_patient_ids" [(ngModel)]="create_patient_ids"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+                <li>
+                    <form class="uk-form-horizontal uk-margin-large">
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-horizontal-text">Resource:</label>
+                            <div class="uk-form-controls">
+                                <select lass="uk-select" class="uk-select" required name="create_fhir_resource_name" [(ngModel)]="create_fhir_resource_name">
+                                    <option *ngFor="let resource of fhirResources" value="{{resource}}">{{resource}}</option>
+                                </select>
+                            </div>
+            
+                            <div><p>&nbsp;</p></div>
+                            <label class="uk-form-label" for="form-horizontal-text">patient id(s):</label>
+                            <div class="uk-form-controls">
+                                <textarea class="uk-textarea" rows="10" placeholder="input comma separated patient ids here" name="create_patient_ids" [(ngModel)]="create_patient_ids"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!assign_feature_set">Create</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="(!assign_feature_set && isResourceObservation) || (!create_fhir_resource_name && !isResourceObservation)">Create</button>
         </div>
     </div>
 </div>

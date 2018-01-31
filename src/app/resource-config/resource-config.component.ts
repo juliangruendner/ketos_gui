@@ -28,7 +28,6 @@ export class ResourceConfigComponent implements OnInit {
 
     // TODO add to localstorage?
     this.fhirBaseService.getMetaData().subscribe(resp => {
-      console.log(resp);
       this.fhirResources = resp['rest'][0]['resource'].map((resource: any) => resource['type']);
     });
   }

@@ -22,13 +22,13 @@ export class CrawlersService {
 
   getAll(): Observable<Crawler[]> {
     return this.httpClient.get<Crawler[]>(routes.all);
-  } 
+  }
 
   getOne(id: string): Observable<Crawler> {
     return this.httpClient.get<Crawler>(routes.singleById(id));
-  } 
-  create(features_set_id: number, dataRequest: DataRequest): Observable<any> {
+  }
+
+  create(dataRequest: DataRequest): Observable<any> {
     return this.httpClient.post(routes.create, dataRequest);
   }
-  
 }
