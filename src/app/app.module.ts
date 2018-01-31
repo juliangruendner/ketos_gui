@@ -32,6 +32,7 @@ import { AdminUserListComponent } from './admin-user-list/admin-user-list.compon
 import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
 import { ResourceConfigModule } from './resource-config/resource-config.module';
 import { ResourcesConfigService } from './services/resourcesconfig.service';
+import { FhirBaseService } from './services/fhirbase.service';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { ResourcesConfigService } from './services/resourcesconfig.service';
     FeatureSetsService,
     UsersService,
     ResourcesConfigService,
+    FhirBaseService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

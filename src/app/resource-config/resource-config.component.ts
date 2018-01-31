@@ -3,6 +3,7 @@ import { ResourcesConfigService } from '../services/resourcesconfig.service';
 import { ResourceConfig } from '../models/resourceConfig.model';
 import * as _ from 'lodash';
 import { ResourceMapping } from '../models/resourceMapping.model';
+import { FhirBaseService } from '../services/fhirbase.service';
 
 @Component({
   selector: 'app-resource-config',
@@ -13,14 +14,22 @@ export class ResourceConfigComponent implements OnInit {
 
   resourceConfigs: ResourceConfig[] = [];
 
+  fhirResources: string[];
+
   is_form_create: boolean;
   form_config: ResourceConfig = new ResourceConfig();
 
-  constructor(private resourcesConfigService: ResourcesConfigService) { }
+  constructor(private resourcesConfigService: ResourcesConfigService, private fhirBaseService: FhirBaseService) { }
 
   ngOnInit() {
     this.resourcesConfigService.getAll().subscribe(resp => {
       this.resourceConfigs = resp;
+    });
+
+    // TODO add to localstorage?
+    this.fhirBaseService.getMetaData().subscribe(resp => {
+      console.log(resp);
+      this.fhirResources = resp['rest'][0]['resource'].map((resource: any) => resource['type']);
     });
   }
 
