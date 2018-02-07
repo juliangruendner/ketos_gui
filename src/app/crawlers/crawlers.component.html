@@ -60,7 +60,7 @@
             
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="(!assign_feature_set && isResourceObservation) || (!create_fhir_resource_name && !isResourceObservation)">Create</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!assign_feature_set">Create</button>
         </div>
     </div>
 </div>
