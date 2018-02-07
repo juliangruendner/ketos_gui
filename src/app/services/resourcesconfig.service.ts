@@ -23,16 +23,12 @@ export class ResourcesConfigService {
     return this.httpClient.get<ResourceConfig>(routes.singleById(resourceName));
   }
 
-  putSingle(resoureConfig: ResourceConfig): Observable<ResourceConfig> {
-    return this.httpClient.put<ResourceConfig>(routes.singleById(resoureConfig.resource_name), resoureConfig);
-  }
-
   post(resoureConfig: ResourceConfig): Observable<ResourceConfig> {
-    return this.httpClient.post<ResourceConfig>(routes.base, resoureConfig);
+    return this.httpClient.post<ResourceConfig>(routes.singleById(resoureConfig._id), resoureConfig);
   }
 
   delete(resoureConfig: ResourceConfig): Observable<String> {
-    return this.httpClient.delete<String>(routes.singleById(resoureConfig.resource_name));
+    return this.httpClient.delete<String>(routes.singleById(resoureConfig._id));
   }
 
 }
