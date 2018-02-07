@@ -18,10 +18,8 @@ export class CrawlersComponent implements OnInit {
 
   crawlers: Crawler[] = [];
   server_url: string = environment.serverUrl;
-  create_fhir_resource_name: string;
   create_patient_ids = 'test';
   create_featureset_id: number;
-  isResourceObservation = true;
 
   assign_feature_set: number;
   featureSets: FeatureSet[] = [];
@@ -43,7 +41,7 @@ export class CrawlersComponent implements OnInit {
   }
 
   clearCreateInput() {
-    this.create_patient_ids = this.create_featureset_id = this.create_fhir_resource_name = null;
+    this.create_patient_ids = this.create_featureset_id = null;
   }
 
   updateCrawlers() {
@@ -62,7 +60,6 @@ export class CrawlersComponent implements OnInit {
   create() {
     const feature_set_id = this.assign_feature_set;
     const stringArray = this.create_patient_ids.split(',');
-    const resource_name = this.create_fhir_resource_name;
 
     const patient_ids: number[] = [];
 
@@ -70,16 +67,12 @@ export class CrawlersComponent implements OnInit {
       patient_ids.push(parseInt(element));
     });
 
-    console.log(feature_set_id, patient_ids, resource_name);
+    console.log(feature_set_id, patient_ids);
 
     const dataRequest = new DataRequest();
     dataRequest.patient_ids = patient_ids;
 
-    if (this.isResourceObservation) {
-      dataRequest.feature_set_id = feature_set_id;
-    } else {
-      dataRequest.resource_name = resource_name;
-    }
+    dataRequest.feature_set_id = feature_set_id;
 
     console.log(dataRequest);
 
