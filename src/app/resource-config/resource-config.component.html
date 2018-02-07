@@ -6,26 +6,20 @@
 </div>
 
 <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
-  <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card" *ngFor="let r of resourceConfigs">
-    <h4><button uk-icon="icon: pencil" uk-toggle="target: #config-form" (click)="setForm(r); is_form_create = false;">{{r.resource_name}} </button>
-    </h4>
-      <table class="uk-table uk-table-small uk-table-justify uk-table-striped">
-          <thead>
-              <tr>
-                  <th>FHIR Resource Path</th>
-                  <th><span uk-icon="icon: arrow-right"></span></th>
-                  <th>CSV Column</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let mapping of r.resource_mapping">
-                <td>{{mapping.resource_path}}</td>
-                <td><span uk-icon="icon: arrow-right"></span></td>
-                <td class="uk-padding-small">{{mapping.result_path}}</td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
+    <div *ngFor="let r of resourceConfigs">
+        <div class="uk-card uk-card-default uk-card-body uk-card-hover env-card">
+            <h4 class="uk-margin-small-bottom"><button uk-icon="icon: pencil" uk-toggle="target: #config-form" (click)="setForm(r); is_form_create = false;">{{r._id}} </button></h4>
+            <h5 class="uk-heading-bullet uk-margin-small-bottom uk-margin-small-top">Value Path</h5>
+            {{r.resource_value_relative_path}}
+
+            <div *ngIf="r.sort_order && r.sort_order.length > 0">
+                <h5 class="uk-heading-bullet uk-margin-small-bottom uk-margin-small-top">Sort Paths</h5>
+                <ul class="uk-list uk-list-bullet">
+                    <li *ngFor="let sortPath of r.sort_order">{{sortPath}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="config-form" uk-modal>
@@ -39,27 +33,29 @@
             <form class="uk-grid-small" uk-grid>
                   <label class="uk-form-label">Resource:</label>
                   <div class="uk-form-controls uk-width-1-1">
-                        <select *ngIf="is_form_create" class="uk-select uk-width-1-2@s" id="env" type="number" required name="form_config.resource_name" [(ngModel)]="form_config.resource_name">
+                        <select *ngIf="is_form_create" class="uk-select uk-width-1-2@s" id="env" type="number" required name="form_config._id" [(ngModel)]="form_config._id">
                             <option *ngFor="let resource of fhirResources" value="{{resource}}">{{resource}}</option>
                         </select>
-                        <input *ngIf="!is_form_create" class="uk-input uk-width-1-2@s" type="text" disabled name="form_config.resource_name" [(ngModel)]="form_config.resource_name">
+                        <input *ngIf="!is_form_create" class="uk-input uk-width-1-2@s" type="text" disabled name="form_config._id" [(ngModel)]="form_config._id">
                   </div>
 
-                  <label class="uk-form-label">Mapping:</label>
-                  <div class="uk-form-controls uk-width-1-1" *ngFor="let mapping of form_config.resource_mapping; index as i;" uk-grid>
+                  <label class="uk-form-label">FHIR Resource Path:</label>
+                  <div class="uk-form-controls uk-width-1-1">
+                        <input class="uk-input uk-width-1-2@s" type="text" placeholder="Path to Value of FHIR Resource" name="form_config.resource_value_relative_path" [(ngModel)]="form_config.resource_value_relative_path">
+                  </div>
+
+                  <label class="uk-form-label">FHIR Resource Sort Paths:</label>
+                  <div class="uk-form-controls uk-width-1-1" *ngFor="let sortOrder of form_config.sort_order; index as i; trackBy:trackByIndex" uk-grid>
                     <div class="uk-form-controls uk-width-1-2@s">
-                        <input class="uk-input" type="text" placeholder="FHIR Resource Path" name="mapping.resource_path-{{i}}" [(ngModel)]="mapping.resource_path">
-                    </div>
-                    <div class="uk-form-controls uk-width-1-2@s">
-                        <input class="uk-input" type="text" placeholder="CSV Column" name="mapping.result_path-{{i}}" [(ngModel)]="mapping.result_path">
+                        <input class="uk-input" type="text" placeholder="FHIR Resource Sort Path" [(ngModel)]="form_config.sort_order[i]" name="form_config.sort_order{{i}}">
                     </div>
                   </div>
-                  <button uk-icon="icon: plus" class="uk-button uk-button-primary uk-button-small uk-form-label" (click)="extendFormMapping(form_config)"></button>
+                  <button uk-icon="icon: plus" class="uk-button uk-button-primary uk-button-small uk-form-label" (click)="extendSortPaths(form_config)"></button>
             </form>
         </div>
         <div *ngIf="is_form_create" class="uk-modal-footer uk-text-right">
             <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" 
-             [disabled]="!form_config.resource_name">Create</button>
+             [disabled]="!form_config._id">Create</button>
         </div>
         <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
             <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()">Submit Changes</button>

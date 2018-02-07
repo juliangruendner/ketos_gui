@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ResourcesConfigService } from '../services/resourcesconfig.service';
 import { ResourceConfig } from '../models/resourceConfig.model';
 import * as _ from 'lodash';
-import { ResourceMapping } from '../models/resourceMapping.model';
 import { FhirBaseService } from '../services/fhirbase.service';
 
 @Component({
@@ -24,6 +23,7 @@ export class ResourceConfigComponent implements OnInit {
   ngOnInit() {
     this.resourcesConfigService.getAll().subscribe(resp => {
       this.resourceConfigs = resp;
+      console.log(this.resourceConfigs);
     });
 
     // TODO add to localstorage?
@@ -32,31 +32,35 @@ export class ResourceConfigComponent implements OnInit {
     });
   }
 
+  trackByIndex(index: number, value: string) {
+    return index;
+  }
+
   clearForm() {
     this.form_config = new ResourceConfig();
-    this.extendFormMapping(this.form_config);
+    this.extendSortPaths(this.form_config);
   }
 
   setForm(resourceConfig: ResourceConfig) {
     this.form_config = _.cloneDeep(resourceConfig);
   }
 
-  extendFormMapping(resourceConfig: ResourceConfig) {
-    if (!Array.isArray(resourceConfig.resource_mapping)) {
-      resourceConfig.resource_mapping = new Array();
+  extendSortPaths(resourceConfig: ResourceConfig) {
+    if (!Array.isArray(resourceConfig.sort_order)) {
+      resourceConfig.sort_order = new Array();
     }
 
-    resourceConfig.resource_mapping.push(new ResourceMapping());
+    resourceConfig.sort_order.push('');
   }
 
-  removeEmptyMapping(resourceConfig: ResourceConfig) {
-    resourceConfig.resource_mapping = resourceConfig.resource_mapping.filter(mapping => {
-      return mapping.resource_path !== '' && mapping.result_path !== '';
+  removeEmptySortPaths(resourceConfig: ResourceConfig) {
+    resourceConfig.sort_order = resourceConfig.sort_order.filter(sortOrder => {
+      return sortOrder !== '';
     });
   }
 
   create() {
-    this.removeEmptyMapping(this.form_config);
+    this.removeEmptySortPaths(this.form_config);
 
     this.resourcesConfigService.post(this.form_config).subscribe(resourceConfig => {
       this.resourceConfigs.push(resourceConfig);
@@ -64,17 +68,19 @@ export class ResourceConfigComponent implements OnInit {
   }
 
   edit() {
-    this.removeEmptyMapping(this.form_config);
+    this.removeEmptySortPaths(this.form_config);
+
+    console.log(this.form_config)
 
     this.resourcesConfigService.post(this.form_config).subscribe((retResourceConfig) => {
       this.resourceConfigs[this.resourceConfigs.findIndex(
-        config => retResourceConfig.resource_name === config.resource_name)] = retResourceConfig;
+        config => retResourceConfig._id === config._id)] = retResourceConfig;
     });
   }
 
   delete() {
     this.resourcesConfigService.delete(this.form_config).subscribe((resourceName) => {
-      this.resourceConfigs.splice(this.resourceConfigs.findIndex(resourceConfig => resourceName === resourceConfig.resource_name), 1);
+      this.resourceConfigs.splice(this.resourceConfigs.findIndex(resourceConfig => resourceName === resourceConfig._id), 1);
     });
   }
 

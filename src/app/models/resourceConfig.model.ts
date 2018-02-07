@@ -1,6 +1,5 @@
-import { ResourceMapping } from './resourceMapping.model';
-
 export class ResourceConfig {
-    resource_name: string;
-    resource_mapping: ResourceMapping[];
+    _id: string;
+    resource_value_relative_path: string;
+    sort_order: string[];
 }
