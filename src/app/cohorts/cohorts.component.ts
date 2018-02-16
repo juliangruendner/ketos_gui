@@ -22,6 +22,10 @@ export class CohortsComponent implements OnInit {
   }
 
   getPatientIds() {
+    this.patient_ids = null;
+    if(this.cohort_id == null) {
+      return;
+    }
     this.altasCohortService.getSingleById(this.cohort_id).subscribe(cohort => {
       this.patient_ids = cohort.patient_ids;
     });
