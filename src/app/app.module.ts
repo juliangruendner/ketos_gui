@@ -33,6 +33,8 @@ import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
 import { ResourceConfigModule } from './resource-config/resource-config.module';
 import { ResourcesConfigService } from './services/resourcesconfig.service';
 import { FhirBaseService } from './services/fhirbase.service';
+import { CohortsModule } from './cohorts/cohorts.module';
+import { AtlasCohortsService } from './services/atlasCohorts.service';
 
 
 @NgModule({
@@ -56,6 +58,7 @@ import { FhirBaseService } from './services/fhirbase.service';
     MlmodelsModule,
     AdminUserListModule,
     ResourceConfigModule,
+    CohortsModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
@@ -72,6 +75,7 @@ import { FhirBaseService } from './services/fhirbase.service';
     UsersService,
     ResourcesConfigService,
     FhirBaseService,
+    AtlasCohortsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

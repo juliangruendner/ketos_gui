@@ -1,0 +1,43 @@
+<div class="header-wrapper">
+  <h1 class="uk-heading-divider">Atlas Cohorts</h1> 
+</div>
+
+<div class="uk-panel">
+  <h3 class="uk-panel-title">How to create new Cohorts using OHDSI Atlas</h3>
+  <p>
+    To create patient cohorts please use OHDSI's Tool Atlas.<br>
+    You can create cohorts just like you are used to. The only thing to remember is the ID of the cohort created to retrieve all the patients IDs the cohort includes.<br>
+    There are two ways to determine a cohort's ID:<br>
+  </p>
+    <ul>
+        <li>
+          Look at the column "Id" in the Cohort Summary View.
+        </li>
+        <li>
+            <div contenteditable>
+              Look at a concrete Cohort's URL: e.g. http://localhost:8081/atlas/#/cohortdefinition/<span style="color: red"><b>3</b></span>.
+            </div>
+        </li>
+    </ul>
+  <p>
+    <br>Get redirected to Atlas' Cohort Creation: <button class="uk-button uk-button-primary uk-button-small" type="button" (click)="openAtlasCohorts()">Create new Atlas Cohort</button>
+  </p>
+</div>
+<br>
+<br>
+<br>
+<div class="uk-panel">
+    <h3 class="uk-panel-title">Get patient IDs for a Atlas Cohort</h3>
+    <form class="uk-form-horizontal uk-margin-large">
+      <div>
+        <label class="uk-form-label" for="cohort_id_input">Atlas Cohort ID:</label>
+        <div class="uk-form-controls">
+          <input class="uk-input uk-form-width-medium" id="cohort_id_input" type="number" name="cohort_id_input" [(ngModel)]="cohort_id">
+        </div>
+        <button class="uk-button uk-button-primary uk-button-small" type="button" (click)="getPatientIds()">Get patient IDs</button>
+        <br>
+        <br>
+        <input class="uk-width-1-1" type="text" placeholder="" name="patient_ids_out" [(ngModel)]="patient_ids">
+      </div>
+    </form>
+</div>
