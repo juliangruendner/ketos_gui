@@ -33,6 +33,8 @@ import { AdminUserListModule } from './admin-user-list/admin-user-list.module';
 import { ResourceConfigModule } from './resource-config/resource-config.module';
 import { ResourcesConfigService } from './services/resourcesconfig.service';
 import { FhirBaseService } from './services/fhirbase.service';
+import { AnnotationsComponent } from './annotations/annotations.component';
+import { AnnotationsModule } from './annotations/annotations.module';
 
 
 @NgModule({
@@ -56,11 +58,12 @@ import { FhirBaseService } from './services/fhirbase.service';
     MlmodelsModule,
     AdminUserListModule,
     ResourceConfigModule,
+    AnnotationsModule,
 
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, AnnotationsComponent],
   providers: [
     EnvironmentsService,
     CrawlersService,

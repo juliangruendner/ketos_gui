@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit {
     this.addEntry("FHIR Resource", "/resource-config", "settings");
     this.addEntry("Data Requests", "/data", "table");
     this.addEntry("Datasets", "/about", "database");
+    this.addEntry("Annotations", "/annotations", "list");
     this.addEntry("User management", "/admin-user-list", "user", auth.getUser().username=='admin');
     this.addEntry("Configuration", "/playlists", "cog");
     this.addEntry("Logout", "/login", "sign-out");

@@ -1,0 +1,94 @@
+<div class="header-wrapper">
+  <h1 class="uk-heading-divider">Annotation Tasks</h1>
+  <div class="header-btn">
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" >Create new</button>
+  </div>  
+</div>
+
+<table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
+  <thead>
+      <tr>
+          <th class="uk-table-shrink"></th>
+          <th>Name</th>
+          <th>Crawler Id</th>
+          <th>Type</th>
+          <th>Creator Id</th>
+      </tr>
+  </thead>
+  <tbody>
+      <!-- <tr *ngFor="let f of features">
+          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form" (click)=""></button></td>
+          <td>{{f.resource}}</td>
+          <td>{{f.parameter_name}}</td>
+          <td>{{f.value}}</td>
+          <td>{{f.name}}</td>
+          <td>{{f.description}}</td>
+      </tr> -->
+  </tbody>
+</table>
+
+<div id="feature-form" uk-modal>
+  <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header">
+          <h1 class="uk-modal-title">Create Annotation Task</h1>
+          <!-- <h1 *ngIf="!is_form_create" class="uk-modal-title">Edit Annotation Task</h1> -->
+      </div>
+      <div class="uk-modal-body">
+        <ul uk-tab>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Annotators</a></li>
+        </ul>
+
+        <ul class="uk-switcher uk-margin">
+          <li>
+            <form class="uk-form-horizontal uk-margin-large">
+              <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Name:</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="text" required name="form_annotation.resource" [(ngModel)]="form_annotation.resource">
+                </div>
+
+                <div><p>&nbsp;</p></div>
+
+                <label class="uk-form-label" for="form-horizontal-text">Type:</label>
+                <div class="uk-form-controls">
+                  <select lass="uk-select" class="uk-select" required name="form_annotation.type" [(ngModel)]="form_annotation.type">
+                    <option *ngFor="let anno_type of anno_types" value="{{anno_type.id}}">{{anno_type.name}}</option>
+                  </select>
+                </div>
+
+                <div><p>&nbsp;</p></div>
+
+                <label class="uk-form-label" for="form-horizontal-text">Data Request:</label>
+                <div class="uk-form-controls">
+                  <select lass="uk-select" class="uk-select" required name="form_annotation.crawler" [(ngModel)]="form_annotation.crawler">
+                    <option *ngFor="let request of crawlers" value="{{request._id}}">{{request._id}}</option>
+                  </select>
+                </div>
+
+  
+              </div>
+            </form>
+          </li>
+          <li>
+            <ul class="uk-list uk-list-striped">
+              <li><a href="">http://ketos.ai/annotation/23kh2k23</a></li>
+              <li><a href="">http://ketos.ai/annotation/fkdjfe93</a></li>
+              <li><a href="">http://ketos.ai/annotation/8fdfosdf</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit"
+           [disabled]="true">Create</button>
+      </div>
+      <!-- <div class="uk-modal-footer uk-text-right">
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()"
+           [disabled]="true">Submit Changes</button>
+          <button class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete()">Delete</button>
+      </div> -->
+  </div>
+</div>
