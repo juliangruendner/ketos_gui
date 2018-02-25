@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   version: '(dev)',
   serverUrl: 'http://localhost:5000',
-  fhirServerUrl: 'http://gruendner.de:8080/gtfhir/base',
+  fhirServerUrl: 'http://46.101.216.15:8080/gtfhir/base/',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

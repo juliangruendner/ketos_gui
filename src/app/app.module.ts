@@ -35,6 +35,8 @@ import { ResourcesConfigService } from './services/resourcesconfig.service';
 import { FhirBaseService } from './services/fhirbase.service';
 import { AnnotationsComponent } from './annotations/annotations.component';
 import { AnnotationsModule } from './annotations/annotations.module';
+import { CohortsModule } from './cohorts/cohorts.module';
+import { AtlasCohortsService } from './services/atlasCohorts.service';
 
 
 @NgModule({
@@ -59,7 +61,7 @@ import { AnnotationsModule } from './annotations/annotations.module';
     AdminUserListModule,
     ResourceConfigModule,
     AnnotationsModule,
-
+    CohortsModule,
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
   ],
@@ -75,6 +77,7 @@ import { AnnotationsModule } from './annotations/annotations.module';
     UsersService,
     ResourcesConfigService,
     FhirBaseService,
+    AtlasCohortsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
