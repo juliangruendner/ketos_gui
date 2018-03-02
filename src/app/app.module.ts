@@ -37,6 +37,7 @@ import { AnnotationsComponent } from './annotations/annotations.component';
 import { AnnotationsModule } from './annotations/annotations.module';
 import { CohortsModule } from './cohorts/cohorts.module';
 import { AtlasCohortsService } from './services/atlasCohorts.service';
+import { AnnotationService } from './services/annotation.service';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { AtlasCohortsService } from './services/atlasCohorts.service';
     ResourcesConfigService,
     FhirBaseService,
     AtlasCohortsService,
+    AnnotationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

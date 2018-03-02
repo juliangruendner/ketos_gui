@@ -37,7 +37,7 @@
       <div class="uk-modal-body">
         <ul uk-tab>
           <li><a href="#">Settings</a></li>
-          <li><a href="#">Annotators</a></li>
+          <li disabled="true"><a href="#">Annotators</a></li>
         </ul>
 
         <ul class="uk-switcher uk-margin">
@@ -46,14 +46,14 @@
               <div class="uk-margin">
                 <label class="uk-form-label" for="form-horizontal-text">Name:</label>
                 <div class="uk-form-controls">
-                    <input class="uk-input" id="form-horizontal-text" type="text" required name="form_annotation.resource" [(ngModel)]="form_annotation.resource">
+                    <input class="uk-input" id="form-horizontal-text" type="text" required name="form_annotation.name" [(ngModel)]="form_annotation.name">
                 </div>
 
                 <div><p>&nbsp;</p></div>
 
                 <label class="uk-form-label" for="form-horizontal-text">Type:</label>
                 <div class="uk-form-controls">
-                  <select lass="uk-select" class="uk-select" required name="form_annotation.type" [(ngModel)]="form_annotation.type">
+                  <select lass="uk-select" class="uk-select" required name="form_annotation.anno_type" [(ngModel)]="form_annotation.anno_type">
                     <option *ngFor="let anno_type of anno_types" value="{{anno_type.id}}">{{anno_type.name}}</option>
                   </select>
                 </div>
@@ -62,11 +62,17 @@
 
                 <label class="uk-form-label" for="form-horizontal-text">Data Request:</label>
                 <div class="uk-form-controls">
-                  <select lass="uk-select" class="uk-select" required name="form_annotation.crawler" [(ngModel)]="form_annotation.crawler">
+                  <select lass="uk-select" class="uk-select" required name="form_annotation.crawler_job_id" [(ngModel)]="form_annotation.crawler_job_id">
                     <option *ngFor="let request of crawlers" value="{{request._id}}">{{request._id}}</option>
                   </select>
                 </div>
 
+                <div><p>&nbsp;</p></div>
+
+                <label class="uk-form-label" for="form-horizontal-text">Number of Annotators:</label>
+                <div class="uk-form-controls">
+                  <input class="uk-input" id="form-horizontal-text" type="number" required #numberannotators>
+                </div>
   
               </div>
             </form>
@@ -82,8 +88,7 @@
 
       </div>
       <div class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit"
-           [disabled]="true">Create</button>
+          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create(form_annotation, numberannotators.value)">Create</button>
       </div>
       <!-- <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()"
