@@ -38,6 +38,8 @@ import { AnnotationsModule } from './annotations/annotations.module';
 import { CohortsModule } from './cohorts/cohorts.module';
 import { AtlasCohortsService } from './services/atlasCohorts.service';
 import { AnnotationService } from './services/annotation.service';
+import { AnnotoolModule } from './annotool/annotool.module';
+import { AnnotoolComponent } from './annotool/annotool.component';
 
 
 @NgModule({
@@ -63,10 +65,11 @@ import { AnnotationService } from './services/annotation.service';
     ResourceConfigModule,
     AnnotationsModule,
     CohortsModule,
+    AnnotoolModule,
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
   ],
-  declarations: [AppComponent, AnnotationsComponent],
+  declarations: [AppComponent],
   providers: [
     EnvironmentsService,
     CrawlersService,

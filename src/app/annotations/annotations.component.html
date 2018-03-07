@@ -1,7 +1,7 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">Annotation Tasks</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" >Create new</button>
+      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" (click)="beforeOpenModal()">Create new</button>
   </div>  
 </div>
 
@@ -12,18 +12,15 @@
           <th>Name</th>
           <th>Crawler Id</th>
           <th>Type</th>
-          <th>Creator Id</th>
       </tr>
   </thead>
   <tbody>
-      <!-- <tr *ngFor="let f of features">
-          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form" (click)=""></button></td>
-          <td>{{f.resource}}</td>
-          <td>{{f.parameter_name}}</td>
-          <td>{{f.value}}</td>
-          <td>{{f.name}}</td>
-          <td>{{f.description}}</td>
-      </tr> -->
+      <tr *ngFor="let annotation of annotations">
+          <td><button uk-icon="icon: pencil" uk-toggle=" target: #feature-form" (click)="edit(annotation)"></button></td>
+          <td>{{annotation.name}}</td>
+          <td>{{annotation.crawler_job_id}}</td>
+          <td>{{mapAnnoCodeToName(annotation.anno_type)}}</td>
+      </tr>
   </tbody>
 </table>
 
@@ -37,7 +34,8 @@
       <div class="uk-modal-body">
         <ul uk-tab>
           <li><a href="#">Settings</a></li>
-          <li disabled="true"><a href="#">Annotators</a></li>
+          <li *ngIf="edit_mode"><a href="#">Annotators</a></li>
+          <li *ngIf="edit_mode"><a href="#">Scale</a></li>
         </ul>
 
         <ul class="uk-switcher uk-margin">
@@ -67,28 +65,49 @@
                   </select>
                 </div>
 
-                <div><p>&nbsp;</p></div>
-
-                <label class="uk-form-label" for="form-horizontal-text">Number of Annotators:</label>
-                <div class="uk-form-controls">
-                  <input class="uk-input" id="form-horizontal-text" type="number" required #numberannotators>
+                <div *ngIf="!edit_mode">
+                  <div><p>&nbsp;</p></div>
+                  <label class="uk-form-label" for="form-horizontal-text">Number of Annotators:</label>
+                  <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="number" required name="numberannotators" [(ngModel)]="numberannotators">
+                  </div>
                 </div>
+                
   
               </div>
             </form>
           </li>
           <li>
             <ul class="uk-list uk-list-striped">
-              <li><a href="">http://ketos.ai/annotation/23kh2k23</a></li>
-              <li><a href="">http://ketos.ai/annotation/fkdjfe93</a></li>
-              <li><a href="">http://ketos.ai/annotation/8fdfosdf</a></li>
+              <li *ngFor="let annotator of annotators"><a href="{{getUrl(annotator.token)}}">{{getUrl(annotator.token)}}</a></li>
+            </ul>
+          </li>
+
+          <li>
+            
+
+            <div uk-grid class="uk-margin">
+                <div class="uk-width-expand">
+                    <input class="uk-input" type="text" placeholder="Name" #entryname>
+                </div>
+                <div class="uk-width-auto">
+                    <button class="uk-button uk-button-primary" (click)="createScaleEntry(form_annotation, entryname.value)">Add Entry</button>
+                </div>
+            </div>
+            
+            <ul class="uk-list uk-list-striped">
+              <li *ngFor="let scale_entry of scale_entries">
+                {{scale_entry.name}} (Code: {{scale_entry.code}})
+                <button class="uk-button uk-button-default uk-button-small uk-align-right">Remove</button>
+              </li>
             </ul>
           </li>
         </ul>
 
       </div>
       <div class="uk-modal-footer uk-text-right">
-          <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create(form_annotation, numberannotators.value)">Create</button>
+          <button *ngIf="!edit_mode" class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create(form_annotation, numberannotators)">Create</button>
+          <button *ngIf="edit_mode" class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete(form_annotation)">Delete</button>
       </div>
       <!-- <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()"
