@@ -18,7 +18,7 @@ export class AnnotationsComponent implements OnInit {
   annotations : Annotation[];
   edit_mode: boolean = false;
   annotators: any[];
-  ketosUrl = "http://ketos.ai";
+  ketosAnnoUrl = "http://localhost:4200/annotool/";
   numberannotators : number;
   scale_entries: ScaleEntry[];
 
@@ -84,7 +84,7 @@ export class AnnotationsComponent implements OnInit {
   }
 
   getUrl(token: string){
-    return this.ketosUrl + "/annotation/" + token;
+    return this.ketosAnnoUrl + token;
   }
 
   createScaleEntry(annotation: Annotation, entryName: string){

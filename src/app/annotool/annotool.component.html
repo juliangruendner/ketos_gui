@@ -4,8 +4,35 @@
         <img src="assets/ketos_white.svg">
     </div>
     <div class="annotool-inner uk-card uk-card-default uk-card-body">
-      <h3 class="uk-card-title">ANNOTOOL</h3>
+      <h3 class="uk-card-title">Annotation Task: {{task.name}}</h3>
+
+      <div class="progress-wrapper">
+        <progress id="js-progressbar" class="uk-progress" value="10" max="100"></progress>
+        <div>0 / {{entries.length}} entries done</div>
+      </div>
       
+
+      <div class="uk-child-width-1-2 uk-text-center" uk-grid>
+        <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              {{entries[current_entry_id].json}}
+            </div>
+        </div>
+        <div>
+          
+            
+            <div class="uk-card uk-card-default uk-card-body scale-entries">
+              
+              <div class="uk-margin" *ngFor="let scale_entry of scale_entries">
+                <label><input class="uk-{{getType(task.anno_type)}}" type="{{getType(task.anno_type)}}" name="radio">&nbsp;&nbsp;{{scale_entry.name}}</label>
+              </div>
+              
+            </div>
+          
+          <button class="uk-button uk-button-primary">Save & continue</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

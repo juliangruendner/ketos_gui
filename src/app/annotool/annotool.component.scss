@@ -14,14 +14,14 @@
 }
 
 .annotool-box {
-  width: 600px;
+  width: 800px;
   min-height: 500px;
   /* margin: 0 auto; */
   position: absolute;
   top: 30%;
   left: 50%;
   margin-top: -200px;
-  margin-left: -300px;
+  margin-left: -400px;
 }
 
 .logo-wrapper{
@@ -35,9 +35,7 @@
 }
 
 .annotool-inner{
-  height: 300px;
   text-align: center;
-
   button{
     width: 100%;
   }
@@ -47,3 +45,17 @@
   width: 100%;
 }
 
+.scale-entries{
+  text-align: left;
+}
+
+.progress-wrapper{
+  text-align: center;
+  margin-bottom: 20px;
+
+  div{
+    margin-top: -18px;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}

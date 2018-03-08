@@ -10,6 +10,7 @@ import { AnnotationEntry } from '../models/AnnotationEntry';
 
 const routes = {
   base: environment.serverUrl + '/annotation_tasks',
+  get: (id : number) => routes.base + `/${id}`,
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/annotation_tasks`,
   getAnnotators: (id : number) => routes.base + `/${id}/annotators`,
   delete: (id : number) => routes.base + `/${id}`,
@@ -23,6 +24,10 @@ export class AnnotationService {
 
   constructor(private httpClient: HttpClient, private authService : AuthenticationService) { }
     
+  get(annotation_id: number): Observable<Annotation> {
+    return this.httpClient.get<Annotation>(routes.get(annotation_id));
+  }
+
   getAll(): Observable<Annotation[]> {
     return this.httpClient.get<Annotation[]>(routes.allByUser(this.authService.getUser().id));
   }
