@@ -3,4 +3,5 @@ export class ScaleEntry {
     name: string;
     code: number;
     task_id: number;
+    checked: boolean;
 }
