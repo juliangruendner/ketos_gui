@@ -18,6 +18,7 @@ const routes = {
   scaleentries: (id : number) => routes.base + `/${id}/scale_entries`,
   annotationByTask: (id : string) => environment.serverUrl + `/annotators/${id}`,
   entries: (id : number) => routes.base + `/${id}/entries`,
+  deleteScaleEntry: (annotation_id: number, scale_entry_id: number) => routes.base + `/${annotation_id}/scale_entries/${scale_entry_id}`,
 };
 
 export class AnnotationService {
@@ -58,6 +59,10 @@ export class AnnotationService {
 
   getEntries(id: number): Observable<AnnotationEntry[]>{
     return this.httpClient.get<AnnotationEntry[]>(routes.entries(id));
+  }
+
+  deleteScaleEntry(annotation_id: number, scale_entry_id: number) : Observable<Annotation> {
+    return this.httpClient.delete<Annotation>(routes.deleteScaleEntry(annotation_id, scale_entry_id));
   }
 
   

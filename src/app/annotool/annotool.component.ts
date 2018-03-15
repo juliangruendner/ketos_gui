@@ -19,6 +19,7 @@ export class AnnotoolComponent implements OnInit {
   entries: AnnotationEntry[] = [];
   task: Annotation;
   current_entry_id: number = 0;
+  result_scale_entry: ScaleEntry;
 
   constructor(private route: ActivatedRoute, private annotationService: AnnotationService) {}
 
@@ -84,12 +85,16 @@ export class AnnotoolComponent implements OnInit {
   }
 
   public save(){
-    console.log(this.scale_entries);
+    console.log(this.result_scale_entry);
     if(this.current_entry_id < this.entries.length - 1){
       this.current_entry_id++;
     }else{
       // UIkit.modal.alert('Annotation finished! Thank you for your work.')
     }
+  }
+
+  public setResult(scaleEntry: ScaleEntry){
+    this.result_scale_entry = scaleEntry;
   }
 
 }

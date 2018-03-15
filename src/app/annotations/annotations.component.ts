@@ -109,4 +109,10 @@ export class AnnotationsComponent implements OnInit {
     });
   }
 
+  deleteScaleEntry(annotation: Annotation, scale_entry: ScaleEntry){
+    this.annotationService.deleteScaleEntry(annotation.id, scale_entry.id).subscribe(resp => {
+      this.getScaleEntries(annotation);
+    });
+  }
+
 }
