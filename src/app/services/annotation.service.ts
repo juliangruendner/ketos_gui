@@ -7,6 +7,8 @@ import { PatientIDs } from '../models/patientIds.model';
 import { Annotation } from '../models/annotation';
 import { ScaleEntry } from '../models/ScaleEntry';
 import { AnnotationEntry } from '../models/AnnotationEntry';
+import { AnnotationResult } from '../models/AnnotationResult';
+import { Annotator } from '../models/Annotator';
 
 const routes = {
   base: environment.serverUrl + '/annotation_tasks',
@@ -19,6 +21,9 @@ const routes = {
   annotationByTask: (id : string) => environment.serverUrl + `/annotators/${id}`,
   entries: (id : number) => routes.base + `/${id}/entries`,
   deleteScaleEntry: (annotation_id: number, scale_entry_id: number) => routes.base + `/${annotation_id}/scale_entries/${scale_entry_id}`,
+  saveResult: () => routes.base + '/results',
+  annotatorsByToken: (token : string) => environment.serverUrl + `/annotators/${token}`,
+  resultsByAnnotator: (id : number) => environment.serverUrl + `/annotators/${id}/results`,
 };
 
 export class AnnotationService {
@@ -63,6 +68,18 @@ export class AnnotationService {
 
   deleteScaleEntry(annotation_id: number, scale_entry_id: number) : Observable<Annotation> {
     return this.httpClient.delete<Annotation>(routes.deleteScaleEntry(annotation_id, scale_entry_id));
+  }
+
+  saveResult(annotationResult: AnnotationResult): Observable<any> {
+    return this.httpClient.post<any>(routes.saveResult(), annotationResult);
+  }
+
+  getAnnotatorByToken(token: string): Observable<Annotator> {
+    return this.httpClient.get<any>(routes.annotatorsByToken(token));
+  }
+
+  getResultsByAnnotator(id: number): Observable<any> {
+    return this.httpClient.get<any>(routes.resultsByAnnotator(id));
   }
 
   

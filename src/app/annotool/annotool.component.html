@@ -8,11 +8,15 @@
 
       <div class="progress-wrapper">
         <progress id="js-progressbar" class="uk-progress" value="{{current_entry_id + 1}}" max="{{entries.length}}"></progress>
-        <div>entry {{current_entry_id + 1}} of {{entries.length}}</div>
+        <div>entry {{current_entry_id + 1 + already_done}} of {{entries.length + already_done}}</div>
       </div>
       
+      <div class="annotation-finished" *ngIf="isFinished">
+        <span uk-icon="icon: check; ratio: 4"></span><br>
+        Annotation is finished. Thank you for your work!
+      </div>
 
-      <div uk-grid>
+      <div uk-grid *ngIf="!isFinished">
         <div class="uk-width-2-3">
             <div class="uk-card uk-card-default uk-card-body">
               <table class="uk-table uk-table-striped">
