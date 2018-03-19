@@ -27,6 +27,7 @@ export class AnnotoolComponent implements OnInit {
   current_entry_id: number = 0;
   already_done: number = 0;
   isFinished: boolean = false;
+  isChecked: boolean = false;
   result_scale_entries: Map<number, ScaleEntry> = new Map<number, ScaleEntry>();
 
   constructor(private route: ActivatedRoute, private annotationService: AnnotationService) {}
@@ -72,9 +73,9 @@ export class AnnotoolComponent implements OnInit {
 
       this.annotationService.getScaleEntries(this.task_id).subscribe(resp => {
         this.scale_entries = resp;
-        for(var e of this.scale_entries){
-          e.checked = false;
-        }
+        // for(var e of this.scale_entries){
+        //   e.checked = false;
+        // }
       });
     });
     
@@ -96,7 +97,8 @@ export class AnnotoolComponent implements OnInit {
   public getEntryJson(): any{
     var entry = this.getEntry();
     if(entry != undefined){
-      var json = JSON.parse(entry.json.replace(/'/g, "\"").replace(/None/g, "null"));
+      // var json = JSON.parse(entry.json.replace(/'/g, "\"").replace(/None/g, "null"));
+      var json = JSON.parse(entry.json);
       var ret = [];
       for(var j of json){
         var key = Object.keys(j)[0];
@@ -119,19 +121,23 @@ export class AnnotoolComponent implements OnInit {
   }
 
   public save(){
-    this.result_scale_entries.forEach((value: ScaleEntry, key: number) => {
-      let tmp = new AnnotationResult();
-      tmp.annotator_id = this.annotator.id;
-      tmp.entry_id = this.getEntry().id;
-      tmp.scale_entry_id = value.id;
-      this.annotationService.saveResult(tmp).subscribe(resp => {});
-    });
+    // this.result_scale_entries.forEach((value: ScaleEntry, key: number) => {
+    //   let tmp = new AnnotationResult();
+    //   tmp.annotator_id = this.annotator.id;
+    //   tmp.entry_id = this.getEntry().id;
+    //   tmp.scale_entry_id = value.id;
+    //   this.annotationService.saveResult(tmp).subscribe(resp => {});
+    // });
     
-    if(this.current_entry_id < this.entries.length - 1){
-      this.current_entry_id++;
-    }else{
-      this.isFinished = true;
-    }
+    // if(this.current_entry_id < this.entries.length - 1){
+    //   this.current_entry_id++;
+    // }else{
+    //   this.isFinished = true;
+    // }
+
+    // console.log(this.scale_entries);
+    // this.checked = false;
+    this.result_scale_entries = new Map<number, ScaleEntry>();
   }
 
   public setResult(scaleEntry: ScaleEntry){
@@ -150,4 +156,8 @@ export class AnnotoolComponent implements OnInit {
     console.log(this.result_scale_entries);
   }
 
+
+  public test(x: any){
+    console.log(x);
+  }
 }

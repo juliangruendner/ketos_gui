@@ -4,4 +4,5 @@ export class Annotation {
     creator_id: number;
     name: string;
     anno_type: number;
+    description: string;
 }

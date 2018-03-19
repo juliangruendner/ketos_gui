@@ -19,6 +19,7 @@
       <div uk-grid *ngIf="!isFinished">
         <div class="uk-width-2-3">
             <div class="uk-card uk-card-default uk-card-body">
+
               <table class="uk-table uk-table-striped">
                 <thead>
                   <tr>
@@ -37,13 +38,15 @@
         </div>
         <div class="uk-width-expand">
           <div class="uk-card uk-card-default uk-card-body scale-entries">
+            <span>{{task.description}}</span>
             <div class="uk-margin" *ngFor="let scale_entry of scale_entries">
               <label>
-                <input class="uk-{{getType(task.anno_type)}}" type="{{getType(task.anno_type)}}" name="radio" (change)="setResult(scale_entry)">
+                <input class="uk-{{getType(task.anno_type)}}" type="{{getType(task.anno_type)}}" name="radio" [checked]="isChecked">
                 &nbsp;&nbsp;{{scale_entry.name}}
               </label>
             </div>
           </div>
+          
           <button class="uk-button uk-button-primary" (click)="save()">Save & continue</button>
         </div>
       </div>
