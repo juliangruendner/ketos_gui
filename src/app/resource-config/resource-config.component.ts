@@ -54,6 +54,9 @@ export class ResourceConfigComponent implements OnInit {
   }
 
   removeEmptySortPaths(resourceConfig: ResourceConfig) {
+    if (!Array.isArray(resourceConfig.sort_order)) {
+      resourceConfig.sort_order = new Array();
+    }
     resourceConfig.sort_order = resourceConfig.sort_order.filter(sortOrder => {
       return sortOrder !== '';
     });
@@ -74,13 +77,17 @@ export class ResourceConfigComponent implements OnInit {
 
     this.resourcesConfigService.post(this.form_config).subscribe((retResourceConfig) => {
       this.resourceConfigs[this.resourceConfigs.findIndex(
-        config => retResourceConfig._id === config._id)] = retResourceConfig;
+        config => retResourceConfig.resource_name === config.resource_name)] = retResourceConfig;
     });
   }
 
   delete() {
-    this.resourcesConfigService.delete(this.form_config).subscribe((resourceName) => {
-      this.resourceConfigs.splice(this.resourceConfigs.findIndex(resourceConfig => resourceName === resourceConfig._id), 1);
+    this.removeEmptySortPaths(this.form_config);
+
+    console.log(this.form_config)
+
+    this.resourcesConfigService.delete(this.form_config).subscribe((retResourceConfig) => {
+      this.resourceConfigs.splice(this.resourceConfigs.findIndex(resourceConfig => retResourceConfig.resource_name === resourceConfig.resource_name), 1);
     });
   }
 

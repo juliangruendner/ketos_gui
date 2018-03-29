@@ -6,8 +6,7 @@ import { environment } from '../../environments/environment';
 import { ResourceConfig } from '../models/resourceConfig.model';
 
 const routes = {
-  base: environment.serverUrl + '/resources_config',
-  singleById: (resourceName: string) => environment.serverUrl + `/resources_config/${resourceName}`,
+  base: environment.serverUrl + '/resources_config'
 };
 
 @Injectable()
@@ -19,16 +18,13 @@ export class ResourcesConfigService {
     return this.httpClient.get<ResourceConfig[]>(routes.base);
   }
 
-  getSingleById(resourceName: string): Observable<ResourceConfig> {
-    return this.httpClient.get<ResourceConfig>(routes.singleById(resourceName));
-  }
-
   post(resoureConfig: ResourceConfig): Observable<ResourceConfig> {
-    return this.httpClient.post<ResourceConfig>(routes.singleById(resoureConfig._id), resoureConfig);
+    return this.httpClient.post<ResourceConfig>(routes.base, resoureConfig);
   }
 
-  delete(resoureConfig: ResourceConfig): Observable<String> {
-    return this.httpClient.delete<String>(routes.singleById(resoureConfig._id));
+  delete(resoureConfig: ResourceConfig): Observable<ResourceConfig> {
+    // Angular does not allow bodies on delete requests -> use generic method instead
+    return this.httpClient.request<ResourceConfig>('delete', routes.base, {"body": resoureConfig});
   }
 
 }
