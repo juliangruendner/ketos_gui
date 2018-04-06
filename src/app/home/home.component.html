@@ -1,4 +1,68 @@
 
+<h1 class="uk-h1">KETOS DASHBOARD</h1>
+
+<div class="uk-width-1-1">
+Welcome to the Ketos machine learning development and deployment platform.
+
+Ketos allows you to create your own development environment for R or TensorFlow and install all your needed packages.
+
+Once your environment ist installed you can request data from our data service and start building your own machine learning or statistical
+analysis model.
+
+Once your model is build it will be available for outside queries straight away, allowing it to be integrated as an expert system 
+
+into apps or EHRs.
+
+<p>
+Is it your first time here? - check out our getting started guide <a class="uk-link-text ketos_link" (click)="gotoRoute('/environments')">Getting Started Guide</a> 
+</p>
+</div>
+
+
+<h2 class="uk-heading-line uk-text-center"><span>What would you like to do next ?</span></h2>
+
+<div class="uk-child-width-1-3@m uk-grid-small uk-grid-match ketos_margin_top" uk-grid>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body uk-card uk-card-hover" (click)="gotoRoute('/environments')">
+            <h3 class="uk-card-title">Environments</h3>
+            <p>Create your own development environment, choose from different base installation like TensorFlow and R</p>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body uk-card uk-card-hover" (click)="gotoRoute('/mlmodels')">
+            <h3 class="uk-card-title">Models</h3>
+            <p>Create a new basic model and assign it to a Environments</p>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body uk-card uk-card-hover" (click)="gotoRoute('/cohorts')">
+            <h3 class="uk-card-title">Cohort Selection</h3>
+            <p>Create a cohort using ohdsi atlas and extract the patient IDs of your cohort</p>
+        </div>
+    </div>
+</div>
+<div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body uk-card uk-card-hover" (click)="gotoRoute('/data')">
+            <h3 class="uk-card-title">Data Requests</h3>
+            <p>Create a new Data Request to recieve standardised input data for your model building process</p>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body uk-card uk-card-hover" (click)="gotoRoute('/feature-sets')">
+            <h3 class="uk-card-title">Feature Sets</h3>
+            <p>Create sets of features for your data request</p>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body uk-card uk-card-hover" (click)="gotoRoute('/features')">
+            <h3 class="uk-card-title">Features</h3>
+            <p>Create your own Features to be used as part of feature sets</p>
+        </div>
+    </div>
+</div>
+
+
 
 <p uk-margin>
   <button class="uk-button uk-button-default">Default</button>
@@ -13,6 +77,9 @@
 
 <!-- This is a button toggling the modal -->
 <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #modal-example">Open</button>
+
+
+
 
 <!-- This is an anchor toggling the modal -->
 <a href="#modal-example" uk-toggle>Open</a>
