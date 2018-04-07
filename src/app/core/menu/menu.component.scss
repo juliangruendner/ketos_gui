@@ -27,8 +27,7 @@
 }
 
 .user-wrapper {
-    position: absolute;
-    bottom: 16px;
-    left: 60px;
-    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.5);
+    padding-left: 40px;
+    padding-top: 10px;
 }
