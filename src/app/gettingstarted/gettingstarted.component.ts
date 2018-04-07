@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { QuoteService } from './quote.service';
 import { MenuComponent } from '../core/menu/menu.component';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './gettingstarted.component.html',
+  styleUrls: ['./gettingstarted.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class GettingStartedComponent implements OnInit {
 
   quote: string;
   isLoading: boolean;
 
-  constructor(private quoteService: QuoteService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.isLoading = false;

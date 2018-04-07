@@ -40,7 +40,7 @@ import { AtlasCohortsService } from './services/atlasCohorts.service';
 import { AnnotationService } from './services/annotation.service';
 import { AnnotoolModule } from './annotool/annotool.module';
 import { AnnotoolComponent } from './annotool/annotool.component';
-
+import {GettingStartedModule} from './gettingstarted/gettingstarted.module';
 
 @NgModule({
   imports: [
@@ -66,6 +66,7 @@ import { AnnotoolComponent } from './annotool/annotool.component';
     AnnotationsModule,
     CohortsModule,
     AnnotoolModule,
+    GettingStartedModule,
     //must be after other modules, otherwise path is not detected
     AppRoutingModule,
   ],

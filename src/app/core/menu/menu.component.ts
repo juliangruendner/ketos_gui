@@ -14,17 +14,17 @@ export class MenuComponent implements OnInit {
   entries : MenuEntry[] = []
 
   constructor(public auth: AuthenticationService, private router: Router) { 
+    this.addEntry("Dashboard", "/home", "thumbnails");
     this.addEntry("Environments", "/environments", "desktop");
     this.addEntry("ML Models", "/mlmodels", "thumbnails");
-    this.addEntry("Features", "/features", "bookmark");
-    this.addEntry("Feature Sets", "/feature-sets", "move");
     this.addEntry("Cohorts", "/cohorts", "users");
-    this.addEntry("FHIR Resource", "/resource-config", "settings");
     this.addEntry("Data Requests", "/data", "table");
-    this.addEntry("Datasets", "/about", "database");
+    this.addEntry("Feature Sets", "/feature-sets", "move");
+    this.addEntry("Features", "/features", "bookmark");
     this.addEntry("Annotations", "/annotations", "list");
+    this.addEntry("FHIR Resource", "/resource-config", "settings");
     this.addEntry("User management", "/admin-user-list", "user", auth.getUser().username=='admin');
-    this.addEntry("Configuration", "/playlists", "cog");
+    this.addEntry("Getting Started", "/gettingstarted", "info");
     this.addEntry("Logout", "/login", "sign-out");
   }
 
