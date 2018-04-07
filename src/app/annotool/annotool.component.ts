@@ -73,9 +73,9 @@ export class AnnotoolComponent implements OnInit {
 
       this.annotationService.getScaleEntries(this.task_id).subscribe(resp => {
         this.scale_entries = resp;
-        // for(var e of this.scale_entries){
-        //   e.checked = false;
-        // }
+        for(var e of this.scale_entries){
+          e.checked = false;
+        }
       });
     });
     
@@ -113,31 +113,34 @@ export class AnnotoolComponent implements OnInit {
     return [];
   }
 
-  public getType(id: number): string{
-    if(id == 0){
+  public getType(): string{
+    if(this.task.anno_type == 0){
       return "checkbox";
     }
     return "radio";
   }
 
   public save(){
-    // this.result_scale_entries.forEach((value: ScaleEntry, key: number) => {
-    //   let tmp = new AnnotationResult();
-    //   tmp.annotator_id = this.annotator.id;
-    //   tmp.entry_id = this.getEntry().id;
-    //   tmp.scale_entry_id = value.id;
-    //   this.annotationService.saveResult(tmp).subscribe(resp => {});
-    // });
-    
-    // if(this.current_entry_id < this.entries.length - 1){
-    //   this.current_entry_id++;
-    // }else{
-    //   this.isFinished = true;
-    // }
+  
+    console.log(this.scale_entries);
 
-    // console.log(this.scale_entries);
-    // this.checked = false;
-    this.result_scale_entries = new Map<number, ScaleEntry>();
+    this.scale_entries.forEach((value: ScaleEntry, key: number) => {
+      if(value.checked){
+        let tmp = new AnnotationResult();
+        tmp.annotator_id = this.annotator.id;
+        tmp.entry_id = this.getEntry().id;
+        tmp.scale_entry_id = value.id;
+        this.annotationService.saveResult(tmp).subscribe(resp => {});
+      }
+      value.checked = false;
+    });
+    
+    if(this.current_entry_id < this.entries.length - 1){
+      this.current_entry_id++;
+    }else{
+      this.isFinished = true;
+    }
+  
   }
 
   public setResult(scaleEntry: ScaleEntry){
@@ -152,12 +155,6 @@ export class AnnotoolComponent implements OnInit {
     }else{
       this.result_scale_entries.set(scaleEntry.id, undefined);
     }
-    
-    console.log(this.result_scale_entries);
   }
 
-
-  public test(x: any){
-    console.log(x);
-  }
 }

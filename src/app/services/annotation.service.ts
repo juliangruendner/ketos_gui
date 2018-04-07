@@ -9,10 +9,12 @@ import { ScaleEntry } from '../models/ScaleEntry';
 import { AnnotationEntry } from '../models/AnnotationEntry';
 import { AnnotationResult } from '../models/AnnotationResult';
 import { Annotator } from '../models/Annotator';
+import { ObservationFHIRResult } from '../models/ObservationFHIRResult';
 
 const routes = {
   base: environment.serverUrl + '/annotation_tasks',
   get: (id : number) => routes.base + `/${id}`,
+  postResults: (id: number) => routes.base + `/${id}/results`,
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/annotation_tasks`,
   getAnnotators: (id : number) => routes.base + `/${id}/annotators`,
   delete: (id : number) => routes.base + `/${id}`,
@@ -82,5 +84,8 @@ export class AnnotationService {
     return this.httpClient.get<any>(routes.resultsByAnnotator(id));
   }
 
+  saveToFHIR(id: number, details: ObservationFHIRResult): Observable<any> {
+    return this.httpClient.post<any>(routes.postResults(id), details);
+  }
   
 }

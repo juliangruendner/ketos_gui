@@ -36,6 +36,7 @@
           <li><a href="#">Settings</a></li>
           <li *ngIf="edit_mode"><a href="#">Annotators</a></li>
           <li *ngIf="edit_mode"><a href="#">Answer Options</a></li>
+          <li *ngIf="edit_mode"><a href="#">Save to FHIR</a></li>
         </ul>
 
         <ul class="uk-switcher uk-margin">
@@ -97,8 +98,11 @@
                 <div class="uk-width-expand">
                     <input class="uk-input" type="text" placeholder="Name" #entryname>
                 </div>
+                <div class="uk-width-expand">
+                  <input class="uk-input" type="text" placeholder="Code" #code>
+                </div>
                 <div class="uk-width-auto">
-                    <button class="uk-button uk-button-primary" (click)="createScaleEntry(form_annotation, entryname.value); entryname.value=''">Add Entry</button>
+                    <button class="uk-button uk-button-primary" (click)="createScaleEntry(form_annotation, entryname.value, code.value); entryname.value=''; code.value=''">Add Entry</button>
                 </div>
             </div>
             
@@ -108,6 +112,38 @@
                 <button class="uk-button uk-button-default uk-button-small uk-align-right" (click)="deleteScaleEntry(form_annotation, scale_entry)">Remove</button>
               </li>
             </ul>
+          </li>
+
+          <li>
+
+            <form class="uk-form-horizontal uk-margin-large">
+              <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Server:</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="text" value="http://ketos.ai:8080/gtfhir/base/" #server>
+                </div>
+
+                <div><p>&nbsp;</p></div>
+
+                <label class="uk-form-label" for="form-horizontal-text">System:</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="text" value="http://snomed.info/sct" #system>
+                </div>
+
+                <div><p>&nbsp;</p></div>
+
+                <label class="uk-form-label" for="form-horizontal-text">Code:</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="text" value="1060601000000109" #code>
+                </div>
+
+                <div><p>&nbsp;</p></div>
+                
+                <button [hidden]="showLoading" class="uk-button uk-button-primary" type="submit" (click)="writeToFHIR(server.value, system.value, code.value)">Write to FHIR Server</button>
+                <div [hidden]="!showLoading" uk-spinner></div>
+
+              </div>
+            </form>
           </li>
         </ul>
 

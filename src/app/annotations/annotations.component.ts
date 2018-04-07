@@ -5,6 +5,7 @@ import { AnnotationService } from '../services/annotation.service';
 import { Annotation } from '../models/annotation';
 import { environment } from '../../environments/environment.prod';
 import { ScaleEntry } from '../models/ScaleEntry';
+import { ObservationFHIRResult } from '../models/ObservationFHIRResult';
 
 @Component({
   selector: 'app-annotations',
@@ -21,6 +22,7 @@ export class AnnotationsComponent implements OnInit {
   ketosAnnoUrl = "http://localhost:4200/annotool/";
   numberannotators : number;
   scale_entries: ScaleEntry[];
+  showLoading: boolean = false;
 
   anno_types : any = [
     {"name": "Multiple Choice", "id": 0},
@@ -87,16 +89,16 @@ export class AnnotationsComponent implements OnInit {
     return this.ketosAnnoUrl + token;
   }
 
-  createScaleEntry(annotation: Annotation, entryName: string){
-    var max_code : number = 0;
-    for(var scale_entry of this.scale_entries){
-      if (scale_entry.code > max_code){
-        max_code = +scale_entry.code;
-      }
-    }
+  createScaleEntry(annotation: Annotation, entryName: string, code: string){
+    // var max_code : number = 0;
+    // for(var scale_entry of this.scale_entries){
+    //   if (scale_entry.code > max_code){
+    //     max_code = +scale_entry.code;
+    //   }
+    // }
 
     var tmp = new ScaleEntry();
-    tmp.code = max_code + 1;
+    tmp.code = code;
     tmp.name = entryName;
     this.annotationService.createScaleEntry(annotation.id, tmp).subscribe(resp => {
       this.getScaleEntries(annotation);
@@ -114,5 +116,18 @@ export class AnnotationsComponent implements OnInit {
       this.getScaleEntries(annotation);
     });
   }
+
+  writeToFHIR(server: string, system: string, code: string){
+    let details = new ObservationFHIRResult();
+    details.code = code;
+    details.server_url = server;
+    details.system = system;
+    this.showLoading = true;
+
+    this.annotationService.saveToFHIR(this.form_annotation.id, details).subscribe(resp => {
+      this.showLoading = false;
+    });
+  }
+
 
 }

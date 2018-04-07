@@ -1,7 +1,7 @@
 export class ScaleEntry {
     id : number;
     name: string;
-    code: number;
+    code: string;
     task_id: number;
     checked: boolean;
 }

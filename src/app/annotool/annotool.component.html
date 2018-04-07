@@ -41,7 +41,8 @@
             <span>{{task.description}}</span>
             <div class="uk-margin" *ngFor="let scale_entry of scale_entries">
               <label>
-                <input class="uk-{{getType(task.anno_type)}}" type="{{getType(task.anno_type)}}" name="radio" [checked]="isChecked">
+                <input *ngIf="task.anno_type == 0" class="uk-checkbox" type="checkbox" name="{{scale_entry.name}}" [(ngModel)]="scale_entry.checked">
+                <input *ngIf="task.anno_type == 1" class="uk-radio" type="radio" name="radio" [(ngModel)]="scale_entry.checked">
                 &nbsp;&nbsp;{{scale_entry.name}}
               </label>
             </div>
