@@ -10,7 +10,8 @@ const routes = {
   singleById: (id : number) => environment.serverUrl + `/models/${id}`,
   prediction: (id : number) => environment.serverUrl + `/models/${id}/prediction`,
   create: (create_example_model : boolean) => environment.serverUrl + `/models?create_example_model=${create_example_model}`,
-  base: environment.serverUrl + '/models'
+  base: environment.serverUrl + '/models',
+  export: (id: number) => environment.serverUrl + `/models/${id}/export`,
 };
 
 export class MLModelsService {
@@ -31,5 +32,10 @@ export class MLModelsService {
 
   predict(id: number, patientIds: PatientIDs): Observable<any> {
     return this.httpClient.post(routes.prediction(id), patientIds);
+  }
+
+  export(id: number): void {
+    //return this.httpClient.get<Blob>(routes.export(id));
+    document.location.href = routes.export(id);
   }
 }

@@ -15,6 +15,13 @@ const proxyConfig = [
     target: 'https://api.chucknorris.io',
     changeOrigin: true,
     secure: false
+  },
+  {
+    context: '/brain',
+    pathRewrite: { '^/brain': '' },
+    target: 'http://localhost:5000',
+    changeOrigin: true,
+    secure: false
   }
 ];
 

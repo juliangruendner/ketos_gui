@@ -1,7 +1,8 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">ML Models</h1>
   <div class="header-btn">
-      <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #model-create" (click)="initCreate()">Create new</button>
+        <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #import-model" (click)="initImport()">Import existing</button>   
+        <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #model-create" (click)="initCreate()">Create new</button>
   </div>  
 </div>
 
@@ -22,9 +23,11 @@
           <td>{{m.environment.name}}</td>
           <td>{{m.feature_set.name}}</td>
           <td>
-            <div *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
-            <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
-            <div *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small ketos-predict-button" uk-toggle="target: #test" (click)="initTest(m)">Predict</button></div>
+            <div class="uk-margin-small"><button class="uk-button uk-button-primary uk-button-small" (click)="exportModel(m)"><span uk-icon="download"></span>&nbsp;Export</button></div>
+            <div class="uk-margin-small" *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
+            <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
+            <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small" uk-toggle="target: #test" (click)="initTest(m)"><span uk-icon="nut"></span>&nbsp;Predict</button></div>
+            
           </td>
       </tr>
   </tbody>
@@ -81,6 +84,53 @@
         </div>
         <div class="uk-modal-footer uk-text-right">
             <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="assignFeatureSet()" [disabled]="!assign_feature_set">Assign</button>
+        </div>
+    </div>
+  </div>
+
+
+  <div id="import-model" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h1 class="uk-modal-title">Import existing model</h1>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-horizontal uk-margin-large">
+                <div class="uk-margin">
+
+                    <label class="uk-form-label" for="env">Environment:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="env" type="number" required name="create_image_id" #importEnv>
+                            <option *ngFor="let e of envs" value="{{e.id}}">{{e.name}}</option>
+                        </select>
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+
+                    <label class="uk-form-label" for="env">Feature Set:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="env" type="number" required name="create_image_id" #importFeature>
+                            <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
+                        </select>
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+                    
+                    <label class="uk-form-label" for="env">Model File:</label>
+                    <div class="uk-form-controls">
+                        <input type="file" ng2FileSelect [uploader]="uploader"/>
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+
+                    
+                    
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-primary" type="button" (click)="importModel(importEnv.value, importFeature.value)" >Import</button>
         </div>
     </div>
   </div>

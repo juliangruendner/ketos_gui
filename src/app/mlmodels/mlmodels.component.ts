@@ -6,7 +6,7 @@ import { Environment } from '../models/environment.model';
 import { FeatureSetsService } from '../services/featuresets.service';
 import { FeatureSet } from '../models/featureSets.model';
 import { PatientIDs } from '../models/patientIds.model';
-
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-mlmodels',
@@ -29,6 +29,9 @@ export class MlmodelsComponent implements OnInit {
 
   testStr: any;
   show_spinner: boolean;
+  
+  uploader:FileUploader = new FileUploader({url: "/brain/models/import"});
+
 
   constructor(private mlModelsService: MLModelsService, private environmentsService: EnvironmentsService, private featureSetsService: FeatureSetsService) { }
 
@@ -98,6 +101,11 @@ export class MlmodelsComponent implements OnInit {
     this.setMlModel(mlmodel);
   }
 
+  initImport(){
+    this.getFeatureSets();
+    this.getEnvs();
+  }
+
   test() {
     this.show_spinner = true
     var patientIds: PatientIDs = new PatientIDs();
@@ -122,5 +130,22 @@ export class MlmodelsComponent implements OnInit {
     this.patient_ids = this.testStr = null;
     this.setMlModel(mlmodel);
   }
+
+  exportModel(mlmodel: MLModel){
+    this.mlModelsService.export(mlmodel.id);
+  }
+
+  importModel(env_id: number, feature_set_id: number){
+    console.log("XXXXX");
+    this.uploader.options.itemAlias = "file";
+    this.uploader.options.additionalParameter = {
+      environment_id: env_id,
+      feature_set_id: feature_set_id
+    };
+    this.uploader.uploadAll();
+  }
+
+
+
 
 }
