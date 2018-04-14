@@ -30,7 +30,8 @@ export class MlmodelsComponent implements OnInit {
   testStr: any;
   show_spinner: boolean;
   
-  uploader:FileUploader = new FileUploader({url: "/brain/models/import"});
+  uploader_url : string = "/brain/models/import";
+  uploader: FileUploader = new FileUploader({});
 
 
   constructor(private mlModelsService: MLModelsService, private environmentsService: EnvironmentsService, private featureSetsService: FeatureSetsService) { }
@@ -40,6 +41,7 @@ export class MlmodelsComponent implements OnInit {
       this.mlmodels = resp;
     });
     this.show_spinner = false;
+    this.uploader = new FileUploader({});
   }
 
   clearCreateInput() {
@@ -136,13 +138,11 @@ export class MlmodelsComponent implements OnInit {
   }
 
   importModel(env_id: number, feature_set_id: number){
-    console.log("XXXXX");
-    this.uploader.options.itemAlias = "file";
-    this.uploader.options.additionalParameter = {
-      environment_id: env_id,
-      feature_set_id: feature_set_id
-    };
+    // this.uploader.options.url = this.uploader_url + "?environment_id=" + env_id + "&feature_set_id=" + feature_set_id;
+    // this.uploader.options.itemAlias = "file";
+    this.uploader.setOptions({url: this.uploader_url + "?environment_id=" + env_id + "&feature_set_id=" + feature_set_id, itemAlias: "file" });
     this.uploader.uploadAll();
+    
   }
 
 
