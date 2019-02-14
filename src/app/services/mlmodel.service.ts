@@ -8,7 +8,7 @@ import { PatientIDs } from '../models/patientIds.model';
 const routes = {
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/models`,
   singleById: (id : number) => environment.serverUrl + `/models/${id}`,
-  prediction: (id : number) => environment.serverUrl + `/models/${id}/prediction`,
+  prediction: (id : number) => environment.serverUrl + `/models/${id}/prediction?writeToFhir=False&ownInputData=False`,
   create: (create_example_model : boolean) => environment.serverUrl + `/models?create_example_model=${create_example_model}`,
   base: environment.serverUrl + '/models',
   export: (id: number) => environment.serverUrl + `/models/${id}/export`,

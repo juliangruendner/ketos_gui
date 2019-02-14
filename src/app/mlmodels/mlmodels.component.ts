@@ -116,6 +116,7 @@ export class MlmodelsComponent implements OnInit {
     //for(var i = 0; i < stringArray.length; i++) {
       //patientIds.patient_ids.push(parseInt(stringArray[i]));
     //} 
+    
 
     this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
       console.log(resp)
