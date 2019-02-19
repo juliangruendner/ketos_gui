@@ -52,7 +52,7 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   openJupyter(env : Environment) {
-    window.open('http://' + env.jupyter_url, "_blank");
+    window.open('https://' + env.jupyter_url, "_blank");
   }
 
   start() {
