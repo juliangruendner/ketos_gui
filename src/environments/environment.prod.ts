@@ -4,7 +4,9 @@ import * as env from './.env.json';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'https://api.chucknorris.io',
+  serverUrl: '/api',
+  fhirServerUrl: 'http://46.101.216.15:8080/gtfhir/base/',
+  ketosUrl: "http://ketos.ai",
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

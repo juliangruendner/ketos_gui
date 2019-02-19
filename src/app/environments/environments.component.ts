@@ -1,10 +1,12 @@
 import { Component, OnInit} from '@angular/core';
 import { EnvironmentsService } from '../services/environments.service';
-import { finalize } from 'rxjs/operators';
 import { Environment } from '../models/environment.model';
 import { Image } from '../models/image.model';
 import { ImagesService } from '../services/images.service';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/timeInterval';
 import { MLModel } from '../models/mlmodel.model';
 
 @Component({
