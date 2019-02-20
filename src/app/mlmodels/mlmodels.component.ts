@@ -7,6 +7,7 @@ import { FeatureSetsService } from '../services/featuresets.service';
 import { FeatureSet } from '../models/featureSets.model';
 import { PatientIDs } from '../models/patientIds.model';
 import { FileUploader } from 'ng2-file-upload';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-mlmodels',
@@ -39,9 +40,29 @@ export class MlmodelsComponent implements OnInit {
   ngOnInit() {
     this.mlModelsService.getAll().subscribe(resp => {
       this.mlmodels = resp;
+      console.log(this.mlmodels)
     });
     this.show_spinner = false;
     this.uploader = new FileUploader({});
+  }
+
+
+  copyModelUrl(model: MLModel){
+      
+    var modelUrl = "" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
+
+    console.log(modelUrl)
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = modelUrl;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 
   clearCreateInput() {
@@ -121,7 +142,7 @@ export class MlmodelsComponent implements OnInit {
     this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
       console.log(resp)
       this.show_spinner = false
-      this.testStr = resp.prediction[0].prediction;
+      this.testStr = JSON.stringify(resp.prediction, null, 2);
 
     }, err => {
       this.show_spinner = false

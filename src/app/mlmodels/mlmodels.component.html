@@ -26,8 +26,8 @@
             <div class="uk-margin-small"><button class="uk-button uk-button-primary uk-button-small" (click)="exportModel(m)"><span uk-icon="download"></span>&nbsp;Export</button></div>
             <div class="uk-margin-small" *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
             <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
+            <div class="uk-margin-small"><button class="uk-button uk-button-secondary uk-button-small" (click)="copyModelUrl(m)">copy model Url</button></div>
             <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small" uk-toggle="target: #test" (click)="initTest(m)"><span uk-icon="nut"></span>&nbsp;Predict</button></div>
-            
           </td>
       </tr>
   </tbody>
