@@ -8,7 +8,7 @@ import { PatientIDs } from '../models/patientIds.model';
 const routes = {
   allByUser: (id : number) => environment.serverUrl + `/users/${id}/models`,
   singleById: (id : number) => environment.serverUrl + `/models/${id}`,
-  prediction: (id : number) => environment.serverUrl + `/models/${id}/prediction?writeToFhir=False&ownInputData=False`,
+  prediction: (id : number, ownInputData : boolean) => environment.serverUrl + `/models/${id}/prediction?writeToFhir=False&ownInputData=${ownInputData}`,
   create: (create_example_model : boolean) => environment.serverUrl + `/models?create_example_model=${create_example_model}`,
   base: environment.serverUrl + '/models',
   export: (id: number) => environment.serverUrl + `/models/${id}/export`,
@@ -30,8 +30,8 @@ export class MLModelsService {
     return this.httpClient.put<MLModel>(routes.singleById(id), mlModel);
   }
 
-  predict(id: number, patientIds: PatientIDs): Observable<any> {
-    return this.httpClient.post(routes.prediction(id), patientIds);
+  predict(id: number, patientIds: PatientIDs, ownInputData: boolean): Observable<any> {
+    return this.httpClient.post(routes.prediction(id, ownInputData), patientIds);
   }
 
   export(id: number): void {

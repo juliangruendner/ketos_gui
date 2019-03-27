@@ -27,7 +27,7 @@
             <div class="uk-margin-small" *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
             <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
             <div class="uk-margin-small"><button class="uk-button uk-button-secondary uk-button-small" (click)="copyModelUrl(m)">copy model Url</button></div>
-            <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-secondary uk-button-small" uk-toggle="target: #test" (click)="initTest(m)"><span uk-icon="nut"></span>&nbsp;Predict</button></div>
+            <div class="uk-margin-small"><button class="uk-button uk-button-secondary uk-button-small" uk-toggle="target: #test" (click)="initTest(m)"><span uk-icon="nut"></span>&nbsp;Predict</button></div>
           </td>
       </tr>
   </tbody>
@@ -76,6 +76,7 @@
                     <label class="uk-form-label" for="env">Feature Set:</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" id="env" type="number" required name="create_image_id" [(ngModel)]="assign_feature_set">
+                            <option value="0">None</option>
                             <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
                         </select>
                     </div>
@@ -165,7 +166,7 @@
               </div>
           </div>
           <div class="uk-modal-footer uk-text-right">
-              <button class="uk-button uk-button-primary" type="submit" (click)="test()" [disabled]="!patient_ids">get prediction</button>
+              <button class="uk-button uk-button-primary" type="submit" (click)="getPrediction()" [disabled]="!patient_ids">get prediction</button>
           </div>
       </div>
     </div>

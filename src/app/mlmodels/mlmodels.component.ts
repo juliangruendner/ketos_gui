@@ -40,7 +40,6 @@ export class MlmodelsComponent implements OnInit {
   ngOnInit() {
     this.mlModelsService.getAll().subscribe(resp => {
       this.mlmodels = resp;
-      console.log(this.mlmodels)
     });
     this.show_spinner = false;
     this.uploader = new FileUploader({});
@@ -48,10 +47,15 @@ export class MlmodelsComponent implements OnInit {
 
 
   copyModelUrl(model: MLModel){
-      
-    var modelUrl = "" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
 
-    console.log(modelUrl)
+    console.log(model)
+    
+    if(model.feature_set_id == 0){
+        var modelUrl = "" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=False&writeToFhir=False"
+    } else{
+        var modelUrl = "" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
+    }
+ 
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -101,7 +105,7 @@ export class MlmodelsComponent implements OnInit {
 
   assignFeatureSet() {
     var m = Object.assign({}, this.mlmodel);
-    m.feature_set_id = this.assign_feature_set;
+    m.feature_set_id = this.assign_feature_set
     this.mlModelsService.put(this.mlmodel.id, m).subscribe(resp => {
       for(var i = 0; i < this.mlmodels.length; i++) {
         if(resp.id == this.mlmodels[i].id) {
@@ -129,7 +133,7 @@ export class MlmodelsComponent implements OnInit {
     this.getEnvs();
   }
 
-  test() {
+  getPrediction() {
     this.show_spinner = true
     var patientIds: PatientIDs = new PatientIDs();
     let stringArray = this.patient_ids.split(',');
@@ -137,16 +141,17 @@ export class MlmodelsComponent implements OnInit {
     //for(var i = 0; i < stringArray.length; i++) {
       //patientIds.patient_ids.push(parseInt(stringArray[i]));
     //} 
-    
 
-    this.mlModelsService.predict(this.mlmodel.id, patientIds).subscribe(resp => {
-      console.log(resp)
+    
+    var ownInputData : boolean = (this.mlmodel.feature_set_id == 0)  ? true : false;
+    console.log(ownInputData)
+    this.mlModelsService.predict(this.mlmodel.id, patientIds, ownInputData).subscribe(resp => {
       this.show_spinner = false
       this.testStr = JSON.stringify(resp.prediction, null, 2);
 
     }, err => {
       this.show_spinner = false
-      this.testStr = 'we are sorry, but it seems that the ml-model does not like you!'
+      this.testStr = 'something went Wrong!'
     });
   }
 
