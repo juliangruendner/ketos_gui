@@ -4,7 +4,7 @@
       <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-form" (click)="beforeOpenModal()">Create new</button>
   </div>  
 </div>
-
+<div [hidden]="hide_alert" id="messge_demo" uk-alert class="uk-alert-primary" >Annotation Creation disabled for demo</div>
 <table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
   <thead>
       <tr>
@@ -149,6 +149,7 @@
 
       </div>
       <div class="uk-modal-footer uk-text-right">
+          
           <button *ngIf="!edit_mode" class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create(form_annotation, numberannotators)">Create</button>
           <button *ngIf="edit_mode" class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete(form_annotation)">Delete</button>
       </div>

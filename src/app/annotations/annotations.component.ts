@@ -23,6 +23,7 @@ export class AnnotationsComponent implements OnInit {
   numberannotators : number;
   scale_entries: ScaleEntry[];
   showLoading: boolean = false;
+  hide_alert: boolean = true;
 
   anno_types : any = [
     {"name": "Multiple Choice", "id": 0},
@@ -51,6 +52,12 @@ export class AnnotationsComponent implements OnInit {
   }
 
   create(annotation: Annotation, number_of_annotators: number){
+
+    if(environment.demo){
+        this.hide_alert = false;
+        return;
+    }
+    
     console.log(annotation);
     annotation.creator_id = 1;
     this.annotationService.post(annotation, number_of_annotators).subscribe(resp => {

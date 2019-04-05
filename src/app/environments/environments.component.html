@@ -40,6 +40,7 @@
             <b>Updated</b><br>{{env.updated_at | date:'MMM d, y, H:mm:ss'}}<br><br>
           </p>
         </div>
+        <div [hidden]="hide_alert" uk-alert class="uk-alert-primary" >Disabled for demo</div>
         <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-primary" type="button" (click)="openJupyter(env)" *ngIf="env.status=='running'">Open Jupyter</button>
           <button class="uk-button uk-button-primary" type="button" *ngIf="env.status=='stopped'" (click)="start()">Start</button>
@@ -82,6 +83,7 @@
             </form>
         </div>
         <div class="uk-modal-footer uk-text-right">
+            <div [hidden]="hide_alert" id="messge_demo" uk-alert class="uk-alert-primary" >Environment Creation disabled for demo</div>
             <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="create()" [disabled]="!create_name||!create_image_id">Create</button>
         </div>
     </div>

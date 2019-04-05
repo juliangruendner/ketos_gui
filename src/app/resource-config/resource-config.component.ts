@@ -3,6 +3,7 @@ import { ResourcesConfigService } from '../services/resourcesconfig.service';
 import { ResourceConfig } from '../models/resourceConfig.model';
 import * as _ from 'lodash';
 import { FhirBaseService } from '../services/fhirbase.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-resource-config',
@@ -14,6 +15,8 @@ export class ResourceConfigComponent implements OnInit {
   resourceConfigs: ResourceConfig[] = [];
 
   fhirResources: string[];
+  hide_alert: boolean = false;
+  demo: boolean = environment.demo;
 
   is_form_create: boolean;
   form_config: ResourceConfig = new ResourceConfig();

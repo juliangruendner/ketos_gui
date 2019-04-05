@@ -1,11 +1,12 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">FHIR Resource Configurations</h1>
-  <div class="header-btn">
+  <div *ngIf="demo" id="messge_demo" uk-alert class="uk-alert-primary" >FHIR Resrouces Config disabled for demo</div>
+  <div *ngIf="! demo" class="header-btn">
       <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #config-form" (click)="clearForm(); is_form_create = true;">Create new</button>
   </div>  
 </div>
 
-<div class="uk-child-width-1-3@m uk-grid-medium uk-grid-match" uk-grid>
+<div *ngIf="! demo" class="uk-child-width-1-3@m uk-grid-medium uk-grid-match" uk-grid>
     <div *ngFor="let r of resourceConfigs">
         <div class="uk-card uk-card-small uk-card-default uk-card-body uk-card-hover env-card">
             <h4 class="uk-margin-small-bottom uk-text-center"><button uk-icon="icon: pencil" uk-toggle="target: #config-form" (click)="setForm(r); is_form_create = false;">{{r.resource_name}} </button></h4>

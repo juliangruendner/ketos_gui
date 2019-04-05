@@ -3,6 +3,7 @@ import * as env from './.env.json';
 
 export const environment = {
   production: true,
+  demo: true,
   version: env.npm_package_version,
   serverUrl: '/api',
   fhirServerUrl: 'http://46.101.216.15:8080/gtfhir/base/',

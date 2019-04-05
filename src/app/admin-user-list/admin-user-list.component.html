@@ -1,6 +1,7 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">User List</h1>
-  <div class="header-btn">
+  <div *ngIf="demo" id="messge_demo" uk-alert class="uk-alert-primary" >User management disabled for demo</div>
+  <div *ngIf="! demo" class="header-btn">
       <button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #user-form" (click)="clearForm(); is_form_create = true;">Create new</button>
   </div>  
 </div>
@@ -15,7 +16,7 @@
           <th>E-Mail</th>
       </tr>
   </thead>
-  <tbody>
+  <tbody *ngIf="! demo">
       <tr *ngFor="let u of (users | sortForProperty: 'id')" uk-toggle="target: #user-form" (click)="setForm(u); is_form_create = false;">
           <td>{{u.id}}</td>
           <td>{{u.username}}</td>

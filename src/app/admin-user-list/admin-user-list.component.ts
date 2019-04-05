@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, FormC
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user.model';
 import * as _ from 'lodash';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -16,6 +17,7 @@ export class AdminUserListComponent implements OnInit {
   is_form_create : boolean;
   form_user : User = new User();
   userForm : FormGroup;
+  demo: boolean = environment.demo
 
   constructor(private usersService: UsersService,
               private formBuilder: FormBuilder) { }
@@ -75,6 +77,7 @@ export class AdminUserListComponent implements OnInit {
   }
 
   setForm(user: User) {
+
     this.form_user = _.clone(user);
 
      // Set fields of userForm to fields of form user

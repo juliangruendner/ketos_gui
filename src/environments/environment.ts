@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  demo: false,
   version: '(dev)',
   serverUrl: 'http://localhost:5000',
   fhirServerUrl: 'http://46.101.216.15:8080/gtfhir/base/',

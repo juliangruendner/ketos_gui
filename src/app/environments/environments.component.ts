@@ -8,6 +8,7 @@ import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/timeInterval';
 import { MLModel } from '../models/mlmodel.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-environments',
@@ -21,6 +22,7 @@ export class EnvironmentsComponent implements OnInit {
   env: Environment = new Environment();
 
   images: Image[] = [];
+  hide_alert: boolean = true
 
   create_name: string;
   create_description: string;
@@ -58,6 +60,12 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   start() {
+
+    if(environment.demo){
+        this.hide_alert = false;
+        return;
+    }
+    
     this.startProgress(this.env, 10);
     var e = Object.assign({}, this.env);
     e.status = 'running';
@@ -67,6 +75,11 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   stop() {
+    if(environment.demo){
+        this.hide_alert = false;
+        return;
+    }
+
     this.startProgress(this.env, 10);
     var e = Object.assign({}, this.env);
     e.status = 'stopped';
@@ -86,6 +99,12 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   create() {
+
+    if(environment.demo){
+        this.hide_alert = false;
+        return;
+    }
+
     var env = new Environment();
     env.name = this.create_name;
     env.description = this.create_description;
