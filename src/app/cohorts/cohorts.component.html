@@ -1,8 +1,8 @@
 <div class="header-wrapper">
   <h1 class="uk-heading-divider">Atlas Cohorts</h1> 
 </div>
-
-<div class="uk-panel">
+<div *ngIf="demo" id="messge_demo" uk-alert class="uk-alert-primary" >FHIR Resrouces Config disabled for demo</div>
+<div *ngIf="! demo" class="uk-panel">
   <h3 class="uk-panel-title">How to create new Cohorts using OHDSI Atlas</h3>
   <p>
     To create patient cohorts please use OHDSI's Tool Atlas.<br>
@@ -26,7 +26,7 @@
 <br>
 <br>
 <br>
-<div class="uk-panel">
+<div *ngIf="! demo" class="uk-panel">
     <h3 class="uk-panel-title">Get patient IDs for a Atlas Cohort</h3>
     <form class="uk-form-horizontal uk-margin-large">
       <div>

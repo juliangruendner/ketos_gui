@@ -8,6 +8,8 @@ import { FeatureSet } from '../models/featureSets.model';
 import { PatientIDs } from '../models/patientIds.model';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../environments/environment';
+import { ResourceLoader } from '@angular/compiler';
+import { AuthenticationService } from "../core/authentication/authentication.service";
 
 @Component({
   selector: 'app-mlmodels',
@@ -20,6 +22,7 @@ export class MlmodelsComponent implements OnInit {
   mlmodel: MLModel = new MLModel();
   envs: Environment[] = []
   featureSets: FeatureSet[] = []
+  ketosUrl: string = environment.ketosUrl
 
   create_env_id: number;
   create_description: string;
@@ -28,14 +31,17 @@ export class MlmodelsComponent implements OnInit {
 
   patient_ids: string;
 
-  testStr: any;
+  predictionResult: any;
   show_spinner: boolean;
   
-  uploader_url : string = "/brain/models/import";
+  uploader_url : string = "/api/models/import";
   uploader: FileUploader = new FileUploader({});
 
+  uploadInProgress: boolean = false;
+  modelFile: File;
 
-  constructor(private mlModelsService: MLModelsService, private environmentsService: EnvironmentsService, private featureSetsService: FeatureSetsService) { }
+
+  constructor(private mlModelsService: MLModelsService, private environmentsService: EnvironmentsService, private featureSetsService: FeatureSetsService, private authService : AuthenticationService) { }
 
   ngOnInit() {
     this.mlModelsService.getAll().subscribe(resp => {
@@ -51,9 +57,9 @@ export class MlmodelsComponent implements OnInit {
     console.log(model)
     
     if(model.feature_set_id == 0){
-        var modelUrl = "" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=False&writeToFhir=False"
+        var modelUrl = environment.ketosUrl + "/" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=False&writeToFhir=False"
     } else{
-        var modelUrl = "" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
+        var modelUrl = environment.ketosUrl + "/" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
     }
  
     let selBox = document.createElement('textarea');
@@ -93,6 +99,22 @@ export class MlmodelsComponent implements OnInit {
     this.mlModelsService.post(model).subscribe(resp => {
       this.mlmodels.push(resp);
     });
+  }
+
+  deleteModel(m : MLModel){
+
+    this.mlModelsService.delete(m.id).subscribe(resp =>{
+        console.log(resp.id)
+        console.log(this.mlmodels)
+        
+        for(var i = 0; i < this.mlmodels.length; i++){
+            if(this.mlmodels[i].id == resp.id){
+              var rem = this.mlmodels.splice(i,1)
+              console.log(rem)
+            }
+        }
+    });
+
   }
 
   clearAssignData() {
@@ -136,39 +158,69 @@ export class MlmodelsComponent implements OnInit {
   getPrediction() {
     this.show_spinner = true
     var patientIds: PatientIDs = new PatientIDs();
-    let stringArray = this.patient_ids.split(',');
-    patientIds.patient_ids = parseInt(stringArray[0]);
+    if(this.patient_ids != undefined){
+        let stringArray = this.patient_ids.split(',');
+        patientIds.patient_ids = parseInt(stringArray[0]);
+    } else {
+        patientIds.patient_ids = 0
+    }
+
     //for(var i = 0; i < stringArray.length; i++) {
       //patientIds.patient_ids.push(parseInt(stringArray[i]));
     //} 
 
     
     var ownInputData : boolean = (this.mlmodel.feature_set_id == 0)  ? true : false;
-    console.log(ownInputData)
     this.mlModelsService.predict(this.mlmodel.id, patientIds, ownInputData).subscribe(resp => {
       this.show_spinner = false
-      this.testStr = JSON.stringify(resp.prediction, null, 2);
-
+      this.predictionResult = JSON.stringify(resp.prediction, null, 2);
+        console.log("success")
     }, err => {
       this.show_spinner = false
-      this.testStr = 'something went Wrong!'
+      this.predictionResult = 'something went Wrong!'
+      console.log("ERROR")
     });
-  }
+  } 
 
   initTest(mlmodel: MLModel) {
-    this.patient_ids = this.testStr = null;
+    this.patient_ids = this.predictionResult = null;
     this.setMlModel(mlmodel);
   }
 
   exportModel(mlmodel: MLModel){
-    this.mlModelsService.export(mlmodel.id);
+
+    this.mlModelsService.prepare_export(mlmodel.id).subscribe(resp => {
+        console.log("success")  
+        this.mlModelsService.export(mlmodel.id);    
+      }, err => {
+        console.log("ERROR")
+        console.log(err)
+      });
+    
+    
+  }
+
+  onChange(event: { srcElement: { files: File; }; }) {
+    this.modelFile = event.srcElement.files[0];
   }
 
   importModel(env_id: number, feature_set_id: number){
-    // this.uploader.options.url = this.uploader_url + "?environment_id=" + env_id + "&feature_set_id=" + feature_set_id;
-    // this.uploader.options.itemAlias = "file";
-    this.uploader.setOptions({url: this.uploader_url + "?environment_id=" + env_id + "&feature_set_id=" + feature_set_id, itemAlias: "file" });
-    this.uploader.uploadAll();
+
+    this.uploadInProgress = true;
+    this.mlModelsService.import(this.modelFile, env_id, feature_set_id).subscribe((data: any) => {
+        console.log(data)
+        this.uploadInProgress = false;
+      }, error => {
+        console.log("upload failed")
+        this.uploadInProgress = false;
+        //this.error = error.error.message;
+      });
+    }
+
+    //this.uploader_url = "http://localhost:5000/models/import"
+    //auth = btoa(auth)
+    //this.uploader.setOptions({url: this.uploader_url + "?environment_id=" + env_id + "&feature_set_id=" + feature_set_id,authToken: auth, itemAlias: "file"});
+    //this.uploader.uploadAll();
     
   }
 

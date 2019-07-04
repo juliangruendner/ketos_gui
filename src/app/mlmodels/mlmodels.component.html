@@ -23,6 +23,7 @@
           <td>{{m.environment.name}}</td>
           <td>{{m.feature_set.name}}</td>
           <td>
+                <!--div class="uk-margin-small"><button class="uk-button uk-button-danger uk-button-small" (click)="deleteModel(m)"><span uk-icon="trash"></span>&nbsp;Delete</button></div-->
             <div class="uk-margin-small"><button class="uk-button uk-button-primary uk-button-small" (click)="exportModel(m)"><span uk-icon="download"></span>&nbsp;Export</button></div>
             <div class="uk-margin-small" *ngIf="1 > m.feature_set.id"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Bind Feature Set</button></div>
             <div class="uk-margin-small" *ngIf="m.feature_set.id > 0"><button class="uk-button uk-button-primary uk-button-small" uk-toggle="target: #feature-set-assign" (click)="initAssign(m)">Change Feature Set</button></div>
@@ -90,7 +91,7 @@
   </div>
 
 
-  <div id="import-model" uk-modal>
+  <!--div id="import-model" uk-modal>
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
@@ -134,6 +135,55 @@
             <button class="uk-button uk-button-primary" type="button" (click)="importModel(importEnv.value, importFeature.value)" >Import</button>
         </div>
     </div>
+  </div-->
+
+  <div id="import-model" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h1 class="uk-modal-title">Import existing model</h1>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-horizontal uk-margin-large">
+                <div class="uk-margin">
+
+                    <label class="uk-form-label" for="env">Environment:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="env" type="number" required name="create_image_id" #importEnv>
+                            <option *ngFor="let e of envs" value="{{e.id}}">{{e.name}}</option>
+                        </select>
+                    </div>
+                    <div><p>&nbsp;</p></div>
+                    <label class="uk-form-label" for="env">Feature Set:</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="env" type="number" required name="create_image_id" #importFeature>
+                            <option *ngFor="let fs of featureSets" value="{{fs.id}}">{{fs.name}}</option>
+                        </select>
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+                    
+                    <label class="uk-form-label" for="env">Model File:</label>
+                    <div class="uk-form-controls">
+                        <input #modelFile type="file" (change)="onChange($event)" name="file" ngModel class="form-control-file" id="model_file">
+                    </div>
+
+                    <div><p>&nbsp;</p></div>
+
+                    
+                    
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+                <button [disabled]="modelFile.length == 0" *ngIf="!uploadInProgress" (click)="importModel(importEnv.value, importFeature.value)" class="btn btn-primary"
+                type="button">Import new</button>
+              <div *ngIf="uploadInProgress" class="spinner-border text-primary" role="status">
+                <span class="sr-only">Uploading...</span>
+              </div>
+            <button class="uk-button uk-button-primary" type="button" (click)="importModel(importEnv.value, importFeature.value)" >Import</button>
+        </div>
+    </div>
   </div>
 
   <div id="test" uk-modal>
@@ -143,12 +193,17 @@
               <h1 class="uk-modal-title">Prediction for model</h1>
           </div>
           <div class="uk-modal-body">
-              <form class="uk-form-horizontal uk-margin-large">
-                  <label class="uk-form-label" for="form-horizontal-text">Patient IDs:</label>
+              <form *ngIf="mlmodel.feature_set_id != 0" class="uk-form-horizontal uk-margin-large">
+                  <label class="uk-form-label" for="form-horizontal-text">Patient ID:</label>
                   <div class="uk-form-controls">
                       <input class="uk-input" id="form-horizontal-text" type="text" required name="patient_ids" [(ngModel)]="patient_ids">
                   </div>
               </form>
+              <div *ngIf="mlmodel.feature_set_id == 0" class="ketos-model-info uk-text-primary">
+                    There is no feature-set assigned to this model => this model will be called without a patient Id.
+                    Please make sure that your model is a respective model, which does not need specific patient information to be called.
+                    Else please assign a feature-set here:  <a href="{{ketosUrl}}/mlmodels">{{ketosUrl}}/mlmodels</a>
+              </div>
               <div>
                   <label>Prediction result:</label>
                   <div *ngIf="show_spinner">
@@ -159,14 +214,14 @@
                   <div class="ketos-prediction-result">
                         <ul class="uk-list uk-list-divider">
                             <li>
-                                <span>{{testStr}}</span></li>
+                                <span>{{predictionResult}}</span></li>
                         </ul>
                         
                   </div>
               </div>
           </div>
           <div class="uk-modal-footer uk-text-right">
-              <button class="uk-button uk-button-primary" type="submit" (click)="getPrediction()" [disabled]="!patient_ids">get prediction</button>
+              <button class="uk-button uk-button-primary" type="submit" (click)="getPrediction()" [disabled]="mlmodel.feature_set_id != 0 && !patient_ids">get prediction</button>
           </div>
       </div>
     </div>

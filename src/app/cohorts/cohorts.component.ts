@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AtlasCohortsService } from '../services/atlasCohorts.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-cohorts',
@@ -9,7 +10,7 @@ import { AtlasCohortsService } from '../services/atlasCohorts.service';
 export class CohortsComponent implements OnInit {
 
   cohort_id: number;
-
+  demo: boolean = environment.demo;
   patient_ids: number[];
 
   constructor(private altasCohortService: AtlasCohortsService) { }
