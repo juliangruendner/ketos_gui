@@ -10,9 +10,10 @@
       <tr>
           <th class="uk-table-shrink"></th>
           <th>Resource</th>
-          <th>Parameter Name</th>
-          <th>Value</th>
+          <th>Search Parameter Name</th>
+          <th>Search Value</th>
           <th>Name</th>
+          <th>Output Value Path</th>
           <th>Description</th>
       </tr>
   </thead>
@@ -23,6 +24,7 @@
           <td>{{f.parameter_name}}</td>
           <td>{{f.value}}</td>
           <td>{{f.name}}</td>
+          <td>{{f.output_value_path}}</td>
           <td>{{f.description}}</td>
       </tr>
   </tbody>
@@ -66,6 +68,13 @@
 
                   <div><p>&nbsp;</p></div>
 
+                  <label class="uk-form-label" for="form-horizontal-text">Output Value Path:</label>
+                  <div class="uk-form-controls">
+                      <input class="uk-input" id="form-horizontal-text" type="text" required name="form_feature.output_value_path" [(ngModel)]="form_feature.output_value_path">
+                  </div>
+
+                  <div><p>&nbsp;</p></div>
+
                   <label class="uk-form-label" for="form-horizontal-text">Description:</label>
                   <div class="uk-form-controls">
                       <textarea class="uk-textarea" rows="3" id="form-horizontal-text" type="text" required name="form_feature.description" [(ngModel)]="form_feature.description"></textarea>
@@ -79,7 +88,8 @@
       </div>
       <div *ngIf="!is_form_create" class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-primary uk-modal-close" type="submit" (click)="edit()"
-           [disabled]="form_feature.resource == tmp_feature.resource && form_feature.parameter_name == tmp_feature.parameter_name 
+           [disabled]="form_feature.resource == tmp_feature.resource && form_feature.parameter_name == tmp_feature.parameter_name
+           && form_feature.output_value_path == tmp_feature.output_value_path 
            && form_feature.value == tmp_feature.value && form_feature.name == tmp_feature.name && form_feature.description == tmp_feature.description">Submit Changes</button>
           <button class="uk-button uk-button-danger uk-modal-close" type="submit" (click)="delete()">Delete</button>
       </div>

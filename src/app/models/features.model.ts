@@ -6,6 +6,7 @@ export class Feature {
     parameter_name: string;
     value: string;
     name: string;
+    output_value_path: string
     description: string;
     creator: User;
     created_at: Date;

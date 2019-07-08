@@ -34,12 +34,23 @@ export class FeaturesComponent implements OnInit {
   }
 
   create() {
+
+    if(this.form_feature.output_value_path == ''){
+        this.form_feature.output_value_path = null
+    }
+
     this.featuresService.post(this.form_feature).subscribe(f => {
       this.features.push(f);
     });
   }
 
+
   edit() {
+
+    if(this.form_feature.output_value_path == ''){
+        this.form_feature.output_value_path = null
+    }
+
     this.featuresService.putSingle(this.form_feature.id, this.form_feature).subscribe((retF) => {
       this.features[this.features.findIndex(f => retF.id === f.id)] = retF;
     });
