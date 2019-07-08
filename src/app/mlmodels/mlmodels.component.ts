@@ -215,8 +215,6 @@ export class MlmodelsComponent implements OnInit {
         this.uploadInProgress = false;
         //this.error = error.error.message;
       });
-    }
-
     //this.uploader_url = "http://localhost:5000/models/import"
     //auth = btoa(auth)
     //this.uploader.setOptions({url: this.uploader_url + "?environment_id=" + env_id + "&feature_set_id=" + feature_set_id,authToken: auth, itemAlias: "file"});
