@@ -20,6 +20,8 @@ export class CrawlersComponent implements OnInit {
   server_url: string = environment.serverUrl;
   create_patient_ids = 'test';
   create_featureset_id: number;
+  timerThread: any
+  unfinishedCrawlers: boolean
 
   assign_feature_set: number;
   featureSets: FeatureSet[] = [];
@@ -78,10 +80,44 @@ export class CrawlersComponent implements OnInit {
 
     this.crawlersService.create(dataRequest).subscribe(resp => {
       console.log(resp);
+      this.unfinishedCrawlers = true;
+      this.startRefresh()
     }, err => {
       console.log('request failed');
+      this.unfinishedCrawlers = true;
+      this.startRefresh()
     });
 
+    
+
+  }
+
+  checkIfUnfinishedCrawlers(){ 
+    this.crawlersService.getAll().subscribe(resp => {
+            this.crawlers = resp;
+            
+            this.crawlers.forEach(crawler => {
+                if(crawler.status == "running" || crawler.status == "queued"){
+                    this.unfinishedCrawlers = true;
+                    return;
+                }
+
+            this.unfinishedCrawlers = false;
+        });
+        
+    });
+    
+  }
+
+  startRefresh(){
+    this.checkIfUnfinishedCrawlers()
+    if(!this.unfinishedCrawlers){
+        return;
+    }
+
+    this.timerThread = setTimeout(x => {
+        this.startRefresh();
+      }, 2000);
   }
 
   clearAssignData() {
