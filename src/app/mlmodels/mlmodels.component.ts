@@ -22,7 +22,7 @@ export class MlmodelsComponent implements OnInit {
   mlmodel: MLModel = new MLModel();
   envs: Environment[] = []
   featureSets: FeatureSet[] = []
-  ketosUrl: string = environment.ketosUrl
+  ketosUrl: string = location.origin
 
   create_env_id: number;
   create_description: string;
@@ -53,13 +53,11 @@ export class MlmodelsComponent implements OnInit {
 
 
   copyModelUrl(model: MLModel){
-
-    console.log(model)
     
     if(model.feature_set_id == 0){
-        var modelUrl = environment.ketosUrl + "/" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=False&writeToFhir=False"
+        var modelUrl = location.origin + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
     } else{
-        var modelUrl = environment.ketosUrl + "/" + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=True&writeToFhir=False"
+        var modelUrl = location.origin + environment.serverUrl + "/models/" + model.id + "/prediction?ownInputData=False&writeToFhir=False"
     }
  
     let selBox = document.createElement('textarea');

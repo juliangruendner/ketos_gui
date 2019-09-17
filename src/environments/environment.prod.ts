@@ -7,7 +7,6 @@ export const environment = {
   version: env.npm_package_version,
   serverUrl: '/api',
   fhirServerUrl: 'http://46.101.216.15:8080/gtfhir/base/',
-  ketosUrl: "https://ketos.ai",
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

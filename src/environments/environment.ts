@@ -7,9 +7,9 @@ export const environment = {
   production: false,
   demo: false,
   version: '(dev)',
-  serverUrl: 'http://localhost:5000',
+  serverUrl: 'http://localhost:5000',   //'https://ketos.ai/api',
+  //serverUrl: 'https://ketos.ai/api',
   fhirServerUrl: 'http://46.101.216.15:8080/gtfhir/base/',
-  ketosUrl: "https://ketos.ai",
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
