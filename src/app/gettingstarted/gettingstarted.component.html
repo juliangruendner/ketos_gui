@@ -1,0 +1,86 @@
+
+<h1 class="uk-h1">KETOS GETTING STARTED</h1>
+
+<div class="uk-width-1-1">
+    <br>
+    <div class="ketos_gs_info" >
+        Welcome to KETOS - Getting Started.
+        <br><br>
+        We set up this example server to guide you through the basic steps of building an deploying your own model. 
+    </div>
+    <h2> Demonstration Data </h2>
+    
+    We are currently running a GT-FHIR Server, which is filled with demonstration data.
+    <br><br>
+    The demonstration data consists for the IRIS machine learning example dataset (<a href="https://archive.ics.uci.edu/ml/datasets/iris"><span class="ketos_link">https://archive.ics.uci.edu/ml/datasets/iris</span></a>) mapped to OMOP Observations, as follows:
+    <br><br>
+    sepal length in cm => rateOfGrowth	<br>
+    sepal width in cm  => bodyWeight <br>
+    petal length in cm => bodyHeight <br>
+    petal width in cm => bodySize	<br>
+    flower type => bodyComposition (values: 'Iris-setosa': 'bad body structure', 'Iris-versicolor': 'good body structure', 'Iris-virginica': 'awesome body structure')<br>
+    <br>
+    This mapping is for demonstration purposes only and has no bearing on any real life clinical application.
+    
+    <br><br>
+    <h2>A step by step guide to KETOS</h2>
+    
+    <h3> 1. Create your development environment and a model </h3>
+    <br>
+    You can access your development environment under <a href="https://ketos.ai/environments"><span class="ketos_link">https://ketos.ai/environments. </span></a>For the demonstration server the creation of a new environment is not allowed.
+    <br><br>
+    Luckily we have already created one for you - the example environment "docker_api_dev". Go to your model by clicking on the jupyter link provided.
+    <br><br>
+    Usually the environment is empty and you still have to create a new model for you environment here: <a href="https://ketos.ai/mlmodels"><span class="ketos_link">https://ketos.ai/mlmodels.</span></a>
+    <br><br>
+    This time we have done this for you already. 
+    <br><br>
+    Because we have created the model for you already you can see your model under your jupyter link by following the link under environments and navigating to: models > mlmodel_1.
+    <br><br>
+    This is your model environment where you can build your models. The example model model.ipynb is provided for you.
+    
+    
+    <h3> 2. Define and retrieve data </h3>
+    
+    Next to build a model we need data.
+    <br><br>
+    To get Data KETOS allows you to request data from the provided data service via a preprocessing service.
+    <br><br>
+    Go to <a href="https://ketos.ai/data"><span class="ketos_link"> https://ketos.ai/data </span> </a>to see all the current data requests and to make a new data request.
+    <br><br>
+    As you can see there have been already a number of data requests made.
+    <br><br>
+    For the Request used to build our example model see <a href="https://ketos.ai:57588/notebooks/models/mlmodel_1/model.ipynb "><span class="ketos_link">https://ketos.ai:57588/notebooks/models/mlmodel_1/model.ipynb </span> </a>- cell 4 ketos_Input_data
+    
+    
+   <h3> 3. Adjust data further and train your model </h3>
+   <br><br>
+    We have already trained an example model for you, which you can access under file <a href="https://ketos.ai:57588/notebooks/models/mlmodel_1/model.ipynb"><span class="ketos_link"> https://ketos.ai:57588/notebooks/models/mlmodel_1/model.ipynb</span></a>
+    <br><br>
+    You can do all your training here, retrain your model, and change your training function or make any other adjustments to the data.
+    <br><br>
+    Note that any adjustments you would make to the data for training, which you would also like to be executed before model prediction you have to add to your
+    ketos predict function accordingly.
+    <br><br>
+    In this example case we trained a simple glmnet model using the caret library by running the cells tagged "# ketos_train"
+    
+    
+    <h3>4. Deploy your model </h3>
+    
+    Deploying your model as a webservice is easy. 
+    <br><br>
+    Just tag the output cells of your model file <a href="https://ketos.ai:57588/notebooks/models/mlmodel_1/model.ipynb"><span class="ketos_link">https://ketos.ai:57588/notebooks/models/mlmodel_1/model.ipynb</span></a> accordingly, with #ketos_predict, ketos_predict_output
+    <br><br>
+    <div class="ketos_gs_info">Congratulations! - Your model is now deployed and ready to be accessed for predictions.</div>
+    
+    <h4>access your model via webservice:</h4>
+    To access your newly created prediction webservice call the following url with a curl request by typing the following in your command line:<br><br>
+    <span class="ketos_link">curl -u admin:test123 -d '{{ '{' }}"patient_ids": [2]{{ '}' }}' -H "Content-Type: application/json" -X POST 'https://ketos.ai/api/models/1/prediction?ownInputData=false&writeToFhir=false' </span>
+    <br><br>
+    To get the url of your model go to <a href="https://ketos.ai/mlmodels">https://ketos.ai/mlmodels</a> and click the "copy model url" button next to your model
+    <br>
+    <h4>Test your model in the ketos gui: </h4>
+    To test a call to your model and the prediction you would get we have provided a predict function in the KETOS gui, which calls the webservice endpoint of your newly deployed model.
+    To test it go to <a href="https://ketos.ai/mlmodels"><span class="ketos_link"> https://ketos.ai/mlmodels </span> </a>and klick predict, type in a patient id and get the prediction from your model.
+
+</div>
